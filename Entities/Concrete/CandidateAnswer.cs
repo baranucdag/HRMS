@@ -2,7 +2,7 @@
 
 namespace Entities.Concrete
 {
-    public class CandiateAnswer : IEntity
+    public class CandidateAnswer : IEntity
     {
         public int Id { get; set; }
         public int CanidateId { get; set; }
