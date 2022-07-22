@@ -20,7 +20,7 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public void Delete(TEntity entity)
+        public void HardDelete(TEntity entity)
         {
             using (TContext context = new TContext())
             {
@@ -44,6 +44,16 @@ namespace Core.DataAccess.EntityFramework
             using (TContext context = new TContext())
             {
                 return filter == null ? context.Set<TEntity>().ToList() : context.Set<TEntity>().Where(filter).ToList();
+            }
+        }
+
+        public void SoftDelete(TEntity entity)
+        {
+            using (TContext context = new TContext())
+            {
+                var deletedEntity = context.Entry(entity);
+                deletedEntity.CurrentValues["IsDeleted"] = true;
+                context.SaveChanges();
             }
         }
 

@@ -12,5 +12,6 @@ namespace Entities.Concrete
         public DateTime PublishDate { get; set; }
         public DateTime DeadLine { get; set; }
         public bool Status { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace Entities.Concrete
         public string ReferenceAdress { get; set; }
         public string ReferenceProfession { get; set; }
         public string ReferencePhoneNumber { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

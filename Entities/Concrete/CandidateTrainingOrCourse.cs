@@ -11,5 +11,6 @@ namespace Entities.Concrete
         public string TrainOrCourseDetails { get; set; }
         public string Issuer { get; set; }
         public string ValidityDate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

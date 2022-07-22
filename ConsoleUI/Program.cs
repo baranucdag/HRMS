@@ -1,6 +1,5 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
@@ -12,7 +11,11 @@ namespace ConsoleUI
             QuestionService questionService = new QuestionService(new EfQuestionDal());
             var result = questionService.GetAll();
 
-            foreach (var item in result)
+            AnswerService answerService = new AnswerService(new EfAnswerDal());
+            var result2 = answerService.GetAll();
+
+
+            foreach (var item in result2)
             {
                 Console.WriteLine(item.Text);
             }

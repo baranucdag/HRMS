@@ -2,7 +2,7 @@
 
 namespace Entities.Concrete
 {
-    public class CandidateExperience : IEntity
+    public class CandidateComputerExperience : IEntity
     {
         public int Id { get; set; }
         public int CandidateId { get; set; }
@@ -10,5 +10,6 @@ namespace Entities.Concrete
         public string LanguageOrProgram { get; set; }
         public string WorksDone { get; set; }
         public string Duration { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

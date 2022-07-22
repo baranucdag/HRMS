@@ -74,5 +74,6 @@ namespace Entities.Concrete
         public string SucscribedSociety { get; set; }
         public string SucscribedProfessionalOrganizations { get; set; }
         public string SucscribedSporClubs { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

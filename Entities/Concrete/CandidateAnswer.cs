@@ -8,6 +8,7 @@ namespace Entities.Concrete
         public int CanidateId { get; set; }
         public int AnswerId { get; set; }
         public int AnswerValue { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
     
