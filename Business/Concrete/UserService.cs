@@ -17,9 +17,10 @@ namespace Business.Concrete
             userDal.Add(user);
         }
 
-        public void Delete(User user)
+        public void Delete(int id)
         {
-            userDal.SoftDelete(user);
+            var deletedEntity = userDal.Get(x=>x.Id == id);
+            userDal.SoftDelete(deletedEntity);
         }
 
         public List<User> GetAll()

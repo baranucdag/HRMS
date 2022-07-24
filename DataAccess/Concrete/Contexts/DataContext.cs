@@ -8,7 +8,7 @@ namespace DataAccess.Concrete.Contexts
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=KJ4FUIB1;Database=HRMS;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer("Data Source=KJ4FUIB1;Database=HRMS;Trusted_Connection=true");
         }
 
         public DbSet<Answer> Answers { get; set; }

@@ -6,7 +6,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuestionsController : ControllerBase
+    public class QuestionsController : BaseController
     {
         private readonly IQuestionService questionService;
         public QuestionsController(IQuestionService questionService)

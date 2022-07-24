@@ -6,7 +6,7 @@ namespace Business.Abstract
     public interface IOperationClaimService
     {
         void Add(OperationClaim operationClaim);
-        void Delete(OperationClaim operationClaim);
+        void Delete(int id);
         List<OperationClaim> GetAll();
         OperationClaim Get(int id);
     }

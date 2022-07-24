@@ -18,9 +18,10 @@ namespace Business.Concrete
             answerDal.Add(answer);
         }
 
-        public void Delete(Answer answer)
+        public void Delete(int id)
         {
-            answerDal.SoftDelete(answer);
+            var deletedEntity = answerDal.Get(x=>x.Id == id);
+            answerDal.SoftDelete(deletedEntity);
         }
 
         public List<Answer> GetAll()

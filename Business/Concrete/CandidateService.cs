@@ -18,9 +18,10 @@ namespace Business.Concrete
             candidateDal.Add(candidate);
         }
 
-        public void Delete(Candidate candidate)
+        public void Delete(int id)
         {
-            candidateDal.SoftDelete(candidate);
+            var deletedEntity = candidateDal.Get(x => x.Id == id);
+            candidateDal.SoftDelete(deletedEntity);
         }
 
         public List<Candidate> GetAll()

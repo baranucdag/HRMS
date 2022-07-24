@@ -7,7 +7,7 @@ namespace Business.Abstract
     {
         void Add(Answer answer);
         void Update(Answer answer);
-        void Delete(Answer answer);
+        void Delete(int id);
         List<Answer> GetAll();
         Answer GetById(int id);
         List<Answer> GetByQuestionId(int questionId);

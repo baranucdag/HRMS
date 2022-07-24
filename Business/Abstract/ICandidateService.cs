@@ -7,7 +7,7 @@ namespace Business.Abstract
     {
         void Add(Candidate candidate);
         void Update(Candidate candidate);
-        void Delete(Candidate candidate);
+        void Delete(int id);
         List<Candidate> GetAll();
         Candidate GetById(int id);
     }

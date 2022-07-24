@@ -9,10 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CrossCuttingConcerns\Validation\" />
     <Folder Include="Entites\Abstract\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
   </ItemGroup>
 

@@ -5,7 +5,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EFCandidateDal : EfEntityRepositoryBase<Candidate,DataContext>,ICandidateDal
+    public class EfCandidateDal : EfEntityRepositoryBase<Candidate,DataContext>,ICandidateDal
     {
     }
 }

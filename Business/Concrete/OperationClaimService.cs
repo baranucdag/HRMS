@@ -18,9 +18,10 @@ namespace Business.Concrete
             operationClaimDal.Add(operationClaim);
         }
 
-        public void Delete(OperationClaim operationClaim)
+        public void Delete(int id)
         {
-            operationClaimDal.SoftDelete(operationClaim);
+            var deletedEntity = operationClaimDal.Get(x=>x.Id == id);
+            operationClaimDal.SoftDelete(deletedEntity);
         }
 
         public OperationClaim Get(int id)
