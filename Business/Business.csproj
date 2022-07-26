@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CrossCuttingConcerns\" />
     <Folder Include="ValidationRules\" />
   </ItemGroup>
 

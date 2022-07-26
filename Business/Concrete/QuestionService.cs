@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Constans;
+using Business.CrossCuttingConcerns.SecuredOperations;
+using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using System.Collections.Generic;
 
 namespace Business.Concrete
 {
@@ -15,6 +17,7 @@ namespace Business.Concrete
 
         public void Add(Question question)
         {
+            SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
             questionDal.Add(question);
         }
 
@@ -23,12 +26,6 @@ namespace Business.Concrete
             var deletedEntity = questionDal.Get(x => x.Id == id);
             questionDal.SoftDelete(deletedEntity);
         }
-
-        public List<Question> GetAll()
-        {
-            return questionDal.GetAll();
-        }
-
         public Question GetById(int id)
         {
             return questionDal.Get(x => x.Id == id);
@@ -38,5 +35,11 @@ namespace Business.Concrete
         {
             questionDal.Update(question);
         }
+
+        public ResultItem GetAll()
+        {
+            return new ResultItem(true, questionDal.GetAll(), Messages.DataListed);
+        }
+
     }
 }

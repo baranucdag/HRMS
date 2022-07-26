@@ -10,6 +10,7 @@ namespace Business.Abstract
         void Delete(int id);
         List<User> GetAll();
         User GetById(int id);
-        User GetUserEMail(string email);
+        User GetByMail(string email);
+        List<OperationClaim> GetClaims(User user);
     }
 }

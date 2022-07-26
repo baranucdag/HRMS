@@ -1,4 +1,6 @@
-﻿using Entities.Concrete;
+﻿using Business.Concrete;
+using Core.Utilities.Result;
+using Entities.Concrete;
 using System.Collections.Generic;
 
 namespace Business.Abstract
@@ -8,7 +10,7 @@ namespace Business.Abstract
         void Add(Candidate candidate);
         void Update(Candidate candidate);
         void Delete(int id);
-        List<Candidate> GetAll();
+        ResultItem GetAll(QueryParams queryParams);
         Candidate GetById(int id);
     }
 }

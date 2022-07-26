@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Business.Concrete
 {
@@ -24,9 +26,31 @@ namespace Business.Concrete
             candidateDal.SoftDelete(deletedEntity);
         }
 
-        public List<Candidate> GetAll()
+        public ResultItem GetAll(QueryParams queryParams)
         {
-            return candidateDal.GetAll();
+            List<Candidate> result;
+            if (queryParams.OrderType == false)
+            {
+                if (queryParams.GlobalFilter != null)
+                {
+                    result = candidateDal.GetAll().OrderByDescending(x => x.Id).ToList();
+                }
+                result = candidateDal.GetAll(x => x.EMail.ToLower().Contains(queryParams.GlobalFilter.ToLower())
+                   || x.FirstName.ToLower().Contains(queryParams.GlobalFilter.ToLower())
+                   || x.LastName.ToLower().Contains(queryParams.GlobalFilter.ToLower())).OrderByDescending(x => x.Id).ToList();
+            }
+            else
+            {
+                if (queryParams.GlobalFilter == null)
+                {
+                    result = candidateDal.GetAll();
+                }
+                result = candidateDal.GetAll(x => x.EMail.ToLower().Contains(queryParams.GlobalFilter.ToLower()) 
+                || x.FirstName.ToLower().Contains(queryParams.GlobalFilter.ToLower()) 
+                || x.LastName.ToLower().Contains(queryParams.GlobalFilter.ToLower()));
+            }
+
+            return new ResultItem(true, result);
         }
 
         public Candidate GetById(int id)
@@ -39,4 +63,11 @@ namespace Business.Concrete
             candidateDal.Update(candidate);
         }
     }
+
+    public class QueryParams
+    {
+        public bool OrderType { get; set; }
+        public string GlobalFilter { get; set; }
+    }
 }
+

@@ -27,12 +27,12 @@ namespace Entities.Concrete
         public string CriminalRecordReason { get; set; }
         public bool HasLawSuit { get; set; }
         public string LawSuitReason { get; set; }
-        public bool HasDiability { get; set; }
+        public bool HasDisability { get; set; }
         public string DisabilityDetail { get; set; }
         public bool HasMentalPhysicalProblem { get; set; }
         public string MentalPyhsicalProblemDetail { get; set; }
         public bool HadMajorSurgery { get; set; }
-        public string MajorSurgeryDetail { get; set; }
+        public string MajorSurgeyDetail { get; set; }
         public string BloudGroup { get; set; }
         public string MilitaryInformation { get; set; }
         public string DrivingLicenceInformation { get; set; }
@@ -47,7 +47,7 @@ namespace Entities.Concrete
         public DateTime MiddleSchoolStartDate { get; set; }
         public DateTime MiddleSchoolEndDate { get; set; }
         public DateTime HighSchoolStartDate { get; set; }
-        public DateTime HightSchoolEndDate { get; set; }
+        public DateTime HighSchoolEndDate { get; set; }
         public DateTime UniversityStartDate { get; set; }
         public DateTime UniversityEndDate { get; set; }
         public DateTime MasterStartDate { get; set; }
@@ -58,9 +58,9 @@ namespace Entities.Concrete
         public string FrenchReadingLevel { get; set; }
         public string FrenchWritingLevel { get; set; }
         public string FrenchSpeakingLevel { get; set; }
-        public string DeucthReadingLevel { get; set; }
+        public string DeutchReadingLevel { get; set; }
         public string DeutchWritingLevel { get; set; }
-        public string DeutchSpeaingLevel { get; set; }
+        public string DeutchSpeakingLevel { get; set; }
         public string LastPositionName { get; set; }
         public string LastPositionDepartment { get; set; }
         public string LastPositionDescription { get; set; }
@@ -75,5 +75,6 @@ namespace Entities.Concrete
         public string SucscribedProfessionalOrganizations { get; set; }
         public string SucscribedSporClubs { get; set; }
         public bool IsDeleted { get; set; }
+        public string CvPath { get; set; }
     }
 }

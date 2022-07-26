@@ -1,5 +1,5 @@
-﻿using Entities.Concrete;
-using System.Collections.Generic;
+﻿using Core.Utilities.Result;
+using Entities.Concrete;
 
 namespace Business.Abstract
 {
@@ -8,7 +8,7 @@ namespace Business.Abstract
         void Add(Question question);
         void Update(Question question);
         void Delete(int id);
-        List<Question> GetAll();
+        ResultItem GetAll();
         Question GetById(int id);
     }
 }
