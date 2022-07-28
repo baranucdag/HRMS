@@ -11,6 +11,9 @@ namespace Business.DependencyResolver
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<AnswerService>().As<IAnswerService>().SingleInstance();
+            builder.RegisterType<EfAnswerDal>().As<IAnswerDal>().SingleInstance();
+
             builder.RegisterType<QuestionService>().As<IQuestionService>().SingleInstance();
             builder.RegisterType<EfQuestionDal>().As<IQuestionDal>().SingleInstance();
 
@@ -19,6 +22,12 @@ namespace Business.DependencyResolver
 
             builder.RegisterType<OperationClaimService>().As<IOperationClaimService>().SingleInstance();
             builder.RegisterType<EfOperationClaimDal>().As<IOperationClaimDal>().SingleInstance();
+
+            builder.RegisterType<EfCandidateAnswerDal>().As<ICandidateAnswerDal>().SingleInstance();
+            builder.RegisterType<CandidateAnswerService>().As<ICandidateAnswerService>().SingleInstance();
+
+            builder.RegisterType<EfJobAdvertDal>().As<IJobAdvertDal>().SingleInstance();
+            builder.RegisterType<JobAdvertService>().As<IJobAdvertService>().SingleInstance();
 
             builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();

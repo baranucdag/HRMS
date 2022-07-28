@@ -16,6 +16,7 @@ namespace DataAccess.Concrete.Contexts
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<CandidateComputerExperience> CandidateComputerExperiences { get; set; }
         public DbSet<CandidateExperience> CandidateExperinces { get; set; }
+        public DbSet<CandidateAnswer> CandidateAnswers { get; set; }
         public DbSet<CandidateReference> CandidateReferences { get; set; }
         public DbSet<CandidateTrainingOrCourse> CandidateTrainingOrCourses { get; set; }
         public DbSet<JobAdvert> JobAdverts { get; set; }

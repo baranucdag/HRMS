@@ -1,15 +1,18 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Helpers.PaginationHelper;
+using Core.Utilities.Result;
+using Entities.Concrete;
 using System.Collections.Generic;
 
 namespace Business.Abstract
 {
     public interface IAnswerService
     {
-        void Add(Answer answer);
-        void Update(Answer answer);
-        void Delete(int id);
-        List<Answer> GetAll();
-        Answer GetById(int id);
-        List<Answer> GetByQuestionId(int questionId);
+        ResultItem Add(Answer answer);
+        ResultItem Update(Answer answer);
+        ResultItem Delete(int id);
+        ResultItem GetAll();
+        ResultItem GetById(int id);
+        ResultItem GetByQuestionId(int questionId);
+        ResultItem GetPaginationData(PaginationItem<Answer> pi);
     }
 }
