@@ -10,10 +10,9 @@
         public static string UserAlreadyExist = "kullanıcı zaten mevcut";
         public static string EmailNullError = "Email tanımsız olamaz";
         public static string LoggedIn ="Giriş yapıldı";
-
-        public static string UserRegistered { get; internal set; }
-        public static string SuccessfulLogin { get; internal set; }
-        public static string AccessTokenCreated { get; internal set; }
-        public static string UserAlreadyExists { get; internal set; }
+        public static string UserRegistered = "Kayıt başarıyla gerçekleşti";
+        public static string SuccessfulLogin = "Giriş başarıyla gerçekleşti";
+        public static string AccessTokenCreated = "Token oluşturuldu";
+        public static string UserAlreadyExists = "Kullanıcı zaten mevcut";
     }
 }

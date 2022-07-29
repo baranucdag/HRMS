@@ -139,7 +139,7 @@ namespace Core.Extensions
         }
 
         // ToPaginationFilter - IQuerable olan listeyi filtrelemeye yarar.
-        /*public static IQueryable<T> ToPaginationFilter<T>(this IQueryable<T> list, string key, string value, string matchMode)
+       /*public static IQueryable<T> ToPaginationFilter<T>(this IQueryable<T> list, string key, string value, string matchMode)
         {
             var parameter = Expression.Parameter(typeof(T));
             var field = Expression.PropertyOrField(parameter, key);

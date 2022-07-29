@@ -16,21 +16,22 @@ namespace WebAPI.Controllers
             this.answerService = answerService;
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
-        {
-            var result = answerService.GetAll();
-            if (result.IsOk)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);  
-        }
 
         [HttpPost("Add")]
         public IActionResult Add(Answer answer)
         {
             var result = answerService.Add(answer);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetAnswerDetails")]
+        public IActionResult GetAnswerDetails()
+        {
+            var result = answerService.GetAnswerDetails();
             if (result.IsOk)
             {
                 return Ok(result);

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Entites.Concrete;
 using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,13 +20,13 @@ namespace WebAPI.Controllers
         public ActionResult Login(UserLoginDto userLoginDto)
         {
             var userToLogin = authService.Login(userLoginDto);
-            if (!userToLogin.Succes)
+            if (!userToLogin.IsOk)
             {
                 return BadRequest(userToLogin.Message);
             }
-
-            var result = authService.CreateAccessToken(userToLogin.Data);
-            if (result.Succes)
+            User userToCheck = (User)userToLogin.Data;
+            var result = authService.CreateAccessToken(userToCheck);
+            if (result.IsOk)
             {
                 return Ok(result);
             }
@@ -39,16 +40,17 @@ namespace WebAPI.Controllers
             if (userForRegisterDto != null)
             {
                 var userExists = authService.IsUserExists(userForRegisterDto.Email);
-                if (!userExists.Succes)
+                if (!userExists.IsOk)
                 {
                     return BadRequest(userExists.Message);
                 }
 
                 var registerResult = authService.RegisterUser(userForRegisterDto);
-                if (registerResult.Succes)
+                if (registerResult.IsOk)
                 {
-                    var result = authService.CreateAccessToken(registerResult.Data);
-                    if (result.Succes)
+                    User registerUser  = (User)registerResult.Data;
+                    var result = authService.CreateAccessToken(registerUser);
+                    if (result.IsOk)
                     {
                         return Ok(result);
                     }

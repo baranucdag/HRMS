@@ -14,6 +14,9 @@ namespace Business.DependencyResolver
             builder.RegisterType<AnswerService>().As<IAnswerService>().SingleInstance();
             builder.RegisterType<EfAnswerDal>().As<IAnswerDal>().SingleInstance();
 
+            builder.RegisterType<ApplicationService>().As<IApplicationService>().SingleInstance();
+            builder.RegisterType<EfApplicationDal>().As<IApplicationDal>().SingleInstance();
+
             builder.RegisterType<QuestionService>().As<IQuestionService>().SingleInstance();
             builder.RegisterType<EfQuestionDal>().As<IQuestionDal>().SingleInstance();
 

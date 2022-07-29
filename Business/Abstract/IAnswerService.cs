@@ -10,7 +10,7 @@ namespace Business.Abstract
         ResultItem Add(Answer answer);
         ResultItem Update(Answer answer);
         ResultItem Delete(int id);
-        ResultItem GetAll();
+        ResultItem GetAnswerDetails();
         ResultItem GetById(int id);
         ResultItem GetByQuestionId(int questionId);
         ResultItem GetPaginationData(PaginationItem<Answer> pi);

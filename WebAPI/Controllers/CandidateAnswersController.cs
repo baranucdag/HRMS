@@ -29,6 +29,7 @@ namespace WebAPI.Controllers
         public IActionResult GetCandidateAnswerDetailsById(int id)
         {
             var result = candidateAnswerService.GetCandidateAnswerDetailsById(id);
+            //CandidateAnswer candidateAnswer = (CandidateAnswer)result.Data;
             if (result.IsOk)
             {
                 return Ok(result);

@@ -1,4 +1,5 @@
 ﻿using Core.Entites.Concrete;
+using Core.Utilities.Result;
 using Core.Utilities.Results;
 using Core.Utilities.Security.JWT;
 using Entities.Dto;
@@ -7,9 +8,9 @@ namespace Business.Abstract
 {
     public interface IAuthService
     {
-        IDataResult<User> RegisterUser(UserRegisterDto userForRegisterDto);
-        IDataResult<User> Login(UserLoginDto userForLoginDto);
-        IResult IsUserExists(string email);
-        IDataResult<AccessToken> CreateAccessToken(User user);
+        ResultItem RegisterUser(UserRegisterDto userForRegisterDto);
+        ResultItem Login(UserLoginDto userForLoginDto);
+        ResultItem IsUserExists(string email);
+        ResultItem CreateAccessToken(User user);
     }
 }

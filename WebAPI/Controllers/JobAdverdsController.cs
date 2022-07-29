@@ -1,7 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Helpers.PaginationHelper;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.BaseControllers
