@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constans;
 using Core.Extensions;
 using Core.Utilities.Helpers.PaginationHelper;
 using Core.Utilities.Result;
@@ -37,69 +38,12 @@ namespace Business.Concrete
             jobAdvertDal.Update(jobAdvert);
             return new ResultItem(true);
         }
-        /*public ResultItem GetPaginationData(PaginationItem<JobAdvert> pi)
+
+        public ResultItem GetById(int id)
         {
-            var rows = jobAdvertDal.GetAll().AsQueryable();
-
-            rows.OrderByDescending(x => x.Id);
-
-            //Grid kolonlarından veya global searchden arama geldiyse
-            if (pi.Filters != null && pi.Filters.Count() > 0)
-            {
-                List<JobAdvert> globalList = new List<JobAdvert>();
-                foreach (var item in pi.Filters)
-                {
-                    dynamic obj = JObject.Parse(Convert.ToString(item.Value));
-                    string val = obj.value;
-                    //string oVal = val.ToLowerEng();
-                    string matchMode = obj.matchMode;
-                    //matchMode = matchMode.ToFirstCharUpper(true);
-
-                    if (!val.IsNullOrEmpty())
-                    {
-                        if (item.Key == "global")
-                        {
-                            var props = typeof(JobAdvert).GetProperties();
-                            foreach (var prop in props)
-                            {
-                                var res = new List<JobAdvert>();
-
-                                switch (prop.Name)
-                                {
-                                    case nameof(JobAdvert.PositionName):
-                                        {
-                                            res = rows.AsEnumerable().Where(x => x.PositionName.Contains(val)).ToList();
-                                            break;
-                                        }
-                                    case nameof(JobAdvert.WorkType):
-                                        {
-                                            res = rows.AsEnumerable().Where(x => x.WorkType.Contains(val)).ToList();
-                                            break;
-                                        }
-                                    case nameof(JobAdvert.QualificationLevel):
-                                        {
-                                            res = rows.AsEnumerable().Where(x => x.QualificationLevel.Contains(val)).ToList();
-                                            break;
-                                        }
-
-                                    default:
-                                        break;
-                                }
-                                globalList.AddRange(res.ToList());
-                            }
-                            rows = globalList.GroupBy(x => x.Id).Select(x => x.First()).AsQueryable();
-                            globalList = new List<JobAdvert>();
-                        }
-
-                    }
-                }
-            }
-            return new ResultItem(true, rows, null, System.Net.HttpStatusCode.OK, "1");
+            var result = jobAdvertDal.Get(x => x.Id == id);
+            return new ResultItem(true, result,Messages.DataListed);
         }
-
-        //public 
-    }*/
-
         public ResultItem GetPaginationData(PaginationItem<JobAdvert> pi)
         {
             var rows = jobAdvertDal.GetAll().AsQueryable();

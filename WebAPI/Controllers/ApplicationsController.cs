@@ -17,8 +17,8 @@ namespace WebAPI.Controllers
             this.applicationService = applicationService;
         }
 
-        [HttpGet("GetApplicationService")]
-        public IActionResult GetApplicationService()
+        [HttpGet("GetApplicationDetails")]
+        public IActionResult GetApplicationDetails()
         {
             var result = applicationService.GetApplicationDetails();
             if (result.IsOk)

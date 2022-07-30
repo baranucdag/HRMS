@@ -1,16 +1,15 @@
-﻿using Business.Concrete;
+﻿using Core.Utilities.Helpers.PaginationHelper;
 using Core.Utilities.Result;
 using Entities.Concrete;
-using System.Collections.Generic;
 
 namespace Business.Abstract
 {
     public interface ICandidateService
     {
-        void Add(Candidate candidate);
-        void Update(Candidate candidate);
-        void Delete(int id);
-        ResultItem GetAll(QueryParams queryParams);
-        Candidate GetById(int id);
+        ResultItem Add(Candidate candidate);
+        ResultItem Update(Candidate candidate);
+        ResultItem Delete(int id);
+        ResultItem GetById(int id);
+        ResultItem GetCandidatesPaginated(PaginationItem<Candidate> pi);
     }
 }

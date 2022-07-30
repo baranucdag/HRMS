@@ -27,6 +27,17 @@ namespace WebAPI.Controllers.BaseControllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetById")]
+        public IActionResult GetById(int id)
+        {
+            var result = jobAdvertService.GetById(id);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("Add")]
         public IActionResult Add(JobAdvert jobAdvert)
         {

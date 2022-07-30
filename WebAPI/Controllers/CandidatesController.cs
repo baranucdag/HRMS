@@ -1,7 +1,6 @@
 ﻿using Business.Abstract;
-using Business.Concrete;
+using Core.Utilities.Helpers.PaginationHelper;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -17,10 +16,30 @@ namespace WebAPI.Controllers
             this.candidateService = candidateService;
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll([FromQuery]QueryParams queryParams)
+        [HttpPost("Add")]
+        public IActionResult Add(Candidate candidate)
         {
-            var result = candidateService.GetAll(queryParams);
+            var result = candidateService.Add(candidate);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("Update")]
+        public IActionResult Update(Candidate candidate)
+        {
+            var result = candidateService.Update(candidate);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpPost("Delete")]
+        public IActionResult Delete(int id)
+        {
+            var result = candidateService.Delete(id);
             if (result.IsOk)
             {
                 return Ok(result);
@@ -28,14 +47,26 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("Add")]
-        public void Add(Candidate candidate)
+        [HttpGet("GetCandidatesPaginated")]
+        public IActionResult GetCandidatesPaginated(PaginationItem<Candidate> pi)
         {
-            if(candidate == null)
+            var result = candidateService.GetCandidatesPaginated(pi);
+            if (result.IsOk)
             {
-                candidateService.Add(candidate);
+                return Ok(result);
             }
-             candidateService.Add(candidate);            
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetById")]
+        public IActionResult GetById(int id)
+        {
+            var result = candidateService.GetById(id);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
     }
 }

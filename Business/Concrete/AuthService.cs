@@ -2,7 +2,6 @@
 using Business.Constans;
 using Core.Entites.Concrete;
 using Core.Utilities.Result;
-using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;
 using Entities.Dto;
@@ -42,15 +41,15 @@ namespace Business.Concrete
             var userToCheck = userService.GetByMail(userForLoginDto.Email);
             if (userToCheck == null)
             {
-                return new ResultItem(true,Messages.UserNotFound);
+                return new ResultItem(true,null,Messages.UserNotFound, System.Net.HttpStatusCode.OK, "1");
             }
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return new ResultItem(true,Messages.PasswordError);
+                return new ResultItem(true,null,Messages.PasswordError, System.Net.HttpStatusCode.OK, "1");
             }
 
-            return new ResultItem(true,userToCheck,Messages.SuccessfulLogin);
+            return new ResultItem(true,userToCheck,Messages.SuccessfulLogin,System.Net.HttpStatusCode.OK, "1");
         }
 
         public ResultItem IsUserExists(string email)
@@ -59,11 +58,11 @@ namespace Business.Concrete
             {
                 if (userService.GetByMail(email) != null)
                 {
-                    return new ResultItem(false,null,Messages.UserAlreadyExists);
+                    return new ResultItem(false,null,Messages.UserAlreadyExists,System.Net.HttpStatusCode.OK, "1");
                 }
                 return new ResultItem();
             }
-            return new ResultItem(false,Messages.EmailNullError);
+            return new ResultItem(false,null,Messages.EmailNullError,System.Net.HttpStatusCode.OK, "1");
 
         }
 
