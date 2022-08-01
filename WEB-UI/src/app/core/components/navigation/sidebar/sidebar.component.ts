@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { IMenu } from 'src/app/core/models/views';
 import { MenuService } from 'src/app/core/services/api/menu.service';
@@ -12,29 +13,29 @@ import { SidebarService } from 'src/app/core/services/navigation/sidebar.service
 })
 export class SidebarComponent implements OnInit {
   private readonly onDestroy = new Subject<void>();
-  
+
   selectedMenuId?: number;
-  activeMenuId?:number;
+  activeMenuId?: number;
   parentMenuItems: IMenu[] = [];
   allMenuItems: IMenu[] = [];
   childMenuItems: IMenu[] = [];
 
   loadingStates = {
-    menuList:true
+    menuList: true
   };
 
   constructor(
-    private menuService: MenuService, 
+    private menuService: MenuService,
     public sidebarService: SidebarService,
-    private router:Router
-    ) {
-   this.getMenuList();
+    private router: Router
+  ) {
+    this.getMenuList();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   getMenuList(): void {
-    this.menuService
+    /*this.menuService
       .getAll()
       .pipe(takeUntil(this.onDestroy))
       .subscribe((result) => {
@@ -51,7 +52,39 @@ export class SidebarComponent implements OnInit {
         setTimeout(() => {
           this.loadingStates.menuList=false;
         },100);
-      });
+      }); */
+
+    /* statik menü*/
+    this.allMenuItems = [
+      {
+        id: 1,
+        displayText: "Menu Management",
+        icon: "pi pi-list",
+        orderNum: 10,
+        menuGuid: "asdasdasdasdasd"
+      },
+      {
+        id:2,
+        displayText: "Menu List",
+        icon: "bi bi-table",
+        parentId: 1,
+        orderNum: 11,
+        url: "menu-management/menu-list",
+        menuGuid: "assadasdasdadsdasdasdasdasd"
+      },
+    ] as IMenu[];
+
+    this.parentMenuItems = this.allMenuItems.filter(
+      (menu) => menu.parentId == null);
+
+    let url = this.router.url.substring(1);
+    const activeMenu = this.allMenuItems.find(x => x.url === url);
+    this.activeMenuId = activeMenu?.parentId;
+
+    setTimeout(() => {
+      this.loadingStates.menuList = false;
+    }, 100); 
+    /**/
   }
 
   selectedParentMenu(id: number) {
@@ -65,12 +98,12 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  activeMenu(menu:any){
+  activeMenu(menu: any) {
     this.activeMenuId = menu.parentId;
   }
 
-  removeSelect(){
-    this.activeMenuId=undefined;
+  removeSelect() {
+    this.activeMenuId = undefined;
     this.selectedMenuId = undefined;
   }
 

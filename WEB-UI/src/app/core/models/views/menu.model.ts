@@ -5,6 +5,6 @@ export interface IMenu extends IBaseModel {
     icon: string;
     url?: string;
     parentId?:number;
-    orderNum?:number;
+    orderNum:number;
     menuGuid:string;
 }
