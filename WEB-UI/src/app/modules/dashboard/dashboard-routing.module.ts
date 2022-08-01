@@ -19,6 +19,13 @@ const routes: Routes = [
         import('./menu-management/menu-management.module').then(
           (m) => m.MenuManagementModule
         ),
+      },
+      {
+        path:PATHS.jobAdvert,
+        loadChildren:() =>
+        import('./job-advert-management/job-advert-management.module').then(
+          (m) => m.JobAdvertManagementModule
+        ),
       }
     ]
   }

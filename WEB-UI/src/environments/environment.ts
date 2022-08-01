@@ -7,7 +7,7 @@ export const environment = {
   keys:{
     languageStorage: 'boiler_plate_lang'
   },
-  apiUrl:'https://localhost:44371/api/arklicense/',
+  apiUrl:'https://localhost:44381/api/',
   defaults: {
     dateFormat: 'dd.MM.yyyy',
     table: {

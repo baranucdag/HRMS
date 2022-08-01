@@ -6,5 +6,7 @@ export const PATHS = {
     pageNotFound: "404",
     unauthorized: "unauthorized",
     menuManagement: "menu-management",
-    menuList:"menu-list"
+    menuList:"menu-list",
+    jobAdvert:"jobadvert",
+    jobAdvertList:"jobadvert-list"
 }

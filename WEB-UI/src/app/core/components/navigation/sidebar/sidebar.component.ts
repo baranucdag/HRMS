@@ -72,6 +72,22 @@ export class SidebarComponent implements OnInit {
         url: "menu-management/menu-list",
         menuGuid: "assadasdasdadsdasdasdasdasd"
       },
+      {
+        id: 3,
+        displayText: "Job Advert Management",
+        icon: "pi pi-list",
+        orderNum: 10,
+        menuGuid: "asdasdasdasdasda"
+      },
+      {
+        id:4,
+        displayText: "Job Advert List",
+        icon: "bi bi-table",
+        parentId: 1,
+        orderNum: 11,
+        url: "job-advert-management/jo-advert-list",
+        menuGuid: "assadasdasdadsdasdasdsdaasdasd"
+      },
     ] as IMenu[];
 
     this.parentMenuItems = this.allMenuItems.filter(

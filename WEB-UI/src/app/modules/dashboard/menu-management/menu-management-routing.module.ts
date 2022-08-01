@@ -1,3 +1,4 @@
+import { JobAdvertManagementComponent } from './../job-advert-management/job-advert-management.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PATHS } from 'src/app/core/constants';
