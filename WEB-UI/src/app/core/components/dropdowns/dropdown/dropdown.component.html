@@ -1,0 +1,27 @@
+<ng-container>
+    <label class="form-label" *ngIf="label" translate>{{label}} qweqwethftyrty</label>
+    <p-dropdown *ngIf="options" [options]="options.items" [(ngModel)]="options.selected" (onChange)="onChange($event)"
+        optionLabel="{{optionLabel}}" optionDisabled="{{optionDisabled}}" appendTo="body"
+        placeholder="{{placeholder |  translate}}" [showClear]="showClear" [filter]="filter"
+        [resetFilterOnHide]="resetFilterOnHide" [ngClass]="{ 'is-invalid': hasError }" [disabled]="disabled">
+        <ng-template *ngIf="icon" let-icon pTemplate="selectedItem">
+            <div *ngIf="selected">
+            <i class="{{icon}}" style="font-size: 1.6rem; font-weight: bold; color:blue"></i>
+            </div>
+        </ng-template>
+        <ng-template *ngIf="icon" let-icon pTemplate="item">
+            <div>
+              <i class="{{icon}}" style="font-size: 1.4rem; font-weight: bold; color:blue"></i>
+            </div>
+        </ng-template>
+    </p-dropdown>
+    <ng-container *ngIf="(options.errors | async) as errors" [ngTemplateOutlet]="errorTemplate"
+        [ngTemplateOutletContext]="{errors:errors}">
+    </ng-container>
+</ng-container>
+
+<ng-template #errorTemplate let-errors="errors">
+    <div class="invalid-feedback">
+        <div *ngFor="let error of errors" translate>{{error}}</div>
+    </div>
+</ng-template>

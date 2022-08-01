@@ -1,0 +1,27 @@
+<p-dialog  *ngIf="options" class="app-dialog" header="Title" [closeOnEscape]="true" [closable]="true"  [(visible)]="display" [breakpoints]="size.breakpoints" [modal]="true" (onHide)="close()"
+    [draggable]="false" [dismissableMask]="true" [style]="size.style">
+    <ng-template  pTemplate="header" *ngIf="title">
+        <h5 [innerHtml]="title" translate></h5>
+    </ng-template>
+    <div  [innerHtml]="message" translate></div>
+    <ng-template pTemplate="footer">
+        <app-button *ngFor="let button of options.customButtons" [options]="button.options"
+            (onClick)="button.onClick()"></app-button>
+        <ng-container *ngIf="isType(dialogTypes.confirm)">
+            <app-button *ngIf="cancelButton" [options]="cancelButton.options" (onClick)="cancelButton.onClick()">
+            </app-button>
+            <app-button *ngIf="rejectButton" [options]="rejectButton.options" (onClick)="rejectButton.onClick()">
+            </app-button>
+            <app-button *ngIf="confirmButton" [options]="confirmButton.options" (onClick)="confirmButton.onClick()">
+            </app-button>
+        </ng-container>
+        <ng-container *ngIf="isType(dialogTypes.doubleConfirm)">
+            <app-button *ngIf="secondConfirmButton" [options]="secondConfirmButton.options" (onClick)="secondConfirmButton.onClick()">
+            </app-button>
+            <app-button *ngIf="rejectButton" [options]="rejectButton.options" (onClick)="rejectButton.onClick()">
+            </app-button>
+            <app-button *ngIf="confirmButton" [options]="confirmButton.options" (onClick)="confirmButton.onClick()">
+            </app-button>
+        </ng-container>
+    </ng-template>
+</p-dialog>

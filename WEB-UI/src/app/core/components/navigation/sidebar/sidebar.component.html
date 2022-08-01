@@ -1,0 +1,57 @@
+<!-- Sidebar  -->
+
+<nav id="sidebar" class="shadow-2" [class.active]="!sidebarService.showSidebar">
+  <div class="sidebar-header d-flex flex-column align-items-center gap-2">
+    <a routerLink="" (click)="removeSelect()">
+      <div>ARKSOFT BOILERPLATE</div>
+    </a>
+  </div>
+
+  <ul class="list-unstyled components">
+    <p translate> Menu</p>
+    <hr>
+    <div *ngIf="loadingStates.menuList else menuListLoaded" style="padding:0 1rem">
+      <li style="margin-bottom: 1rem;">
+        <p-skeleton height="2rem" width="100%"></p-skeleton>
+      </li>
+      <li style="margin-bottom: 1rem;">
+        <p-skeleton height="2rem" width="100%"></p-skeleton>
+      </li>
+      <li style="margin-bottom: 1rem;">
+        <p-skeleton height="2rem" width="100%"></p-skeleton>
+      </li>
+      <li style="margin-bottom: 1rem;">
+        <p-skeleton height="2rem" width="100%"></p-skeleton>
+      </li>
+      <li style="margin-bottom: 1rem;">
+        <p-skeleton height="2rem" width="100%"></p-skeleton>
+      </li>
+      <li style="margin-bottom: 1rem;">
+        <p-skeleton height="2rem" width="100%"></p-skeleton>
+      </li>
+      <li style="margin-bottom: 1rem;">
+        <p-skeleton height="2rem" width="100%"></p-skeleton>
+      </li>
+      <li style="margin-bottom: 1rem;">
+        <p-skeleton height="2rem" width="100%"></p-skeleton>
+      </li>
+      <li style="margin-bottom: 1rem;">
+        <p-skeleton height="2rem" width="100%"></p-skeleton>
+      </li>
+    </div>
+
+    <ng-template #menuListLoaded>
+      <li *ngFor="let menu of parentMenuItems">
+        <a translate (click)="selectedParentMenu(menu.id)"  [class.activeMenu] = "menu.id == this.activeMenuId"
+          ><i [class]="menu.icon"></i
+          ><span class="menu-title">{{ menu.displayText }}</span></a>
+        <ul *ngIf="selectedMenuId == menu.id">
+          <li *ngFor="let menu of childMenuItems">
+            <a  (click)="activeMenu(menu)" routerLink="/{{ menu.url }}" routerLinkActive="activeChildMenu"
+              ><i [class]="menu.icon"></i>{{ menu.displayText }}</a>
+          </li>
+        </ul>
+      </li>
+    </ng-template>
+  </ul>
+</nav>

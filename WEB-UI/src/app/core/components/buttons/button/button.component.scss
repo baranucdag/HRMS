@@ -1,0 +1,25 @@
+.p-button:enabled:focus {
+    box-shadow: unset;
+}
+
+.p-button.p-button-raised:enabled:focus {
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+}
+
+.p-button-transparent {
+    background-color: transparent;
+    color: #6c757d;
+    &.p-button-outlined {
+        border: 1px solid #ced4da;
+    }
+    &:enabled:active {
+        background-color: #ced4da;
+        color: #6c757d;
+        border: 1px solid #6c757d;
+    }
+    &:enabled:hover {
+        background-color: #ced4da;
+        color: #6c757d;
+        border: 1px solid #6c757d;
+    }
+}

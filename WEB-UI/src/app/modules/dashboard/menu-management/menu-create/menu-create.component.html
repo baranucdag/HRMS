@@ -1,0 +1,49 @@
+<form [formGroup]="menuForm">
+    <div class="row">
+        <div class="col-6">
+            <label for="type" class="form-label" translate>Parent Id</label>
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <app-dropdown *ngIf="parentDropdownOptions" [options]="parentDropdownOptions">
+                    </app-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <label for="type" class="form-label" translate>Icon</label>
+            <div class="input-group d-flex flex-row justify-content-between mb-3">
+                <div class="input-group-append ">
+                    <app-dropdown *ngIf="iconDropdownOptions" [options]="iconDropdownOptions">
+                    </app-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 mb-3">
+            <label for="displayText" class="form-label" translate>Display text</label>
+            <input type="text" class="form-control" formControlName="displayText" id="displayText" maxlength="256"
+                autocomplete="new-displayText"
+                [ngClass]="{ 'is-invalid': f.displayText.dirty && f.displayText.errors }">
+            <div *ngIf="f.displayText.dirty && f.displayText.errors" class="invalid-feedback">
+                <div *ngIf="f.displayText.errors.required" translate>Please enter the menu display text</div>
+            </div>
+        </div>
+        <div class="col-6 mb-3" *ngIf="selectedParentMenu && selectedParentMenu.id!=null">
+            <label for="url" class="form-label" translate>Url</label>
+            <input type="text" class="form-control" formControlName="url" id="url" autocomplete="new-url"
+                maxlength="256" [ngClass]="{ 'is-invalid': f.url.dirty && f.url.errors }">
+            <div *ngIf="f.url.dirty && f.url.errors" class="invalid-feedback">
+                <div *ngIf="f.url.errors.required" translate>Please enter the menu url</div>
+            </div>
+        </div>
+        <div class="col-6 mb-3">
+            <label for="orderNum" class="form-label" translate>Order Number</label>
+            <input type="number" class="form-control" formControlName="orderNum" id="orderNum"
+                autocomplete="new-orderNum" [ngClass]="{ 'is-invalid': f.orderNum.dirty && f.orderNum.errors }">
+            <div *ngIf="f.orderNum.dirty && f.orderNum.errors" class="invalid-feedback">
+                <div *ngIf="f.orderNum.errors.required" translate>Please enter the order number</div>
+                <div *ngIf="f.orderNum.errors.max" translate>Please enter the order number less than 1000</div>
+                <div *ngIf="f.orderNum.errors.min" translate>Please enter the order number greater than 0</div>
+            </div>
+        </div>
+    </div>
+</form>

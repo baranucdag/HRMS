@@ -1,0 +1,54 @@
+<p-toolbar *ngIf="options" [styleClass]="panelClass" [style]="panelStyle">
+    <div class="p-toolbar-group-left">
+        <ng-container *ngIf="!defaultButtonPositionIsLight else defaultButtons"></ng-container>
+        <ng-container *ngFor="let group of leftGroups">
+            <div class="me-3">
+                <ng-container *ngFor="let button of group.buttons">
+                    <app-button class="me-1" [options]="button.options" (onClick)="button.onClick($event)"></app-button>
+                </ng-container>
+            </div>
+        </ng-container>
+        <div [class.me-3]="backButton">
+            <ng-container *ngIf="backButton">
+                <app-button class="me-1" [options]="backButton.options" (onClick)="backButton.onClick($event)">
+                </app-button>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="p-toolbar-group-right">
+        <ng-container *ngIf="defaultButtonPositionIsLight else defaultButtons"></ng-container>
+        <ng-container *ngFor="let group of rightGroups">
+            <div class="me-3">
+                <ng-container *ngFor="let button of group.buttons">
+                    <app-button class="ms-1" [options]="button.options" (onClick)="click($event, button)"></app-button>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</p-toolbar>
+
+<ng-template #defaultButtons>
+    <div [class.me-3]="newButton || deleteButton || saveButton || updateButton || cancelButton">
+        <ng-container *ngIf="cancelButton">
+            <app-button class="me-1" [options]="cancelButton.options" (onClick)="cancelButton.onClick($event)">
+            </app-button>
+        </ng-container>
+        <ng-container *ngIf="newButton">
+            <app-button class="me-1" [options]="newButton.options" (onClick)="newButton.onClick($event)">
+            </app-button>
+        </ng-container>
+        <ng-container *ngIf="deleteButton">
+            <app-button class="me-1" [options]="deleteButton.options" (onClick)="deleteButton.onClick($event)">
+            </app-button>
+        </ng-container>
+        <ng-container *ngIf="saveButton">
+            <app-button class="me-1" [options]="saveButton.options" (onClick)="saveButton.onClick($event)">
+            </app-button>
+        </ng-container>
+        <ng-container *ngIf="updateButton">
+            <app-button class="me-1" [options]="updateButton.options" (onClick)="updateButton.onClick($event)">
+            </app-button>
+        </ng-container>
+    </div>
+</ng-template>
