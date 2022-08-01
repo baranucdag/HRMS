@@ -49,6 +49,7 @@ export class MenuListComponent implements OnInit, IGridComponent {
 
   ngOnInit(): void {
     this.onEditButtonClick = this.onEditButtonClick.bind(this);
+    this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
     this.createTable();
     this.createDeleteDialog();
   }
