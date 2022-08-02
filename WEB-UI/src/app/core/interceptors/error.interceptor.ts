@@ -50,11 +50,11 @@ export class ErrorInterceptor implements HttpInterceptor {
           }, 2000);
           return throwError(err.error.message);
         } else {
-          if (err.error.message)
+          if (err.error?.message)
             this.messageService.add({ severity: "error", detail: err.error.message });
           else
             this.messageService.add({ severity: "error", detail: "Bir hata oluştu..." });
-          const error = err.error.message || err.statusText;
+          const error = err.error?.message || err.statusText;
           return throwError(error);
         }
       }))

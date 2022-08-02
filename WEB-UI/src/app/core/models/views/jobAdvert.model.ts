@@ -7,5 +7,6 @@ export interface IJobAdvert extends IBaseModel{
     publishDate:Date,
     deadline:Date,
     status:boolean,
-    ısDeleted:boolean
+    isDeleted:boolean,
+    
 }

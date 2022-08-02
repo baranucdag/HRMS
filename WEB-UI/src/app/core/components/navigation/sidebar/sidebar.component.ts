@@ -21,7 +21,7 @@ export class SidebarComponent implements OnInit {
   childMenuItems: IMenu[] = [];
 
   loadingStates = {
-    menuList: true
+    menuList: true,
   };
 
   constructor(
@@ -32,7 +32,7 @@ export class SidebarComponent implements OnInit {
     this.getMenuList();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   getMenuList(): void {
     /*this.menuService
@@ -58,48 +58,51 @@ export class SidebarComponent implements OnInit {
     this.allMenuItems = [
       {
         id: 1,
-        displayText: "Menu Management",
-        icon: "pi pi-list",
+        displayText: 'Menu Management',
+        icon: 'pi pi-list',
         orderNum: 10,
-        menuGuid: "asdasdasdasdasd"
+        menuGuid: 'asdasdasdasdasd',
       },
       {
-        id:2,
-        displayText: "Menu List",
-        icon: "bi bi-table",
+        id: 2,
+        displayText: 'Menu List',
+        icon: 'bi bi-table',
         parentId: 1,
         orderNum: 11,
-        url: "menu-management/menu-list",
-        menuGuid: "assadasdasdadsdasdasdasdasd"
+        url: 'menu-management/menu-list',
+        menuGuid: 'assadasdasdadsdasdasdasdasd',
       },
       {
         id: 3,
-        displayText: "Job Advert Management",
-        icon: "pi pi-list",
-        orderNum: 10,
-        menuGuid: "asdasdasdasdasda"
+        displayText: 'Job Advert Management',
+        icon: 'pi pi-list',
+        orderNum: 11,
+        url: 'jobadvert',
+        menuGuid: 'asdasdasdasdasda',
       },
       {
-        id:4,
-        displayText: "Job Advert List",
-        icon: "bi bi-table",
-        parentId: 1,
+        id: 4,
+        displayText: 'Job Advert List',
+        icon: 'bi bi-table',
+        parentId: 3,
         orderNum: 11,
-        url: "job-advert-management/jo-advert-list",
-        menuGuid: "assadasdasdadsdasdasdsdaasdasd"
+        url: 'jobadvert/jobadvert-list',
+        menuGuid: 'assadasdasdadsdasdasdasdasd',
       },
+    
     ] as IMenu[];
 
     this.parentMenuItems = this.allMenuItems.filter(
-      (menu) => menu.parentId == null);
+      (menu) => menu.parentId == null
+    );
 
     let url = this.router.url.substring(1);
-    const activeMenu = this.allMenuItems.find(x => x.url === url);
+    const activeMenu = this.allMenuItems.find((x) => x.url === url);
     this.activeMenuId = activeMenu?.parentId;
 
     setTimeout(() => {
       this.loadingStates.menuList = false;
-    }, 100); 
+    }, 100);
     /**/
   }
 
@@ -122,5 +125,4 @@ export class SidebarComponent implements OnInit {
     this.activeMenuId = undefined;
     this.selectedMenuId = undefined;
   }
-
 }

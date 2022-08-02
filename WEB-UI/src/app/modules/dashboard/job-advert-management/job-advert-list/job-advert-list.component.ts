@@ -1,50 +1,45 @@
-import { LazyLoadEvent } from 'primeng/api';
-import { IBaseModel } from './../../../../core/models/base.model';
-import { IJobAdvert } from './../../../../core/models/views/jobAdvert.model';
+import { DialogService } from 'src/app/core/services/dialog';
+import { JobAdvertCreateComponent } from './../job-advert-create/job-advert-create.component';
 import { JobAdvertService } from './../../../../core/services/api/job-advert.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ITableOptions } from 'src/app/core/components/tables/table/models';
-import { T } from 'src/app/core/helpers/i18n';
+import { IGridComponent } from 'src/app/core/components/interfaces';
+import { TableComponent } from 'src/app/core/components/tables';
+import { IToolbarOptions } from 'src/app/core/components/toolbars/toolbar/models';
+import { SidebarDialogResult, SidebarDialogResultStatus } from 'src/app/core/components/dialogs/sidebar-dialog/enums';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-job-advert-list',
   templateUrl: './job-advert-list.component.html',
-  styleUrls: ['./job-advert-list.component.scss']
+  styleUrls: ['./job-advert-list.component.scss'],
 })
-export class JobAdvertListComponent implements OnInit {
+export class JobAdvertListComponent implements OnInit, IGridComponent {
+  @ViewChild('table') table?: TableComponent;
   tableOptions!: ITableOptions;
-  
-  constructor(private jobAdvertService:JobAdvertService) { }
+
+  constructor(
+    private jobAdvertService: JobAdvertService,
+    private dialogService: DialogService
+  ) {}
 
   ngOnInit(): void {
-    this.createTable()
+    this.createTable();
   }
 
   createTable() {
     this.tableOptions = {
-      data: [ 
-        this.jobAdvertService.getPaginationDataPath()
-      ],
+      data: [],
       columns: [
         { field: 'positionName', title: 'Position Name', type: 'text' },
-        { field: 'qualificationLevel', title: 'Qualification Level', type: 'text' },
-        { field: 'workType', title: 'Work Type', type: 'text' },
-        { field: 'publishDate', title: 'Publish Date', type: 'date' },
-        { field: 'deadLine', title: 'DeadLine', type: 'date' },
-        /*{
-          title: 'Is Deleted',
+        {
+          field: 'qualificationLevel',
+          title: 'Qualification Level',
           type: 'text',
-          field: 'isDeletedText',
-          sortable: true,
-          filterable: true,
-          filter: {
-            type: 'dropdown',
-            data: this.isDeletedOptions,
-            defaultValue: this.isDeletedOptions[0].value,
-          },
-          template: '<i>{{isDeletedText}}</i>',
         },
-        { title: 'Actions', type: 'actions', buttons: this.getButtons() },*/
+        { field: 'workType', title: 'Work Type', type: 'text' },
+        { field: 'publishDate', title: 'Publish Date', type: 'text' },
+        { field: 'deadLine', title: 'DeadLine', type: 'text' },
       ],
       filterable: true,
       sortable: true,
@@ -63,9 +58,41 @@ export class JobAdvertListComponent implements OnInit {
           placeholder: 'Search',
         },
       },
-      // statik data ile çalıştığımız için false dedik
+      lazyLoad: true,
       dataService: this.jobAdvertService,
-      dataServiceMethod:this.jobAdvertService.getPeginationData()
     };
+  }
+
+  // toolbarın özellikleri tanımlanıyor
+  get toolbarOptions(): IToolbarOptions {
+    return {
+      defaultButtons: {
+        new: {
+          onClick: () => {
+            const ref = this.dialogService.open(JobAdvertCreateComponent, {
+              title: 'Create Menu Item',
+              buttons: {
+                save: true,
+                cancel: true,
+              },
+              onResult: (result: SidebarDialogResult) => {
+                if (
+                  _.isEqual(
+                    result.status,
+                    SidebarDialogResultStatus.saveSuccess
+                  )
+                ) {
+                  ref.close();
+                  this.table?.refreshData();
+                }
+              },
+              data: {
+                id: null,
+              },
+            });
+          },
+        },
+      },
+    } as IToolbarOptions;
   }
 }
