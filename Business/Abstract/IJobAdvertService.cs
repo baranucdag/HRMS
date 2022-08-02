@@ -11,5 +11,6 @@ namespace Business.Abstract
         ResultItem Update(JobAdvert jobAdvert);
         ResultItem GetPaginationData(PaginationItem<JobAdvert> pi);
         ResultItem GetById(int id);
+        ResultItem GetAll();
     }
 }

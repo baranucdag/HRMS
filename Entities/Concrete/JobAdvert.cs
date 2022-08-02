@@ -11,6 +11,7 @@ namespace Entities.Concrete
         public string WorkType { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime DeadLine { get; set; }
+        public string Description { get; set; }
         public bool Status { get; set; }
         public bool IsDeleted { get; set; }
     }
