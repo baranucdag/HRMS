@@ -1,0 +1,16 @@
+<div>
+  <nav
+    class="navbar navbar-expand-lg navbar-light bg-light shadow-2 justify-content-between">
+    <div class="container-fluid" id="options">
+      <button type="button" id="sidebarCollapse" class="btn btn-light " (click)="toggleSidebar()">
+        <i class="pi pi-align-left"></i>
+      </button>
+    </div>
+   <div id="menu">
+    <p-panelMenu *ngIf="menuItems" [model]="menuItems" [style]="{'width':'7rem'}" ></p-panelMenu>
+   </div>
+  </nav>
+</div>
+
+<app-dialog *ngIf="logOutDialogOptions" [options]="logOutDialogOptions" #logOutDialog></app-dialog>
+

@@ -1,0 +1,11 @@
+<p-sidebar [(visible)]="display" position="{{position}}" [styleClass]="size" [dismissible]="dismissible" [fullScreen]="fullScreen">
+    <ng-template pTemplate="content">
+        <div class="px-1 pt-5">
+            <ng-template appInsertion>
+            </ng-template>
+        </div>
+    </ng-template>
+</p-sidebar>
+<div class="footer" #footer *ngIf="hasFooter">
+    <app-toolbar #toolbar *ngIf="toolbarOptions" [options]="toolbarOptions"></app-toolbar>
+</div>

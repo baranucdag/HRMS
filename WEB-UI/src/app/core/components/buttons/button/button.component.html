@@ -1,0 +1,4 @@
+<ng-container *ngIf="options">
+    <button pButton type="button" icon="{{iconClass}}"  [hidden]="hidden" [iconPos]="iconPosition" label="{{label | translate}}" [loading]="loading" [disabled]="disabled" (click)="onButtonClick($event)" [class]="class" pTooltip="{{tooltip | translate}}" >
+    </button>
+</ng-container>

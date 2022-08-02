@@ -1,0 +1,9 @@
+.btn-check:focus+.btn,
+.btn:focus {
+    box-shadow: unset;
+}
+
+button.p-panel-toggler,
+.p-panel-header-icon {
+    box-shadow: none !important;
+}
