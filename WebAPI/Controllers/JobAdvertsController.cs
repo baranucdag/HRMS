@@ -7,19 +7,30 @@ namespace WebAPI.Controllers.BaseControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JobAdverdsController : BaseController
+    public class JobAdvertsController : BaseController
     {
         private readonly IJobAdvertService jobAdvertService;
 
-        public JobAdverdsController(IJobAdvertService jobAdvertService)
+        public JobAdvertsController(IJobAdvertService jobAdvertService)
         {
             this.jobAdvertService = jobAdvertService;
         }
 
-        [HttpGet("GetPaginatedData")]
-        public IActionResult GetPaginatedData(PaginationItem<JobAdvert> paginationItem)
+        [HttpPost("GetPaginationData")]
+        public IActionResult GetPaginationData(PaginationItem<JobAdvert> paginationItem)
         {
             var result = jobAdvertService.GetPaginationData(paginationItem);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
+        {
+            var result = jobAdvertService.GetAll();
             if (result.IsOk)
             {
                 return Ok(result);

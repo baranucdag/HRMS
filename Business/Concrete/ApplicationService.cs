@@ -210,12 +210,6 @@ namespace Business.Concrete
                     {
                         var item = pi.MultiSortMeta[i];
                         string key = item.Field.ToFirstCharUpper(true);
-                        if (key == "IsConfirmText") key = "IsConfirm";
-                        if (key == "IsDeletedText") key = "IsDeleted";
-                        if (key == "HasParentText") key = "HasParent";
-                        if (key == "CustomerTypeText") key = "CustomerType";
-                        if (key == "HasParentText") key = "ParentId";
-
 
                         string orderBy = item.Order == 1 ? "ThenBy" : "ThenByDescending";
                         if (i == 0)
