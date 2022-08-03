@@ -7,10 +7,16 @@ import {
 import { IJobAdvert } from './../../../../core/models/views/jobAdvert.model';
 import { JobAdvertService } from './../../../../core/services/api/job-advert.service';
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { setSavingStatus, setUpdatingStatus } from 'src/app/core/helpers/sidebar';
+import {
+  setSavingStatus,
+  setUpdatingStatus,
+} from 'src/app/core/helpers/sidebar';
 import { IOnInitializingParam } from 'src/app/core/components/models';
 import { Subject, takeUntil } from 'rxjs';
-import { SidebarDialogResult, SidebarDialogResultStatus } from 'src/app/core/components/dialogs/sidebar-dialog/enums';
+import {
+  SidebarDialogResult,
+  SidebarDialogResultStatus,
+} from 'src/app/core/components/dialogs/sidebar-dialog/enums';
 import { IFormComponent } from 'src/app/core/components/interfaces';
 
 @Component({
@@ -18,9 +24,11 @@ import { IFormComponent } from 'src/app/core/components/interfaces';
   templateUrl: './job-advert-create.component.html',
   styleUrls: ['./job-advert-create.component.scss'],
 })
-export class JobAdvertCreateComponent implements OnInit,IFormComponent {
-  initialData!: {id:number};
+export class JobAdvertCreateComponent implements OnInit, IFormComponent {
+  initialData!: { id: number };
   jobAdvertForm!: FormGroup;
+  selectedJobAdvert?: any;
+  
   get f(): any {
     return this.jobAdvertForm.controls;
   }
@@ -40,7 +48,12 @@ export class JobAdvertCreateComponent implements OnInit,IFormComponent {
 
   setData(data: any) {
     this.initialData = data;
-
+    if (this.initialData.id) {
+      // update
+      this.getJobAdvert(this.initialData.id);
+    } else {
+      // create
+    }
   }
 
   getJobAdvert(id: number) {
@@ -48,12 +61,13 @@ export class JobAdvertCreateComponent implements OnInit,IFormComponent {
       .getById(id)
       .pipe(takeUntil(this.onDestroy))
       .subscribe((response: any) => {
-        const menu = response.body.data;
-        this.createForm(menu);
+        const jobAdvert = response.body.data;
+        this.selectedJobAdvert = jobAdvert;
+        this.createForm(jobAdvert);
       });
   }
 
-  createForm(jobAdvert?:IJobAdvert) {
+  createForm(jobAdvert?: IJobAdvert) {
     this.jobAdvertForm = this.formBuilder.group({
       positionName: [jobAdvert?.positionName, Validators.required],
       qualificationLevel: [jobAdvert?.qualificationLevel, Validators.required],
@@ -63,12 +77,11 @@ export class JobAdvertCreateComponent implements OnInit,IFormComponent {
       deadline: [jobAdvert?.deadline, Validators.required],
     });
   }
-  //todo: object.keys ne işe yarıyor burada
-  save() {
 
-    // Object.keys(this.jobAdvertForm.controls).forEach((key) => {
-    //   this.jobAdvertForm.get(key)?.markAsDirty();
-    // });
+  save() {
+    Object.keys(this.jobAdvertForm.controls).forEach((key) => {
+      this.jobAdvertForm.get(key)?.markAsDirty();
+    });
 
     if (this.jobAdvertForm.invalid) {
       return;
@@ -93,7 +106,6 @@ export class JobAdvertCreateComponent implements OnInit,IFormComponent {
       );
   }
 
-  
   update() {
     // Object.keys(this.jobAdvertForm.controls).forEach((key) => {
     //   this.jobAdvertForm.get(key)?.markAsDirty();
@@ -106,7 +118,10 @@ export class JobAdvertCreateComponent implements OnInit,IFormComponent {
     this.jobAdvertForm.disable();
     setUpdatingStatus(this.onInitializing, true);
 
-   let jobAdvertModel:IJobAdvert = Object.assign({},this.jobAdvertForm.value)
+    let jobAdvertModel: IJobAdvert = Object.assign(
+      this.selectedJobAdvert,
+      this.jobAdvertForm.value
+    );
 
     if (this.initialData.id) {
       this.jobAdvertService

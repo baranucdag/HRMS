@@ -41,7 +41,7 @@ export abstract class BaseService<T extends IBaseModel> {
   }
 
   getById(id: number): Observable<HttpResponse<IResult<T>>> {
-    return this.httpClient.get<IResult<T>>(`${this.getFullPath()}${id}`, { observe: ObserveType.response });
+    return this.httpClient.get<IResult<T>>(`${this.getFullPath("getById/")}${id}`, { observe: ObserveType.response });
   }
 
   add(t: T): Observable<HttpResponse<IResult<T>>> {
