@@ -5,9 +5,6 @@ import { environment } from 'src/environments/environment';
 import { ObserveType } from '../../enums/http';
 import { IBaseModel, IResult } from '../../models';
 
-
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -56,7 +53,7 @@ export abstract class BaseService<T extends IBaseModel> {
   }
 
   delete(id: number): Observable<HttpResponse<IResult<T>>> {
-    return this.httpClient.post<IResult<T>>(`${this.getFullPath("deleteById?id=")}${id}`,id,{ observe: ObserveType.response });
+    return this.httpClient.post<IResult<T>>(`${this.getFullPath("delete?id=")}${id}`,id,{ observe: ObserveType.response });
   }
 
 }

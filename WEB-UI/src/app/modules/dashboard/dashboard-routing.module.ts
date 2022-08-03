@@ -26,6 +26,20 @@ const routes: Routes = [
         import('./job-advert-management/job-advert-management.module').then(
           (m) => m.JobAdvertManagementModule
         ),
+      },
+      {
+        path:PATHS.candidate,
+        loadChildren:() =>
+        import('./candidate-management/candidate-management.module').then(
+          (m) => m.CandidateManagementModule
+        ),
+      },
+      {
+        path:PATHS.application,
+        loadChildren:() =>
+        import('./application-management/application-management.module').then(
+          (m) => m.ApplicationManagementModule
+        ),
       }
     ]
   }

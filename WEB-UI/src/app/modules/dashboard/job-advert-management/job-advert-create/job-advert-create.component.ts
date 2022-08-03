@@ -7,7 +7,7 @@ import {
 import { IJobAdvert } from './../../../../core/models/views/jobAdvert.model';
 import { JobAdvertService } from './../../../../core/services/api/job-advert.service';
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { setSavingStatus } from 'src/app/core/helpers/sidebar';
+import { setSavingStatus, setUpdatingStatus } from 'src/app/core/helpers/sidebar';
 import { IOnInitializingParam } from 'src/app/core/components/models';
 import { Subject, takeUntil } from 'rxjs';
 import { SidebarDialogResult, SidebarDialogResultStatus } from 'src/app/core/components/dialogs/sidebar-dialog/enums';
@@ -43,17 +43,33 @@ export class JobAdvertCreateComponent implements OnInit,IFormComponent {
 
   }
 
-  createForm() {
-    this.jobAdvertForm = this.formBuilder.group({
-      positionName: ['', Validators.required],
-      qualificationLevel: ['', Validators.required],
-      workType: ['', Validators.required],
-      publishDate: new Date(),
-      deadline: ['', Validators.required],
-    });
+  getJobAdvert(id: number) {
+    this.jobAdvertService
+      .getById(id)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe((response: any) => {
+        const menu = response.body.data;
+        this.createForm(menu);
+      });
   }
 
+  createForm(jobAdvert?:IJobAdvert) {
+    this.jobAdvertForm = this.formBuilder.group({
+      positionName: [jobAdvert?.positionName, Validators.required],
+      qualificationLevel: [jobAdvert?.qualificationLevel, Validators.required],
+      workType: [jobAdvert?.workType, Validators.required],
+      publishDate: new Date(),
+      description: [jobAdvert?.description, Validators.required],
+      deadline: [jobAdvert?.deadline, Validators.required],
+    });
+  }
+  //todo: object.keys ne işe yarıyor burada
   save() {
+
+    // Object.keys(this.jobAdvertForm.controls).forEach((key) => {
+    //   this.jobAdvertForm.get(key)?.markAsDirty();
+    // });
+
     if (this.jobAdvertForm.invalid) {
       return;
     }
@@ -75,5 +91,42 @@ export class JobAdvertCreateComponent implements OnInit,IFormComponent {
           this.jobAdvertForm.enable();
         }
       );
+  }
+
+  
+  update() {
+    // Object.keys(this.jobAdvertForm.controls).forEach((key) => {
+    //   this.jobAdvertForm.get(key)?.markAsDirty();
+    // });
+
+    if (this.jobAdvertForm.invalid) {
+      return;
+    }
+
+    this.jobAdvertForm.disable();
+    setUpdatingStatus(this.onInitializing, true);
+
+   let jobAdvertModel:IJobAdvert = Object.assign({},this.jobAdvertForm.value)
+
+    if (this.initialData.id) {
+      this.jobAdvertService
+        .update(jobAdvertModel)
+        .pipe(takeUntil(this.onDestroy))
+        .subscribe(
+          (response) => {
+            this.onResult.emit({
+              status: SidebarDialogResultStatus.updateSuccess,
+            });
+            setUpdatingStatus(this.onInitializing, false);
+          },
+          (error) => {
+            this.onResult.emit({
+              status: SidebarDialogResultStatus.updateFail,
+            });
+            this.jobAdvertForm.enable();
+            setUpdatingStatus(this.onInitializing, false);
+          }
+        );
+    }
   }
 }

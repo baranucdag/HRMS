@@ -89,6 +89,40 @@ export class SidebarComponent implements OnInit {
         url: 'jobadvert/jobadvert-list',
         menuGuid: 'assadasdasdadsdasdasdasdasd',
       },
+      {
+        id: 5,
+        displayText: 'Candidate Management',
+        icon: 'pi pi-list',
+        orderNum: 11,
+        url: 'jobadvert',
+        menuGuid: 'asdasdasdasdasda',
+      },
+      {
+        id: 6,
+        displayText: 'Candidate List',
+        icon: 'bi bi-table',
+        parentId: 5,
+        orderNum: 11,
+        url: 'candidate/candidate-list',
+        menuGuid: 'assadasdasdadsdasdasdasdasd',
+      },
+      {
+        id: 7,
+        displayText: 'Application Management',
+        icon: 'pi pi-list',
+        orderNum: 11,
+        url: 'application',
+        menuGuid: 'asdasdasdasdasda',
+      },
+      {
+        id: 8,
+        displayText: 'Application List',
+        icon: 'bi bi-table',
+        parentId: 7,
+        orderNum: 11,
+        url: 'application/application-list',
+        menuGuid: 'assadasdasdadsdasdasdasdasd',
+      },
     
     ] as IMenu[];
 
