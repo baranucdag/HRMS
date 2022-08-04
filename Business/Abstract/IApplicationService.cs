@@ -12,5 +12,6 @@ namespace Business.Abstract
         ResultItem Add(Application application);
         ResultItem Update(Application application);
         ResultItem Delete(int id);
+        ResultItem UnDelete(int id);
     }
 }

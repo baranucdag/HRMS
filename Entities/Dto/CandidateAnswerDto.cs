@@ -12,6 +12,6 @@ namespace Entities.Dto
         public int AnswerId { get; set; }
         public string AnswerText { get; set; }
         public int AnswerValue { get; set; }
-        public bool IsDeleted { get; set; }
+        public int IsDeleted { get; set; }
     }
 }

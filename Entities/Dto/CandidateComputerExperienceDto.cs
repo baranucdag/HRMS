@@ -13,6 +13,6 @@ namespace Entities.Dto
         public string LanguageOrProgram { get; set; }
         public string WorksDone { get; set; }
         public string Duration { get; set; }
-        public bool IsDeleted { get; set; }
+        public int IsDeleted { get; set; }
     }
 }

@@ -33,6 +33,13 @@ namespace Business.Concrete
             return new ResultItem();
         }
 
+        public ResultItem UnDelete(int id)
+        {
+            var deletedEntity = candidateDal.Get(x => x.Id == id);
+            candidateDal.UnDelete(deletedEntity);
+            return new ResultItem(true);
+        }
+
         public ResultItem GetById(int id)
         {
             var result =  candidateDal.Get(x => x.Id == id);

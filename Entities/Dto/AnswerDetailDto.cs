@@ -8,6 +8,6 @@ namespace Entities.Dto
         public int  QuestionId { get; set; }
         public string QuestionText { get; set; }
         public string Text { get; set; }
-        public bool IsDeleted { get; set; }
+        public int IsDeleted { get; set; }
     }
 }

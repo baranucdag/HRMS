@@ -38,6 +38,14 @@ namespace Business.Concrete
             applicationDal.SoftDelete(deletedEntity);
             return new ResultItem(true);
         }
+
+        public ResultItem UnDelete(int id)
+        {
+            var deletedEntity = applicationDal.Get(x => x.Id == id);
+            applicationDal.UnDelete(deletedEntity);
+            return new ResultItem(true);
+        }
+
         public ResultItem Update(Application application)
         {
             applicationDal.Update(application);

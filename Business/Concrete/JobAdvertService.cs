@@ -251,12 +251,12 @@ namespace Business.Concrete
                                                     }
                                                 case 1: // IsNotDeleted
                                                     {
-                                                        rows = rows.Where(x => x.IsDeleted == false);
+                                                        rows = rows.Where(x => x.IsDeleted == 0);
                                                         break;
                                                     }
                                                 case 2: // IsDeleted
                                                     {
-                                                        rows = rows.Where(x => x.IsDeleted == true);
+                                                        rows = rows.Where(x => x.IsDeleted == 1);
                                                         break;
                                                     }
                                                 default:

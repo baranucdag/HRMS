@@ -36,10 +36,23 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpPost("Delete")]
         public IActionResult Delete(int id)
         {
             var result = candidateService.Delete(id);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+        [HttpPost("UnDelete")]
+        public IActionResult UnDelete(int id)
+        {
+            var result = candidateService.UnDelete(id);
             if (result.IsOk)
             {
                 return Ok(result);

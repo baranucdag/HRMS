@@ -53,7 +53,7 @@ namespace Core.DataAccess.EntityFramework
             {
                 var deletedEntity = context.Entry(entity);
                 deletedEntity.State = EntityState.Modified;
-                deletedEntity.CurrentValues["IsDeleted"] = true;
+                deletedEntity.CurrentValues["IsDeleted"] = 1;
                 context.SaveChanges();
             }
         }
@@ -74,7 +74,7 @@ namespace Core.DataAccess.EntityFramework
             {
                 var deletedEntity = context.Entry(entity);
                 deletedEntity.State = EntityState.Modified;
-                deletedEntity.CurrentValues["IsDeleted"] = false;
+                deletedEntity.CurrentValues["IsDeleted"] = 0;
                 context.SaveChanges();
             }
         }

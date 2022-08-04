@@ -17,7 +17,7 @@ namespace Entities.Dto
         public string CandidateLastName { get; set; }
         public string CandidateFullName { get; set; }
         public DateTime ApplicationDate { get; set; }
-        public bool IsDeleted { get; set; }
+        public int IsDeleted { get; set; }
 
     }
 }

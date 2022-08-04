@@ -12,7 +12,7 @@ namespace Entities.Concrete
         public string EMail { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string PlaceOfBirth { get; set; }
-        public bool Gender { get; set; }
+        public int Gender { get; set; }
         public string Profession { get; set; }
         public bool IsMarried { get; set; }
         public string SpouseName { get; set; }
@@ -75,7 +75,7 @@ namespace Entities.Concrete
         public string SucscribedSociety { get; set; }
         public string SucscribedProfessionalOrganizations { get; set; }
         public string SucscribedSporClubs { get; set; }
-        public bool IsDeleted { get; set; }
+        public int IsDeleted { get; set; }
         public string CvPath { get; set; }
     }
 }

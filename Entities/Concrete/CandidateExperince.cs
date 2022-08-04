@@ -11,6 +11,6 @@ namespace Entities.Concrete
         public string Position { get; set; }
         public int Salary { get; set; }
         public string ReasonForLeaving { get; set; }
-        public bool IsDeleted { get; set; }
+        public int IsDeleted { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace Entities.Concrete
         public int JobAdvertId { get; set; }
         public int CandidateId { get; set; }
         public DateTime ApplicationDate { get; set; }
-        public bool IsDeleted { get; set; }
+        public int IsDeleted { get; set; }
     }
 }
