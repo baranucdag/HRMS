@@ -25,6 +25,8 @@
                 [ngClass]="{ 'is-invalid': f.displayText.dirty && f.displayText.errors }">
             <div *ngIf="f.displayText.dirty && f.displayText.errors" class="invalid-feedback">
                 <div *ngIf="f.displayText.errors.required" translate>Please enter the menu display text</div>
+                <div *ngIf="f.displayText.errors.maxlength" translate>Please enter the menu display text</div>
+
             </div>
         </div>
         <div class="col-6 mb-3" *ngIf="selectedParentMenu && selectedParentMenu.id!=null">

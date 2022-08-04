@@ -1,20 +1,95 @@
 <form [formGroup]="jobAdvertForm">
   <div class="row">
     <div>
-      <label  class="form-label" translate>Position Name</label>
-      <input type="text" formControlName="positionName" class="form-control" />
+      <label for="display-text" class="form-label" translate
+        >Position Name (*)</label
+      >
+      <input
+        type="text"
+        formControlName="positionName"
+        class="form-control"
+        [ngClass]="{
+          'is-invalid': f.positionName.dirty && f.positionName.errors
+        }"
+      />
+      <div
+        *ngIf="f.positionName.dirty && f.positionName.errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f.positionName.errors.required" translate>
+          Please enter the position name
+        </div>
+      </div>
     </div>
   </div>
-  <div>
-    <label  class="form-label" translate>Qualification Level</label>
-    <input type="text" formControlName="qualificationLevel" class="form-control" />
+  <div class="form-label">
+    <label class="form-label" translate>Qualification Level (*)</label>
+    <input
+      type="text"
+      formControlName="qualificationLevel"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': f.qualificationLevel.dirty && f.qualificationLevel.errors
+      }"
+    />
+    <div
+      *ngIf="f.qualificationLevel.dirty && f.qualificationLevel.errors"
+      class="invalid-feedback"
+    >
+      <div *ngIf="f.qualificationLevel.errors.required" translate>
+        Please enter the qualification level
+      </div>
+    </div>
   </div>
-  <div>
-    <label  class="form-label" translate>Work Type</label>
-    <input type="text" formControlName="workType" class="form-control" />
+  <div class="form-label">
+    <label class="form-label" translate>Work Type (*)</label>
+    <input
+      type="text"
+      formControlName="workType"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': f.workType.dirty && f.workType.errors
+      }"
+    />
+    <div *ngIf="f.workType.dirty && f.workType.errors" class="invalid-feedback">
+      <div *ngIf="f.workType.errors.required" translate>
+        Please enter the work type
+      </div>
+    </div>
   </div>
-  <div>
-    <label  class="form-label" translate>Deadline</label>
-    <input type="date" formControlName="deadline" class="form-control" />
+  <div class="form-label">
+    <label class="form-label" translate>Description (*)</label>
+    <textarea
+      type="text"
+      formControlName="description"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': f.description.dirty && f.description.errors
+      }"
+    ></textarea>
+    <div
+      *ngIf="f.description.dirty && f.description.errors"
+      class="invalid-feedback"
+    >
+      <div *ngIf="f.description.errors.required" translate>
+        Please enter the description
+      </div>
+    </div>
+  </div>
+  <div class="form-label">
+    <label class="form-label" translate>Deadline (*)</label>
+    <input
+      type="date"
+      formControlName="deadline"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': f.deadline.dirty && f.deadline.errors
+      }"
+    />
+  </div>
+  <div *ngIf="f.deadline.dirty && f.deadline.errors" class="invalid-feedback">
+    <div *ngIf="f.deadline.errors.required" translate>
+      Please enter the deadline
+    </div>
   </div>
 </form>

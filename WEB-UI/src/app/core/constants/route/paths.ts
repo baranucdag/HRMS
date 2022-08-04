@@ -8,5 +8,9 @@ export const PATHS = {
     menuManagement: "menu-management",
     menuList:"menu-list",
     jobAdvert:"jobadvert",
-    jobAdvertList:"jobadvert-list"
+    jobAdvertList:"jobadvert-list",
+    candidate:"candidate",
+    candidateList:"candidate-list",
+    application:"application",
+    applicationList:"application-list",
 }
