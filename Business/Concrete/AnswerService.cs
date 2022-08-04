@@ -37,7 +37,7 @@ namespace Business.Concrete
 
         public ResultItem GetById(int id)
         {
-            return new ResultItem(true, answerDal.Get(x => x.Id == id), Messages.DataListed);
+            return new ResultItem(true, answerDal.Get(x => x.Id == id), null);
         }
 
         public ResultItem GetByQuestionId(int questionId)

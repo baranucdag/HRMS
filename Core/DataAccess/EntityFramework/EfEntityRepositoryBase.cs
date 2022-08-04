@@ -67,5 +67,16 @@ namespace Core.DataAccess.EntityFramework
                 context.SaveChanges();
             }
         }
+
+        public void UnDelete(TEntity entity)
+        {
+            using (TContext context = new TContext())
+            {
+                var deletedEntity = context.Entry(entity);
+                deletedEntity.State = EntityState.Modified;
+                deletedEntity.CurrentValues["IsDeleted"] = false;
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -24,14 +24,20 @@ namespace Business.Concrete
         public ResultItem Add(JobAdvert jobAdvert)
         {
             jobAdvertDal.Add(jobAdvert);
-            return new ResultItem(true);
+            return new ResultItem(true,null,Messages.AddSuccess);
         }
 
         public ResultItem Delete(int id)
         {
             var deletedEntity = jobAdvertDal.Get(x => x.Id == id);
             jobAdvertDal.SoftDelete(deletedEntity);
-            return new ResultItem(true);
+            return new ResultItem(true,null,Messages.DeleteSuccess);
+        }
+        public ResultItem UnDelete(int id)
+        {
+            var deletedEntity = jobAdvertDal.Get(x => x.Id == id);
+            jobAdvertDal.UnDelete(deletedEntity);
+            return new ResultItem(true, null, Messages.UnDeleteSuccess);
         }
         public ResultItem Update(JobAdvert jobAdvert)
         {
@@ -42,7 +48,7 @@ namespace Business.Concrete
         public ResultItem GetById(int id)
         {
             var result = jobAdvertDal.Get(x => x.Id == id);
-            return new ResultItem(true, result, Messages.DataListed);
+            return new ResultItem(true,result,null);
         }
 
         public ResultItem GetAll()
@@ -235,6 +241,29 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
+                                    case nameof(JobAdvert.IsDeleted):
+                                        {
+                                            switch (Convert.ToInt32(oVal))
+                                            {
+                                                case 0: // getAll
+                                                    {
+                                                        break;
+                                                    }
+                                                case 1: // IsNotDeleted
+                                                    {
+                                                        rows = rows.Where(x => x.IsDeleted == false);
+                                                        break;
+                                                    }
+                                                case 2: // IsDeleted
+                                                    {
+                                                        rows = rows.Where(x => x.IsDeleted == true);
+                                                        break;
+                                                    }
+                                                default:
+                                                    break;
+                                            }
+                                            break;
+                                        }
                                     default:
                                         {
                                             break;
@@ -277,6 +306,7 @@ namespace Business.Concrete
             }
         }
 
+       
     }
 
 

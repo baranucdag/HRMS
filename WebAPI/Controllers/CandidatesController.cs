@@ -47,8 +47,8 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("GetCandidatesPaginated")]
-        public IActionResult GetCandidatesPaginated(PaginationItem<Candidate> pi)
+        [HttpPost("GetPaginationData")]
+        public IActionResult GetPaginationData(PaginationItem<Candidate> pi)
         {
             var result = candidateService.GetCandidatesPaginated(pi);
             if (result.IsOk)
