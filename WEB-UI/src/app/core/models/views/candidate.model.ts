@@ -70,6 +70,6 @@ export interface ICandidate extends IBaseModel{
     sucscribedProfessionalOrganizations:string,
     sucscribedSporClubs:string,
     cvPath:string,
-    isDeleted:boolean
+    isDeleted:number
 
 }

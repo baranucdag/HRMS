@@ -38,12 +38,15 @@ import { isDeletedOptions } from 'src/app/core/enums';
 export class JobAdvertListComponent implements OnInit, IGridComponent {
   @ViewChild('table') table?: TableComponent;
   @ViewChild('deletionDialog') deletionDialog?: DialogComponent;
+  @ViewChild('unDeletionDialog') unDeletionDialog?: DialogComponent;
 
   // component içerisinde kullanılan değişkenler
   selectedMenu: any;
+  selectedUnDeleteAdvert:any;
   tableOptions!: ITableOptions;
   deletionDialogOptions!: IDialogOptions;
-  
+  unDeletionDialogOptions!: IDialogOptions;
+
   isDeletedOptions: any = enumToArray(isDeletedOptions).map((m) => {
     return { label: m.description.toCapitalize(), value: m.id };
   });
@@ -58,8 +61,10 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
   ngOnInit(): void {
     this.onEditButtonClick = this.onEditButtonClick.bind(this);
     this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
+    this.onUnDeleteButtonClick = this.onUnDeleteButtonClick.bind(this);
     this.createTable();
     this.createDeleteDialog();
+    this.createUnDeleteDialog();
   }
 
   createTable() {
@@ -75,7 +80,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
         { field: 'workType', title: 'Work Type', type: 'text' },
         { field: 'publishDate', title: 'Publish Date', type: 'text' },
         { field: 'description', title: 'Description', type: 'text' },
-        { field: 'deadLine', title: 'DeadLine', type: 'text' },
+        { field: 'deadline', title: 'Deadline', type: 'text' },
         {
           title: 'Is Deleted',
           type: 'text',
@@ -116,7 +121,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
   // dialog componentin özellikleri tanımlanıyor
   createDeleteDialog() {
     this.deletionDialogOptions = {
-      title: 'Menü Silme İşlemi',
+      title: 'Job Advert Silme İşlemi',
       message: 'Menü silinecek, emin misiniz ?',
       type: DialogType.confirm,
       size: DialogSize.small,
@@ -126,6 +131,30 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
       onReject: () => {},
       onCancel: () => {},
     };
+  }
+
+  createUnDeleteDialog() {
+    this.unDeletionDialogOptions = {
+      title: 'Job Advert Silme İşlemi',
+      message: 'Menü silinecek, emin misiniz ?',
+      type: DialogType.confirm,
+      size: DialogSize.small,
+      onConfirm: () => {
+        this.UndeleteJobAdvertById(this.selectedMenu.id);
+      },
+      onReject: () => {},
+      onCancel: () => {},
+    };
+  }
+
+  // id numarasına menüleri soft-delete silmek için api'ye istek gönderen metod
+  UndeleteJobAdvertById(id: number) {
+    this.jobAdvertService
+      .UnDelete(id)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe((result: any) => {
+        this.table!.refreshData();
+      });
   }
 
   // id numarasına menüleri soft-delete silmek için api'ye istek gönderen metod
@@ -201,7 +230,13 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
     this.selectedMenu = row;
     this.deletionDialog?.open();
   }
-  
+
+  // undelete butonuna basınca çalışacak metod
+  onUnDeleteButtonClick(row: any, index: number) {
+    this.selectedMenu = row;
+    this.unDeletionDialog?.open();
+  }
+
   // tablodaki rowların yanındaki butonların özellikleri tanımlanıyor
   getButtons(): IColumnButton[] {
     return [
@@ -233,6 +268,21 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
         },
         onClick: (row: any, index: number) => {
           this.onDeleteButtonClick(row, index);
+        },
+      },
+      {
+        options: {
+          properties: [
+            ButtonType.raised,
+            ButtonType.rounded,
+            ButtonSize.small,
+            ButtonColor.secondary,
+          ],
+          icon: ICON.undo,
+          tooltip: 'Undelete',
+        },
+        onClick: (row: any, index: number) => {
+          this.onUnDeleteButtonClick(row, index);
         },
       },
     ] as IColumnButton[]; // cast ediliyor

@@ -12,12 +12,14 @@ import {
   setUpdatingStatus,
 } from 'src/app/core/helpers/sidebar';
 import { IOnInitializingParam } from 'src/app/core/components/models';
-import { Subject, takeUntil } from 'rxjs';
+import { pipe, Subject, takeUntil } from 'rxjs';
 import {
   SidebarDialogResult,
   SidebarDialogResultStatus,
 } from 'src/app/core/components/dialogs/sidebar-dialog/enums';
 import { IFormComponent } from 'src/app/core/components/interfaces';
+import { dateTransformForBackend } from 'src/app/core/helpers/date/dateTransform';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-job-advert-create',
@@ -28,7 +30,7 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
   initialData!: { id: number };
   jobAdvertForm!: FormGroup;
   selectedJobAdvert?: any;
-  
+
   get f(): any {
     return this.jobAdvertForm.controls;
   }
@@ -39,7 +41,8 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
 
   constructor(
     private jobAdvertService: JobAdvertService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private datePipe:DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -68,13 +71,16 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
   }
 
   createForm(jobAdvert?: IJobAdvert) {
+    //gelen deadline verisinin uygun formata dönüştürülmesi
+    let deadLine =this.datePipe.transform(jobAdvert?.deadline, 'yyyy-MM-dd');
+
     this.jobAdvertForm = this.formBuilder.group({
       positionName: [jobAdvert?.positionName, Validators.required],
       qualificationLevel: [jobAdvert?.qualificationLevel, Validators.required],
       workType: [jobAdvert?.workType, Validators.required],
       publishDate: new Date(),
       description: [jobAdvert?.description, Validators.required],
-      deadline: [jobAdvert?.deadline, Validators.required],
+      deadline: [deadLine, Validators.required],
     });
   }
 
@@ -90,6 +96,9 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     this.jobAdvertForm.disable();
     setSavingStatus(this.onInitializing, true);
     let sendModel: IJobAdvert = Object.assign({}, this.jobAdvertForm.value);
+
+    sendModel.deadline = dateTransformForBackend(sendModel.deadline);
+
     return this.jobAdvertService
       .add(sendModel)
       .pipe(takeUntil(this.onDestroy))
@@ -107,9 +116,9 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
   }
 
   update() {
-    // Object.keys(this.jobAdvertForm.controls).forEach((key) => {
-    //   this.jobAdvertForm.get(key)?.markAsDirty();
-    // });
+    Object.keys(this.jobAdvertForm.controls).forEach((key) => {
+      this.jobAdvertForm.get(key)?.markAsDirty();
+    });
 
     if (this.jobAdvertForm.invalid) {
       return;

@@ -10,6 +10,12 @@ export enum isDeletedOptions {
   deleted = 2
 }
 
+export enum genderOptions{
+  male=0,
+  female=1,
+  unspecified=2
+}
+
 export enum productTypeOptions {
   all = 0,
   software = 1,

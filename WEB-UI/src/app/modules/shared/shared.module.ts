@@ -28,6 +28,7 @@ import { PanelModule } from 'primeng/panel';
 import { InsertionDirective } from 'src/app/core/directives';
 import { HeaderComponent } from 'src/app/core/components/navigation/header/header.component';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import {Calendar, CalendarModule} from 'primeng/calendar';
 import '../../core/extensions';
 
 @NgModule({
@@ -96,7 +97,8 @@ import '../../core/extensions';
     DialogModule,
     PanelModule,
     PanelMenuModule,
-    HeaderComponent
+    HeaderComponent,
+    CalendarModule
 
   ],
   providers:[
