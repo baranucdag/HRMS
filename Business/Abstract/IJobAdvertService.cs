@@ -8,9 +8,11 @@ namespace Business.Abstract
     {
         ResultItem Add(JobAdvert jobAdvert);
         ResultItem Delete(int id);
+        ResultItem UnDelete(int id);
         ResultItem Update(JobAdvert jobAdvert);
         ResultItem GetPaginationData(PaginationItem<JobAdvert> pi);
         ResultItem GetById(int id);
         ResultItem GetAll();
+
     }
 }

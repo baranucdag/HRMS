@@ -36,6 +36,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpPost("Delete")]
         public IActionResult Delete(int id)
         {
@@ -47,8 +48,20 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("GetCandidatesPaginated")]
-        public IActionResult GetCandidatesPaginated(PaginationItem<Candidate> pi)
+
+        [HttpPost("UnDelete")]
+        public IActionResult UnDelete(int id)
+        {
+            var result = candidateService.UnDelete(id);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("GetPaginationData")]
+        public IActionResult GetPaginationData(PaginationItem<Candidate> pi)
         {
             var result = candidateService.GetCandidatesPaginated(pi);
             if (result.IsOk)

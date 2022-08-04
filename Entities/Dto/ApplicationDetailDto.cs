@@ -11,13 +11,13 @@ namespace Entities.Dto
         public string QualificationLevel { get; set; }
         public string WorkType { get; set; }
         public DateTime PublishDate { get; set; }
-        public DateTime DeadLine { get; set; }
+        public DateTime Deadline { get; set; }
         public int CandidateId { get; set; }
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
         public string CandidateFullName { get; set; }
         public DateTime ApplicationDate { get; set; }
-        public bool IsDeleted { get; set; }
+        public int IsDeleted { get; set; }
 
     }
 }

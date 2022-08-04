@@ -10,9 +10,9 @@ namespace Entities.Concrete
         public string QualificationLevel { get; set; }
         public string WorkType { get; set; }
         public DateTime PublishDate { get; set; }
-        public DateTime DeadLine { get; set; }
+        public DateTime Deadline { get; set; }
         public string Description { get; set; }
         public bool Status { get; set; }
-        public bool IsDeleted { get; set; }
+        public int IsDeleted { get; set; }
     }
 }

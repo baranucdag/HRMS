@@ -42,5 +42,6 @@ namespace Business.Concrete
             candidateAnswerDal.Update(candidateAnswer);
             return new ResultItem(true);
         }
+
     }
 }

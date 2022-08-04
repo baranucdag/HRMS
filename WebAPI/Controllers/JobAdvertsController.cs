@@ -38,7 +38,7 @@ namespace WebAPI.Controllers.BaseControllers
             return BadRequest(result);
         }
 
-        [HttpGet("GetById")]
+        [HttpGet("GetById/{id}")]
         public IActionResult GetById(int id)
         {
             var result = jobAdvertService.GetById(id);
@@ -75,6 +75,17 @@ namespace WebAPI.Controllers.BaseControllers
         public IActionResult Delete(int id)
         {
             var result = jobAdvertService.Delete(id);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("UnDelete")]
+        public IActionResult UnDelete(int id)
+        {
+            var result = jobAdvertService.UnDelete(id);
             if (result.IsOk)
             {
                 return Ok(result);

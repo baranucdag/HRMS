@@ -9,6 +9,7 @@ namespace Business.Abstract
         ResultItem Add(Candidate candidate);
         ResultItem Update(Candidate candidate);
         ResultItem Delete(int id);
+        ResultItem UnDelete(int id);
         ResultItem GetById(int id);
         ResultItem GetCandidatesPaginated(PaginationItem<Candidate> pi);
     }

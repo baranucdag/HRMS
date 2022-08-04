@@ -13,5 +13,6 @@ namespace Core.DataAccess
         void Update(T entity);
         void HardDelete(T entity);
         void SoftDelete(T entity);
+        void UnDelete (T entity);
     }
 }

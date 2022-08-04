@@ -34,7 +34,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  QualificationLevel = t3.QualificationLevel,
                                  PublishDate = t3.PublishDate,
                                  WorkType = t3.WorkType,
-                                 DeadLine = t3.DeadLine,
+                                 Deadline = t3.Deadline,
                                  IsDeleted = t1.IsDeleted
                              };
                 return result.ToList();
