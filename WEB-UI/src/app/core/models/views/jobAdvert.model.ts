@@ -8,6 +8,6 @@ export interface IJobAdvert extends IBaseModel{
     deadline:Date,
     description:string,
     status:boolean,
-    isDeleted:boolean,
+    isDeleted:number,
     
 }

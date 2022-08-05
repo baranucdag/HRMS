@@ -115,7 +115,7 @@
   </ng-template>
   <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
     <tr [pSelectableRow]="row" [pSelectableRowIndex]="rowIndex"
-        [class.border]="options.isLogTable==true">
+        [class.border]="options.isLogTable==true" > 
       <td style="min-width: 2rem" *ngIf="selectable">
         <p-tableCheckbox [value]="row"></p-tableCheckbox>
       </td>

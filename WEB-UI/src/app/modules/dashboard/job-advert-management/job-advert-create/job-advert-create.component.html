@@ -1,7 +1,7 @@
 <form [formGroup]="jobAdvertForm">
   <div class="row">
     <div>
-      <label for="display-text" class="form-label" translate
+      <label for="display-text"  translate
         >Position Name (*)</label
       >
       <input
@@ -77,7 +77,7 @@
     </div>
   </div>
   <div class="form-label">
-    <label class="form-label" translate>Deadline (*)</label>
+    <label class="form-label" translate>deadline (*)</label>
     <input
       type="date"
       formControlName="deadline"
@@ -86,10 +86,11 @@
         'is-invalid': f.deadline.dirty && f.deadline.errors
       }"
     />
-  </div>
-  <div *ngIf="f.deadline.dirty && f.deadline.errors" class="invalid-feedback">
-    <div *ngIf="f.deadline.errors.required" translate>
-      Please enter the deadline
+    <!-- <p-calendar formControlName="deadLine" dateFormat="dd-mm-yy" inputId="dateformat"></p-calendar> -->
+    <div *ngIf="f.deadline.dirty && f.deadline.errors" class="invalid-feedback">
+      <div *ngIf="f.deadline.errors.required" translate>
+        Please enter the deadline
+      </div>
     </div>
   </div>
 </form>

@@ -1,6 +1,14 @@
 <div class="row">
-    <div class="col-12">
-      <app-table *ngIf="tableOptions" #table [options]="tableOptions">
-      </app-table>
+  <div class="col-12">
+    <ng-template pTemplate="icons"> </ng-template>
+    <div class="row">
+      <div class="col-12">
+        <app-table *ngIf="tableOptions" #table [options]="tableOptions">
+        </app-table>
+      </div>
     </div>
   </div>
+</div>
+
+<app-dialog *ngIf="deletionDialogOptions" [options]="deletionDialogOptions" #deletionDialog></app-dialog> 
+<app-dialog *ngIf="unDeletionDialogOptions" [options]="unDeletionDialogOptions" #unDeletionDialog></app-dialog> 

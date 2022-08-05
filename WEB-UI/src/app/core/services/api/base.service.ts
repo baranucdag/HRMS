@@ -56,4 +56,8 @@ export abstract class BaseService<T extends IBaseModel> {
     return this.httpClient.post<IResult<T>>(`${this.getFullPath("delete?id=")}${id}`,id,{ observe: ObserveType.response });
   }
 
+  UnDelete(id: number): Observable<HttpResponse<IResult<T>>> {
+    return this.httpClient.post<IResult<T>>(`${this.getFullPath("UnDelete?id=")}${id}`,id,{ observe: ObserveType.response });
+  }
+
 }
