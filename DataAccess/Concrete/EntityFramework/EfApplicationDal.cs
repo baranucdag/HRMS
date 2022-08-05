@@ -33,7 +33,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  PositionName = t3.PositionName,
                                  QualificationLevel = t3.QualificationLevel,
                                  PublishDate = t3.PublishDate,
-                                 WorkType = t3.WorkType,
+                                 WorkTimeType = t3.WorkTimeType,
+                                 WorkPlaceType = t3.WorkPlaceType,
                                  Deadline = t3.Deadline,
                                  IsDeleted = t1.IsDeleted
                              };

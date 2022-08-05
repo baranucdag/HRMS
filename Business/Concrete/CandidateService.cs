@@ -234,6 +234,29 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
+                                    case nameof(Candidate.IsDeleted):
+                                        {
+                                            switch (Convert.ToInt32(oVal))
+                                            {
+                                                case 0: // getAll
+                                                    {
+                                                        break;
+                                                    }
+                                                case 1: // IsNotDeleted
+                                                    {
+                                                        rows = rows.Where(x => x.IsDeleted == 0);
+                                                        break;
+                                                    }
+                                                case 2: // IsDeleted
+                                                    {
+                                                        rows = rows.Where(x => x.IsDeleted == 1);
+                                                        break;
+                                                    }
+                                                default:
+                                                    break;
+                                            }
+                                            break;
+                                        }
                                     default:
                                         {
                                             break;
