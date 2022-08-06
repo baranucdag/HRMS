@@ -144,6 +144,7 @@ namespace Business.Concrete
                                                     }
                                                 default:
                                                     break;
+
                                             }
                                             break;
                                         }
@@ -236,6 +237,13 @@ namespace Business.Concrete
 
                                             break;
                                         }
+                                    case nameof(ApplicationDetailDto.Deadline):
+                                        {
+                                            var a = Convert.ToDateTime(val);
+                                            rows = rows.Where(x => x.Deadline <= a);
+                                            break;
+                                        }
+
                                     default:
                                         {
                                             break;

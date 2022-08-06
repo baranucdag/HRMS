@@ -5,6 +5,7 @@ using Core.Utilities.Helpers.PaginationHelper;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using System;
@@ -26,7 +27,11 @@ namespace Business.Concrete
             jobAdvertDal.Add(jobAdvert);
             return new ResultItem(true, null, Messages.AddSuccess);
         }
-
+        public ResultItem GetAllDetails()
+        {
+            var result = jobAdvertDal.GetJobAdvertDtos();
+            return new ResultItem(true, result, Messages.DataListed);
+        }
         public ResultItem Delete(int id)
         {
             var deletedEntity = jobAdvertDal.Get(x => x.Id == id);
@@ -57,17 +62,17 @@ namespace Business.Concrete
             return new ResultItem(true, result, Messages.DataListed);
         }
 
-        public ResultItem GetPaginationData(PaginationItem<JobAdvert> pi)
+        public ResultItem GetPaginationData(PaginationItem<JobAdvertDto> pi)
         {
 
             try
             {
-                var rows = jobAdvertDal.GetAll().AsQueryable();
+                var rows = jobAdvertDal.GetJobAdvertDtos().AsQueryable();
 
                 // Grid kolonlarından veya global searchden arama geldiyse
                 if (pi.Filters != null && pi.Filters.Count() > 0)
                 {
-                    List<JobAdvert> globalList = new List<JobAdvert>();
+                    List<JobAdvertDto> globalList = new List<JobAdvertDto>();
                     foreach (var item in pi.Filters)
                     {
                         string key = item.Key.ToFirstCharUpper(true);
@@ -83,35 +88,35 @@ namespace Business.Concrete
                             // grid global search
                             if (item.Key.ToLowerEng() == "global")
                             {
-                                var props = typeof(JobAdvert).GetProperties();
+                                var props = typeof(JobAdvertDto).GetProperties();
 
                                 foreach (var prop in props)
                                 {
-                                    var res = new List<JobAdvert>();
+                                    var res = new List<JobAdvertDto>();
 
                                     switch (prop.Name)
                                     {
-                                        case nameof(JobAdvert.PositionName):
+                                        case nameof(JobAdvertDto.PositionName):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.PositionName.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(JobAdvert.QualificationLevel):
+                                        case nameof(JobAdvertDto.QualificationLevel):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.QualificationLevel.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(JobAdvert.WorkTimeType):
+                                        case nameof(JobAdvertDto.WorkTimeType):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(JobAdvert.WorkPlaceType):
+                                        case nameof(JobAdvertDto.WorkPlaceType):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(JobAdvert.Description):
+                                        case nameof(JobAdvertDto.Description):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.Description.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
@@ -124,13 +129,13 @@ namespace Business.Concrete
 
                                 }
                                 rows = globalList.GroupBy(x => x.Id).Select(x => x.First()).AsQueryable();
-                                globalList = new List<JobAdvert>();
+                                globalList = new List<JobAdvertDto>();
                             }
                             else // grid column search - spesifik kolon bazlı işlemler için
                             {
                                 switch (key)
                                 {
-                                    case nameof(JobAdvert.PositionName):
+                                    case nameof(JobAdvertDto.PositionName):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -159,7 +164,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(JobAdvert.QualificationLevel):
+                                    case nameof(JobAdvertDto.QualificationLevel):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -188,7 +193,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(JobAdvert.WorkTimeType):
+                                    case nameof(JobAdvertDto.WorkTimeType):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -217,7 +222,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(JobAdvert.WorkPlaceType):
+                                    case nameof(JobAdvertDto.WorkPlaceType):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -246,7 +251,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(JobAdvert.Description):
+                                    case nameof(JobAdvertDto.Description):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -275,7 +280,13 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(JobAdvert.IsDeleted):
+                                    case nameof(JobAdvertDto.Deadline):
+                                        {
+                                            var a = Convert.ToDateTime(val);
+                                            rows = rows.Where(x => x.Deadline <= a);
+                                            break;
+                                        }
+                                    case nameof(JobAdvertDto.IsDeleted):
                                         {
                                             switch (Convert.ToInt32(oVal))
                                             {
@@ -298,6 +309,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
+
                                     default:
                                         {
                                             break;
@@ -322,7 +334,7 @@ namespace Business.Concrete
                         {
                             orderBy = item.Order == 1 ? "OrderBy" : "OrderByDescending";
                         }
-                        rows = rows.ToApplyOrder<JobAdvert>(key, orderBy);
+                        rows = rows.ToApplyOrder<JobAdvertDto>(key, orderBy);
                     }
                 }
 
