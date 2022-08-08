@@ -120,3 +120,15 @@ export enum propertyTypeOptions {
   boolean = "boolean",
   date = "date"
 }
+
+export enum workTimeType {
+  partTime = 0,
+  fullTime,
+  Intern
+}
+
+export enum workPlaceTypeEnum {
+  remote,
+  hybrid,
+  fromOffice
+}

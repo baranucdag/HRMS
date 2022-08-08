@@ -1,43 +1,63 @@
-<p-table #grid 
-  [value]="dataSource" 
-  sortMode="{{sortMode}}" 
+<p-table
+  #grid
+  [value]="dataSource"
+  sortMode="{{ sortMode }}"
   [(selection)]="selectedRows"
-  (selectionChange)="onSelectionChange($event)" 
-  [scrollable]="scrollable" 
+  (selectionChange)="onSelectionChange($event)"
+  [scrollable]="scrollable"
   scrollDirection="both"
-  [lazy]="lazyLoad" 
+  [lazy]="lazyLoad"
   (onLazyLoad)="loadData($event)"
   [totalRecords]="totalRecords"
-  responsiveLayout="scroll" 
-  dataKey="id" 
+  responsiveLayout="scroll"
+  dataKey="id"
   [rows]="pageOptions?.pageSize || defaultPageSize"
-  [showCurrentPageReport]="true" 
+  [showCurrentPageReport]="true"
   [rowsPerPageOptions]="pageOptions?.pageSizes || defaultPageSizes"
-  [loading]="isLoading" 
-  styleClass="p-datatable p-datatable-gridlines" 
+  [loading]="isLoading"
+  styleClass="p-datatable p-datatable-gridlines"
   [paginator]="true"
-  currentPageReportTemplate="{{pageOptions?.currentPageTemplate || defaultCurrentPageTemplate | translate}}"
-  [globalFilterFields]="globalFilterableFields" 
-  [reorderableColumns]="reorderable" 
+  currentPageReportTemplate="{{
+    pageOptions?.currentPageTemplate || defaultCurrentPageTemplate | translate
+  }}"
+  [globalFilterFields]="globalFilterableFields"
+  [reorderableColumns]="reorderable"
   [alwaysShowPaginator]="!!pageOptions"
   paginatorDropdownAppendTo="body"
 >
-  <ng-template pTemplate="caption" *ngIf="toolbarOptions || searchProperties.enabled">
-
-    <div class="d-flex justify-content-{{toolbarOptions ? 'between' : 'end'}}">
-      <div *ngIf="toolbarOptions">
-
-      </div>
+  <ng-template
+    pTemplate="caption"
+    *ngIf="toolbarOptions || searchProperties.enabled"
+  >
+    <div
+      class="d-flex justify-content-{{ toolbarOptions ? 'between' : 'end' }}"
+    >
+      <div *ngIf="toolbarOptions"></div>
       <div>
-                <span *ngIf="searchProperties.enabled" class="auto me-3" style="display: inline-block">
-                    <input pInputText class="searchInput" type="text" (change)="onChangeFilterGlobal($event, grid)"
-                           [maxLength]="36"
-                           [(ngModel)]="filterGlobal" placeholder="{{searchProperties.placeholder | translate}}..."
-                           max="36"/>
-                </span>
-        <button *ngIf="clearButtonProperties.enabled" pButton
-                label="{{clearButtonProperties.label | translate}}" class="p-button-outlined"
-                icon="pi pi-filter-slash" (click)="clear(grid)"></button>
+        <span
+          *ngIf="searchProperties.enabled"
+          class="auto me-3"
+          style="display: inline-block"
+        >
+          <input
+            pInputText
+            class="searchInput"
+            type="text"
+            (change)="onChangeFilterGlobal($event, grid)"
+            [maxLength]="36"
+            [(ngModel)]="filterGlobal"
+            placeholder="{{ searchProperties.placeholder | translate }}..."
+            max="36"
+          />
+        </span>
+        <button
+          *ngIf="clearButtonProperties.enabled"
+          pButton
+          label="{{ clearButtonProperties.label | translate }}"
+          class="p-button-outlined"
+          icon="pi pi-filter-slash"
+          (click)="clear(grid)"
+        ></button>
       </div>
     </div>
   </ng-template>
@@ -46,64 +66,127 @@
       <th style="width: 3rem" *ngIf="selectable">
         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
-      <th style="min-width: 4rem" *ngIf="showIndexColumn">
-        #
-      </th>
+      <th style="min-width: 4rem" *ngIf="showIndexColumn">#</th>
       <th
-          pSortableColumn="{{(!!options.sortable || !!col.sortable) ? (col.field ?? null) : null}}"
-          [pSortableColumnDisabled]="col.sortable === false || col.type === 'actions'" 
-          *ngFor="let col of columns;">{{col.title | translate}}
-        <p-sortIcon *ngIf="(!!options.sortable || !!col.sortable) && col.sortable !== false && col.field"
-                    field="{{col.field}}"></p-sortIcon>
+        pSortableColumn="{{
+          !!options.sortable || !!col.sortable ? col.field ?? null : null
+        }}"
+        [pSortableColumnDisabled]="
+          col.sortable === false || col.type === 'actions'
+        "
+        *ngFor="let col of columns"
+      >
+        {{ col.title | translate }}
+        <p-sortIcon
+          *ngIf="
+            (!!options.sortable || !!col.sortable) &&
+            col.sortable !== false &&
+            col.field
+          "
+          field="{{ col.field }}"
+        ></p-sortIcon>
       </th>
     </tr>
     <tr *ngIf="!!options.filterable">
       <th style="width: 3rem" *ngIf="selectable"></th>
       <th style="width: 4rem" *ngIf="showIndexColumn"></th>
-      <th *ngFor="let col of columns;">
+      <th *ngFor="let col of columns">
         <ng-container *ngIf="col.filterable !== false && col.field">
           <ng-container [ngSwitch]="getColumnFilterType(col)">
-            <p-columnFilter type="{{getColumnFilterType(col)}}" field="{{col.field}}"
-                            matchMode="{{col.filter?.matchMode || defaultFilterMatch(col.type)}}"
-                            [showAddButton]="false" [showMenu]="false">
+            <p-columnFilter
+              type="{{ getColumnFilterType(col) }}"
+              field="{{ col.field }}"
+              matchMode="{{
+                col.filter?.matchMode || defaultFilterMatch(col.type)
+              }}"
+              [showAddButton]="false"
+              [showMenu]="false"
+            >
               <ng-template pTemplate="filter" let-filter="filterCallback">
                 <div class="d-flex align-items-center">
                   <ng-container *ngSwitchCase="'numeric'">
-                    <input type="number" [(ngModel)]="filterValues[col.field]"
-                           (keyup.enter)="onChangeFilter(filterValues[col.field], filter)"
-                           (keyup)="numberLengthControl(filterValues[col.field],col.field)">
-                    <button type="button"
-                            *ngIf="!!filterValues[col.field] || filterValues[col.field] === 0"
-                            class="p-column-filter-clear-button custom p-link"
-                            (click)="clearFilter(filter, col.field)"><span
-                      class="pi pi-filter-slash"></span></button>
+                    <input
+                      type="number"
+                      [(ngModel)]="filterValues[col.field]"
+                      (keyup.enter)="
+                        onChangeFilter(filterValues[col.field], filter)
+                      "
+                      (keyup)="
+                        numberLengthControl(filterValues[col.field], col.field)
+                      "
+                    />
+                    <button
+                      type="button"
+                      *ngIf="
+                        !!filterValues[col.field] ||
+                        filterValues[col.field] === 0
+                      "
+                      class="p-column-filter-clear-button custom p-link"
+                      (click)="clearFilter(filter, col.field)"
+                    >
+                      <span class="pi pi-filter-slash"></span>
+                    </button>
                   </ng-container>
                   <ng-container *ngSwitchCase="'dropdown'">
-                    <p-dropdown [(ngModel)]="filterValues[col.field]"
-                                placeholder="{{ 'Select' | translate}}" [options]="col.filter!.data || []"
-                                (ngModelChange)="onChangeFilter(filterValues[col.field], filter)" appendTo="body">
+                    <p-dropdown
+                      [(ngModel)]="filterValues[col.field]"
+                      placeholder="{{ 'Select' | translate }}"
+                      [options]="col.filter!.data || []"
+                      (ngModelChange)="
+                        onChangeFilter(filterValues[col.field], filter)
+                      "
+                      appendTo="body"
+                    >
                       <ng-template let-option pTemplate="item">
-                        <span>{{option.label}}</span>
+                        <span>{{ option.label }}</span>
                       </ng-template>
                     </p-dropdown>
                   </ng-container>
                   <ng-container *ngSwitchCase="'date'">
-                    <p-calendar dateFormat="dd-mm-yy" inputId="dateformat" appendTo="body"
-                                [(ngModel)]="filterValues[col.field]" 
-                                (ngModelChange)="onChangeFilter(filterValues[col.field], filter,'date')"
-                                [style]="{'width':'7.5rem'}"></p-calendar>
-                    <button type="button" *ngIf="!!filterValues[col.field]"
-                            class="p-column-filter-clear-button custom p-link"
-                            (click)="clearFilter(filter, col.field)"><span
-                      class="pi pi-filter-slash"></span></button>
+                    <!-- <p-calendar
+                      dateFormat="yy-mm-dd"
+                      inputId="dateformat"
+                      ngDefaultControl
+                      appendTo="body"
+                      [(ngModel)]="filterValues[col.field]"
+                      (ngModelChange)="
+                        onChangeFilter(filterValues[col.field], filter, 'date')
+                      "
+                      [style]="{ width: '7.5rem' }"
+                    ></p-calendar> -->
+
+                    <input
+                      type="date"
+                      [(ngModel)]="filterValues[col.field]"
+                      (ngModelChange)="
+                        onChangeFilter(filterValues[col.field], filter, 'date')
+                      "
+                    />
+                    <button
+                      type="button"
+                      *ngIf="!!filterValues[col.field]"
+                      class="p-column-filter-clear-button custom p-link"
+                      (click)="clearFilter(filter, col.field)"
+                    >
+                      <span class="pi pi-filter-slash"></span>
+                    </button>
                   </ng-container>
                   <ng-container *ngSwitchDefault>
-                    <input type="text" pInputText [(ngModel)]="filterValues[col.field]"
-                           (change)="onChangeFilter(filterValues[col.field], filter)" [maxLength]="36">
-                    <button type="button" *ngIf="!!filterValues[col.field]"
-                            class="p-column-filter-clear-button custom p-link"
-                            (click)="clearFilter(filter, col.field)"><span
-                      class="pi pi-filter-slash"></span></button>
+                    <input
+                      type="text"
+                      pInputText
+                      [(ngModel)]="filterValues[col.field]"
+                      (change)="onChangeFilter(filterValues[col.field], filter)"
+                      [maxLength]="36"
+                    />
+                    <button
+                      type="button"
+                      *ngIf="!!filterValues[col.field]"
+                      class="p-column-filter-clear-button custom p-link"
+                      (click)="clearFilter(filter, col.field)"
+                    >
+                      <span class="pi pi-filter-slash"></span>
+                    </button>
                   </ng-container>
                 </div>
               </ng-template>
@@ -114,39 +197,58 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-row let-rowIndex="rowIndex">
-    <tr [pSelectableRow]="row" [pSelectableRowIndex]="rowIndex"
-        [class.border]="options.isLogTable==true" > 
+    <tr
+      [pSelectableRow]="row"
+      [pSelectableRowIndex]="rowIndex"
+      [class.border]="options.isLogTable == true"
+      [style.background-color]="getIsDeleteStyle(row)"
+    >
       <td style="min-width: 2rem" *ngIf="selectable">
         <p-tableCheckbox [value]="row"></p-tableCheckbox>
       </td>
-      <td style="min-width: 4rem;" *ngIf="showIndexColumn">
-        <span> {{rowIndex + 1}}</span>
+      <td style="min-width: 4rem" *ngIf="showIndexColumn">
+        <span> {{ rowIndex + 1 }}</span>
       </td>
       <td *ngFor="let col of columns">
-        <div [class.center]="col.type=='actions'">
+        <div [class.center]="col.type == 'actions'">
           <ng-container *ngIf="col.template">
-            <span [innerHtml]="getTemplateValue(col, row, rowIndex) | stringTemplate: row | safeHtml"> </span>
+            <span
+              [innerHtml]="
+                getTemplateValue(col, row, rowIndex)
+                  | stringTemplate: row
+                  | safeHtml
+              "
+            >
+            </span>
           </ng-container>
           <ng-container *ngIf="!col.template">
             <ng-container [ngSwitch]="col.type">
               <ng-container *ngSwitchCase="'date'">
-                <span *ngIf="col.field">{{row[col.field] | customDate: col.format}}</span>
+                <span *ngIf="col.field">{{
+                  row[col.field] | customDate: col.format
+                }}</span>
               </ng-container>
               <ng-container *ngSwitchCase="'enum'">
-                <span *ngIf="col.field">{{getEnumData(row, col) | translate}}</span>
+                <span *ngIf="col.field">{{
+                  getEnumData(row, col) | translate
+                }}</span>
               </ng-container>
               <ng-container *ngSwitchCase="'actions'">
                 <ng-container *ngIf="col.buttons">
                   <ng-container *ngFor="let button of col.buttons">
-                    <app-button *ngIf="!hidden(row, rowIndex, button)" class="me-1 "
-                                [options]="button.options" (click)="button.onClick(row, rowIndex)">
+                    <app-button
+                      *ngIf="!hidden(row, rowIndex, button)"
+                      class="me-1"
+                      [options]="button.options"
+                      (click)="button.onClick(row, rowIndex)"
+                    >
                     </app-button>
                   </ng-container>
                 </ng-container>
               </ng-container>
               <ng-container *ngSwitchDefault>
                 <div *ngIf="col.field">
-                  {{row[col.field]}}
+                  {{ row[col.field] }}
                 </div>
               </ng-container>
             </ng-container>
@@ -157,11 +259,14 @@
   </ng-template>
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td [attr.colspan]="columns.length + (selectable ? 1 : 0) +  + (showIndexColumn ? 1 : 0)"
-          class="text-center border-0">{{ 'Veri bulunamadı' | translate}}.
+      <td
+        [attr.colspan]="
+          columns.length + (selectable ? 1 : 0) + +(showIndexColumn ? 1 : 0)
+        "
+        class="text-center border-0"
+      >
+        {{ "Veri bulunamadı" | translate }}.
       </td>
     </tr>
   </ng-template>
 </p-table>
-
-

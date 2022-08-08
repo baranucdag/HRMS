@@ -82,7 +82,7 @@ export class CandidateListComponent implements OnInit {
             data: this.isDeletedOptions,
             defaultValue: this.isDeletedOptions[1].value,
           },
-          //template: '<i>{{isDeletedText}}</i>',
+        //template: '<i>{{isDeletedText}}</i>',
         },
         { title: 'Actions', type: 'actions', buttons: this.getButtons() },
       ],
