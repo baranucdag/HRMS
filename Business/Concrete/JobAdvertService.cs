@@ -27,6 +27,8 @@ namespace Business.Concrete
             jobAdvertDal.Add(jobAdvert);
             return new ResultItem(true, null, Messages.AddSuccess);
         }
+
+        //Get all data without filtering and sorting
         public ResultItem GetAllDetails()
         {
             var result = jobAdvertDal.GetJobAdvertDtos();
@@ -50,6 +52,8 @@ namespace Business.Concrete
             return new ResultItem(true);
         }
 
+
+        //Get single data bu id
         public ResultItem GetById(int id)
         {
             var result = jobAdvertDal.Get(x => x.Id == id);
@@ -62,6 +66,8 @@ namespace Business.Concrete
             return new ResultItem(true, result, Messages.DataListed);
         }
 
+
+        //Get Data paginated, sorted and filtered
         public ResultItem GetPaginationData(PaginationItem<JobAdvertDto> pi)
         {
 

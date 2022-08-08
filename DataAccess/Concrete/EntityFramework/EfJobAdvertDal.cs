@@ -10,31 +10,32 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfJobAdvertDal : EfEntityRepositoryBase<JobAdvert, DataContext>, IJobAdvertDal
     {
+
+        //Get JobAdverts dto
         public List<JobAdvertDto> GetJobAdvertDtos()
         {
             List<JobAdvertDto> result = new List<JobAdvertDto>();
             using (var context = new DataContext())
             {
-                var jobAdverts = context.Set<JobAdvert>().ToList();
-                foreach (var item in jobAdverts)
+
+                var query = context.Set<JobAdvert>().Select(x => new JobAdvertDto
                 {
-                    JobAdvertDto jobAdvertDto = new JobAdvertDto();
-                    jobAdvertDto.Id = item.Id;
-                    jobAdvertDto.PositionName = item.PositionName;
-                    jobAdvertDto.Status = item.Status;  
-                    jobAdvertDto.Description = item.Description;    
-                    jobAdvertDto.Deadline = item.Deadline;
-                    jobAdvertDto.IsDeleted = item.IsDeleted;
-                    jobAdvertDto.PublishDate = item.PublishDate;
-                    jobAdvertDto.QualificationLevel = item.QualificationLevel;
-                    jobAdvertDto.Status = item.Status;
-                    jobAdvertDto.WorkTimeType = item.WorkTimeType;
-                    jobAdvertDto.WorkPlaceType = item.WorkPlaceType;
-                    result.Add(jobAdvertDto);
-                }
+                    Id = x.Id,
+                    Description = x.Description,
+                    Deadline = x.Deadline,
+                    PositionName = x.PositionName,
+                    PublishDate = x.PublishDate,
+                    QualificationLevel = x.QualificationLevel,
+                    Status = x.Status,
+                    WorkPlaceType = x.WorkPlaceType,
+                    WorkTimeType = x.WorkTimeType,
+                    IsDeleted = x.IsDeleted
+                });
+                result = query.ToList();
+
             }
-            return result; 
+            return result;
         }
-       
+
     }
 }

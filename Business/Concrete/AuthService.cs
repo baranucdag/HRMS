@@ -19,6 +19,7 @@ namespace Business.Concrete
             this.tokenHelper = tokenHelper;
         }
 
+        //Register user
         public ResultItem RegisterUser(UserRegisterDto userForRegisterDto)
         {
             byte[] passwordHash, passwordSalt;
@@ -36,6 +37,7 @@ namespace Business.Concrete
             return new ResultItem(true,user, Messages.UserRegistered);
         }
 
+        //Login user
         public ResultItem Login(UserLoginDto userForLoginDto)
         {
             var userToCheck = userService.GetByMail(userForLoginDto.Email);
@@ -52,6 +54,7 @@ namespace Business.Concrete
             return new ResultItem(true,userToCheck,Messages.SuccessfulLogin,System.Net.HttpStatusCode.OK, "1");
         }
 
+        //Check if user is already exist
         public ResultItem IsUserExists(string email)
         {
             if (email != null)
@@ -66,6 +69,7 @@ namespace Business.Concrete
 
         }
 
+        //Create access token when user is logged or registered
         public ResultItem CreateAccessToken(User user)
         {
             var claims = userService.GetClaims(user);

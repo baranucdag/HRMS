@@ -53,7 +53,6 @@ namespace Business.Concrete
         }
         public ResultItem GetApplicationPaginated(PaginationItem<ApplicationDetailDto> pi)
         {
-
             try
             {
                 var rows = applicationDal.GetApplicationDetails().AsQueryable();
