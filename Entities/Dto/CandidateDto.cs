@@ -1,18 +1,22 @@
 ﻿using Entities.Abstract;
-using Entities.Enums;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Entities.Concrete
+namespace Entities.Dto
 {
-    public class Candidate : IEntity
+    public class CandidateDto : IDto
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string CandidateFullName => $"{FirstName} {LastName}";
         public string EMail { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string PlaceOfBirth { get; set; }
-        public GenderEnum Gender { get; set; }
+        public string Gender { get; set; }
         public string Profession { get; set; }
         public bool IsMarried { get; set; }
         public string SpouseName { get; set; }
@@ -77,5 +81,6 @@ namespace Entities.Concrete
         public string SucscribedSporClubs { get; set; }
         public int IsDeleted { get; set; }
         public string CvPath { get; set; }
+        public string IsDeletedText => (IsDeleted == 1) ? "yes" : "no";
     }
 }

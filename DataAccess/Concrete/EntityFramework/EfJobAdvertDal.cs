@@ -27,8 +27,8 @@ namespace DataAccess.Concrete.EntityFramework
                     PublishDate = x.PublishDate,
                     QualificationLevel = x.QualificationLevel,
                     Status = x.Status,
-                    WorkPlaceType = x.WorkPlaceType,
-                    WorkTimeType = x.WorkTimeType,
+                    WorkPlaceType = x.WorkPlaceType.ToString(),
+                    WorkTimeType = x.WorkTimeType.ToString(),
                     IsDeleted = x.IsDeleted
                 });
                 result = query.ToList();

@@ -5,6 +5,7 @@ using Core.Utilities.Helpers.PaginationHelper;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -52,16 +53,17 @@ namespace Business.Concrete
             return new ResultItem();
         }
 
-        public ResultItem GetCandidatesPaginated(PaginationItem<Candidate> pi)
+        //Get Candidates filtering, sorting and paging
+        public ResultItem GetCandidatesPaginated(PaginationItem<CandidateDto> pi)
         {
             try
             {
-                var rows = candidateDal.GetAll().AsQueryable();
+                var rows = candidateDal.GetCandidateDetails().AsQueryable();
 
                 // Grid kolonlarından veya global searchden arama geldiyse
                 if (pi.Filters != null && pi.Filters.Count() > 0)
                 {
-                    List<Candidate> globalList = new List<Candidate>();
+                    List<CandidateDto> globalList = new List<CandidateDto>();
                     foreach (var item in pi.Filters)
                     {
                         string key = item.Key.ToFirstCharUpper(true);
@@ -77,30 +79,30 @@ namespace Business.Concrete
                             // grid global search
                             if (item.Key.ToLowerEng() == "global")
                             {
-                                var props = typeof(Candidate).GetProperties();
+                                var props = typeof(CandidateDto).GetProperties();
 
                                 foreach (var prop in props)
                                 {
-                                    var res = new List<Candidate>();
+                                    var res = new List<CandidateDto>();
 
                                     switch (prop.Name)
                                     {
-                                        case nameof(Candidate.EMail):
+                                        case nameof(CandidateDto.EMail):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.EMail.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(Candidate.CandidateFullName):
+                                        case nameof(CandidateDto.CandidateFullName):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.CandidateFullName.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(Candidate.Profession):
+                                        case nameof(CandidateDto.Profession):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.Profession.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(Candidate.PhoneNumber):
+                                        case nameof(CandidateDto.PhoneNumber):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.PhoneNumber.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
@@ -112,13 +114,13 @@ namespace Business.Concrete
 
                                 }
                                 rows = globalList.GroupBy(x => x.Id).Select(x => x.First()).AsQueryable();
-                                globalList = new List<Candidate>();
+                                globalList = new List<CandidateDto>();
                             }
                             else // grid column search - spesifik kolon bazlı işlemler için
                             {
                                 switch (key)
                                 {
-                                    case nameof(Candidate.EMail):
+                                    case nameof(CandidateDto.EMail):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -147,7 +149,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(Candidate.CandidateFullName):
+                                    case nameof(CandidateDto.CandidateFullName):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -176,7 +178,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(Candidate.Profession):
+                                    case nameof(CandidateDto.Profession):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -205,7 +207,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(Candidate.PhoneNumber):
+                                    case nameof(CandidateDto.PhoneNumber):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -234,7 +236,35 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(Candidate.IsDeleted):
+                                    case nameof(CandidateDto.Gender):
+                                        {
+                                            switch (Convert.ToInt32(oVal))
+                                            {
+                                                case 0: // getAll
+                                                    {
+                                                        break;
+                                                    }
+                                                case 1: // Male
+                                                    {
+                                                        rows = rows.Where(x => x.Gender == "Male");
+                                                        break;
+                                                    }
+                                                case 2: // Female
+                                                    {
+                                                        rows = rows.Where(x => x.Gender == "Female");
+                                                        break;
+                                                    }
+                                                case 3: // UnSpecified
+                                                    {
+                                                        rows = rows.Where(x => x.Gender == "UnSpecified");
+                                                        break;
+                                                    }
+                                                default:
+                                                    break;
+                                            }
+                                            break;
+                                        }
+                                    case nameof(CandidateDto.IsDeleted):
                                         {
                                             switch (Convert.ToInt32(oVal))
                                             {
@@ -281,7 +311,7 @@ namespace Business.Concrete
                         {
                             orderBy = item.Order == 1 ? "OrderBy" : "OrderByDescending";
                         }
-                        rows = rows.ToApplyOrder<Candidate>(key, orderBy);
+                        rows = rows.ToApplyOrder<CandidateDto>(key, orderBy);
                     }
                 }
 

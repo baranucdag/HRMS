@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Helpers.PaginationHelper;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -61,7 +62,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("GetPaginationData")]
-        public IActionResult GetPaginationData(PaginationItem<Candidate> pi)
+        public IActionResult GetPaginationData(PaginationItem<CandidateDto> pi)
         {
             var result = candidateService.GetCandidatesPaginated(pi);
             if (result.IsOk)
