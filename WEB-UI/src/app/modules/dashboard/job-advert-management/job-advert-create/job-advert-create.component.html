@@ -1,9 +1,7 @@
 <form [formGroup]="jobAdvertForm">
   <div class="row">
     <div>
-      <label for="display-text"  translate
-        >Position Name (*)</label
-      >
+      <label for="display-text" translate>Position Name (*)</label>
       <input
         type="text"
         formControlName="positionName"
@@ -22,6 +20,7 @@
       </div>
     </div>
   </div>
+
   <div class="form-label">
     <label class="form-label" translate>Qualification Level (*)</label>
     <input
@@ -41,22 +40,33 @@
       </div>
     </div>
   </div>
+
   <div class="form-label">
-    <label class="form-label" translate>Work Type (*)</label>
-    <input
-      type="text"
-      formControlName="workType"
-      class="form-control"
-      [ngClass]="{
-        'is-invalid': f.workType.dirty && f.workType.errors
-      }"
-    />
-    <div *ngIf="f.workType.dirty && f.workType.errors" class="invalid-feedback">
-      <div *ngIf="f.workType.errors.required" translate>
-        Please enter the work type
+    <label for="type" class="form-label" translate>Work Place Type (*)</label>
+    <div class="input-group">
+      <div class="input-group-append">
+        <app-dropdown
+          *ngIf="workPlaceTypeDropdownOptions"
+          [options]="workPlaceTypeDropdownOptions"
+        >
+        </app-dropdown>
       </div>
     </div>
   </div>
+
+  <div class="form-label">
+    <label class="form-label" translate>Work Time Type (*)</label>
+    <div class="input-group">
+      <div class="input-group-append">
+        <app-dropdown
+          *ngIf="workTimeTypeDropdownOptions"
+          [options]="workTimeTypeDropdownOptions"
+        >
+        </app-dropdown>
+      </div>
+    </div>
+  </div>
+  
   <div class="form-label">
     <label class="form-label" translate>Description (*)</label>
     <textarea
@@ -76,17 +86,17 @@
       </div>
     </div>
   </div>
+
   <div class="form-label">
     <label class="form-label" translate>deadline (*)</label>
-    <input
-      type="date"
-      formControlName="deadline"
-      class="form-control"
+    <p-calendar
       [ngClass]="{
         'is-invalid': f.deadline.dirty && f.deadline.errors
       }"
-    />
-    <!-- <p-calendar formControlName="deadLine" dateFormat="dd-mm-yy" inputId="dateformat"></p-calendar> -->
+      formControlName="deadline"
+      dateFormat="yy-mm-dd"
+      inputId="dateformat"
+    ></p-calendar>
     <div *ngIf="f.deadline.dirty && f.deadline.errors" class="invalid-feedback">
       <div *ngIf="f.deadline.errors.required" translate>
         Please enter the deadline

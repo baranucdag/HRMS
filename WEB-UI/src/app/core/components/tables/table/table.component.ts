@@ -70,10 +70,6 @@ export class TableComponent implements OnInit {
 
   }
 
-  getTableDesign(){
-    
-  }
-
   ngOnDestroy() {
     this.onDestroy.next();
   }
@@ -390,10 +386,15 @@ export class TableComponent implements OnInit {
   hidden(row: any, rowIndex: number, button: IColumnButton): boolean {
     if (button.hidden) return button.hidden(row, rowIndex);
     if (row.isDeleted === 0 && button.options.tooltip === 'Undelete') return true;
+    if (row.isDeleted === 1 && button.options.tooltip === 'Delete') return true;
+
     return false;
   }
 
-  changeBodyStyle(){
-    
+  getIsDeleteStyle(row:any){
+    let color = "red";
+    if(row.isDeleted==true) color="red";
+    else color="white"
+    return color
   }
 }

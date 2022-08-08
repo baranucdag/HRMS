@@ -1,4 +1,9 @@
 import {
+  workPlaceTypeEnum,
+  workTimeType,
+} from './../../../../core/enums/dropdown-select-options';
+import { IDropdownOptions } from './../../../../core/components/dropdowns/dropdown/models/dropdown-options.model';
+import {
   FormGroup,
   FormControl,
   FormBuilder,
@@ -20,6 +25,7 @@ import {
 import { IFormComponent } from 'src/app/core/components/interfaces';
 import { dateTransformForBackend } from 'src/app/core/helpers/date/dateTransform';
 import { DatePipe } from '@angular/common';
+import { enumToArray } from 'src/app/core/helpers/enum';
 
 @Component({
   selector: 'app-job-advert-create',
@@ -30,6 +36,20 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
   initialData!: { id: number };
   jobAdvertForm!: FormGroup;
   selectedJobAdvert?: any;
+  // workPlaceTypes:string[]=['Remote','From Office','Hybrit']
+  //workTimeTypes:string[]=['Full Time','half']
+  selectedWorkPlaceType: any;
+  selectedWorkTimeType: any;
+  workPlaceTypeDropdownOptions?: IDropdownOptions;
+  workTimeTypeDropdownOptions?: IDropdownOptions;
+
+  workTimeTypes: any = enumToArray(workTimeType).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
+
+  workPlaceTypes: any = enumToArray(workPlaceTypeEnum).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
 
   get f(): any {
     return this.jobAdvertForm.controls;
@@ -42,7 +62,7 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
   constructor(
     private jobAdvertService: JobAdvertService,
     private formBuilder: FormBuilder,
-    private datePipe:DatePipe
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -70,18 +90,70 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       });
   }
 
+  setWorkPlaceTypeDropdownOptions(data: any, selected?: any) {
+    // if (selected == undefined) {
+    //   selected = data[0];
+    //   this.selectedWorkPlaceType = selected;
+    // }
+    this.workPlaceTypeDropdownOptions = {
+      items: data,
+      onSelectionChange: (value) => {
+        this.selectedWorkPlaceType = value;
+      },
+      optionLabel: 'label',
+      placeholder: 'Select',
+      selected: selected,
+    };
+    this.workPlaceTypeDropdownOptions.errors?.next([]);
+  }
+
+  setWorkTimeTypeDropdownOptions(data: any, selected?: any) {
+    // if (selected == undefined) {
+    //   selected = data[0];
+    //   this.selectedWorkPlaceType = selected;
+    // }
+    this.workTimeTypeDropdownOptions = {
+      items: data,
+      onSelectionChange: (value) => {
+        this.selectedWorkTimeType = value;
+      },
+      optionLabel: 'label',
+      placeholder: 'Select',
+      selected: selected,
+    };
+    this.workTimeTypeDropdownOptions.errors?.next([]);
+  }
+
   createForm(jobAdvert?: IJobAdvert) {
     //gelen deadline verisinin uygun formata dönüştürülmesi
-    let deadLine =this.datePipe.transform(jobAdvert?.deadline, 'yyyy-MM-dd');
+    let deadLine = this.datePipe.transform(jobAdvert?.deadline, 'yyyy-MM-dd');
 
     this.jobAdvertForm = this.formBuilder.group({
       positionName: [jobAdvert?.positionName, Validators.required],
       qualificationLevel: [jobAdvert?.qualificationLevel, Validators.required],
-      workType: [jobAdvert?.workType, Validators.required],
       publishDate: new Date(),
       description: [jobAdvert?.description, Validators.required],
       deadline: [deadLine, Validators.required],
     });
+
+    let selectedWorkPlaceType;
+    let selectedWorkTimeType;
+    if (this.selectedJobAdvert) {
+      selectedWorkTimeType = this.workTimeTypes.find(
+        (x: any) => x.label === this.selectedJobAdvert.workTimeType
+      );
+      selectedWorkPlaceType = this.workPlaceTypes.find(
+        (x: any) => x.label === this.selectedJobAdvert.workPlaceType
+      );
+    }
+    this.setWorkTimeTypeDropdownOptions(
+      this.workTimeTypes,
+      selectedWorkTimeType
+    );
+    this.setWorkPlaceTypeDropdownOptions(
+      this.workPlaceTypes,
+      selectedWorkPlaceType
+    );
   }
 
   save() {
@@ -98,6 +170,8 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     let sendModel: IJobAdvert = Object.assign({}, this.jobAdvertForm.value);
 
     sendModel.deadline = dateTransformForBackend(sendModel.deadline);
+    sendModel.workPlaceType = this.selectedWorkPlaceType.label;
+    sendModel.workTimeType = this.selectedWorkTimeType.label;
 
     return this.jobAdvertService
       .add(sendModel)
@@ -131,6 +205,12 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       this.selectedJobAdvert,
       this.jobAdvertForm.value
     );
+    if (this.selectedWorkPlaceType != undefined) {
+      jobAdvertModel.workPlaceType = this.selectedWorkPlaceType.label;
+    }
+    if (this.selectedWorkTimeType != undefined) {
+      jobAdvertModel.workTimeType = this.selectedWorkTimeType?.label;
+    }
 
     if (this.initialData.id) {
       this.jobAdvertService

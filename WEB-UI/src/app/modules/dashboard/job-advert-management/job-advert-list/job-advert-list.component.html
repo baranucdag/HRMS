@@ -1,10 +1,12 @@
 <div class="row">
   <div class="col-12">
-   <ng-template pTemplate="icons">
-      </ng-template>
+    <p-panel header="{{ 'Job Advert List' | translate }}" [toggleable]="false">
       <div class="row mb-3">
         <div class="col-12">
-           <app-toolbar *ngIf="toolbarOptions" [options]="toolbarOptions"></app-toolbar>
+          <app-toolbar
+            *ngIf="toolbarOptions"
+            [options]="toolbarOptions"
+          ></app-toolbar>
         </div>
       </div>
       <div class="row">
@@ -13,8 +15,17 @@
           </app-table>
         </div>
       </div>
+    </p-panel>
   </div>
 </div>
 
-<app-dialog *ngIf="deletionDialogOptions" [options]="deletionDialogOptions" #deletionDialog></app-dialog> 
-<app-dialog *ngIf="unDeletionDialogOptions" [options]="unDeletionDialogOptions" #unDeletionDialog></app-dialog> 
+<app-dialog
+  *ngIf="deletionDialogOptions"
+  [options]="deletionDialogOptions"
+  #deletionDialog
+></app-dialog>
+<app-dialog
+  *ngIf="unDeletionDialogOptions"
+  [options]="unDeletionDialogOptions"
+  #unDeletionDialog
+></app-dialog>

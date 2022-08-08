@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'src/app/core/services/dialog';
 import { JobAdvertCreateComponent } from './../job-advert-create/job-advert-create.component';
@@ -42,7 +43,6 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
 
   // component içerisinde kullanılan değişkenler
   selectedMenu: any;
-  selectedUnDeleteAdvert:any;
   tableOptions!: ITableOptions;
   deletionDialogOptions!: IDialogOptions;
   unDeletionDialogOptions!: IDialogOptions;
@@ -63,24 +63,27 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
     this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
     this.onUnDeleteButtonClick = this.onUnDeleteButtonClick.bind(this);
     this.createTable();
-    this.createDeleteDialog();
+    this.createDeleteDialog();  
     this.createUnDeleteDialog();
   }
 
   createTable() {
+    
+    
     this.tableOptions = {
       data: [],
       columns: [
         { field: 'positionName', title: 'Position Name', type: 'text' },
+        { field: 'workPlaceType', title: 'Work Place Type', type: 'text' },
+        { field: 'workTimeType', title: 'Work Time Type', type: 'text' },
         {
           field: 'qualificationLevel',
           title: 'Qualification Level',
           type: 'text',
         },
-        { field: 'workType', title: 'Work Type', type: 'text' },
-        { field: 'publishDate', title: 'Publish Date', type: 'text' },
         { field: 'description', title: 'Description', type: 'text' },
-        { field: 'deadline', title: 'Deadline', type: 'text' },
+        { field: 'publishDate', title: 'Publish Date', type: 'date' },
+        { field: 'deadline', title: 'Deadline', type: 'date', },
         {
           title: 'Is Deleted',
           type: 'text',
@@ -92,7 +95,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
             data: this.isDeletedOptions,
             defaultValue: this.isDeletedOptions[1].value,
           },
-          //template: '<i>{{isDeletedText}}</i>',
+          template: '<i>{{isDeletedText}}</i>',
         },
         { title: 'Actions', type: 'actions', buttons: this.getButtons() },
       ],
@@ -121,8 +124,8 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
   // dialog componentin özellikleri tanımlanıyor
   createDeleteDialog() {
     this.deletionDialogOptions = {
-      title: 'Job Advert Silme İşlemi',
-      message: 'Menü silinecek, emin misiniz ?',
+      title: 'İş İlanı  Silme İşlemi',
+      message: 'İş ilanı  silinecek, emin misiniz ?',
       type: DialogType.confirm,
       size: DialogSize.small,
       onConfirm: () => {
@@ -135,8 +138,8 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
 
   createUnDeleteDialog() {
     this.unDeletionDialogOptions = {
-      title: 'Job Advert Silme İşlemi',
-      message: 'Menü silinecek, emin misiniz ?',
+      title: 'İş ilanı geri alma işlemi',
+      message: 'İş ilanı  geri alınacak, emin misiniz ?',
       type: DialogType.confirm,
       size: DialogSize.small,
       onConfirm: () => {
@@ -179,7 +182,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
         new: {
           onClick: () => {
             const ref = this.dialogService.open(JobAdvertCreateComponent, {
-              title: 'Create Menu Item',
+              title: 'Create New Job Advert',
               buttons: {
                 save: true,
                 cancel: true,
@@ -208,7 +211,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
   // edit butonuna tıklanıldığında çalışacak metod
   onEditButtonClick(row: any, index: number) {
     const ref = this.dialogService.open(JobAdvertCreateComponent, {
-      title: 'Edit Menu',
+      title: 'Edit Job Advert',
       buttons: {
         update: true,
         cancel: true,
