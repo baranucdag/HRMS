@@ -53,7 +53,6 @@ namespace Business.Concrete
         }
         public ResultItem GetApplicationPaginated(PaginationItem<ApplicationDetailDto> pi)
         {
-
             try
             {
                 var rows = applicationDal.GetApplicationDetails().AsQueryable();
@@ -95,9 +94,14 @@ namespace Business.Concrete
                                                 res = rows.AsEnumerable().Where(x => x.CandidateFullName.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(ApplicationDetailDto.WorkType):
+                                        case nameof(ApplicationDetailDto.WorkTimeType):
                                             {
-                                                res = rows.AsEnumerable().Where(x => x.WorkType.ToLowerEng().Contains(oVal)).ToList();
+                                                res = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Contains(oVal)).ToList();
+                                                break;
+                                            }
+                                        case nameof(ApplicationDetailDto.WorkPlaceType):
+                                            {
+                                                res = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
                                         default:
@@ -139,6 +143,7 @@ namespace Business.Concrete
                                                     }
                                                 default:
                                                     break;
+
                                             }
                                             break;
                                         }
@@ -171,35 +176,73 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(ApplicationDetailDto.WorkType):
+                                    case nameof(ApplicationDetailDto.WorkTimeType):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
                                                 case "startswith":
                                                     {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkType.ToLowerEng().StartsWith(oVal)).AsQueryable();
+                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().StartsWith(oVal)).AsQueryable();
                                                         break;
                                                     }
                                                 case "endswith":
                                                     {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkType.ToLowerEng().EndsWith(oVal)).AsQueryable();
+                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().EndsWith(oVal)).AsQueryable();
                                                         break;
                                                     }
                                                 case "contains":
                                                     {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkType.ToLowerEng().Contains(oVal)).AsQueryable();
+                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Contains(oVal)).AsQueryable();
                                                         break;
                                                     }
                                                 case "equals":
                                                     {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkType.ToLowerEng().Equals(oVal)).AsQueryable();
+                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Equals(oVal)).AsQueryable();
                                                         break;
                                                     }
                                                 default:
                                                     break;
                                             }
+
                                             break;
                                         }
+                                    case nameof(ApplicationDetailDto.WorkPlaceType):
+                                        {
+                                            switch (matchMode.ToLowerEng())
+                                            {
+                                                case "startswith":
+                                                    {
+                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().StartsWith(oVal)).AsQueryable();
+                                                        break;
+                                                    }
+                                                case "endswith":
+                                                    {
+                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().EndsWith(oVal)).AsQueryable();
+                                                        break;
+                                                    }
+                                                case "contains":
+                                                    {
+                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Contains(oVal)).AsQueryable();
+                                                        break;
+                                                    }
+                                                case "equals":
+                                                    {
+                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Equals(oVal)).AsQueryable();
+                                                        break;
+                                                    }
+                                                default:
+                                                    break;
+                                            }
+
+                                            break;
+                                        }
+                                    case nameof(ApplicationDetailDto.Deadline):
+                                        {
+                                            var a = Convert.ToDateTime(val);
+                                            rows = rows.Where(x => x.Deadline <= a);
+                                            break;
+                                        }
+
                                     default:
                                         {
                                             break;

@@ -10,6 +10,8 @@ namespace Core.DataAccess.EntityFramework
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> where TEntity : class, IEntity, new()
         where TContext : DbContext, new()
     {
+
+        // Add an entity
         public void Add(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -20,6 +22,7 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        //Delete an entity completely from db
         public void HardDelete(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -30,6 +33,8 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+
+        //Get single data by using spesfic filter
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
 
@@ -39,6 +44,8 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+
+        //Get all data form db
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             using (TContext context = new TContext())
@@ -47,6 +54,8 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+
+        //Soft delete an entity (by change a property)
         public void SoftDelete(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -58,6 +67,7 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        //Update an entity
         public void Update(TEntity entity)
         {
             using (TContext context = new TContext())
@@ -68,6 +78,8 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+
+        //Un delete an entity by change IsDeleted property
         public void UnDelete(TEntity entity)
         {
             using (TContext context = new TContext())

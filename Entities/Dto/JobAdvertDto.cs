@@ -1,9 +1,9 @@
 ﻿using Entities.Abstract;
 using System;
 
-namespace Entities.Concrete
+namespace Entities.Dto
 {
-    public class JobAdvert : IEntity
+    public class JobAdvertDto : IDto
     {
         public int Id { get; set; }
         public string PositionName { get; set; }
@@ -15,5 +15,6 @@ namespace Entities.Concrete
         public string Description { get; set; }
         public bool Status { get; set; }
         public int IsDeleted { get; set; }
+        public string IsDeletedText => (IsDeleted == 1) ? "yes" : "no";
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Core.Utilities.Helpers.PaginationHelper;
 using Core.Utilities.Result;
 using Entities.Concrete;
+using Entities.Dto;
 
 namespace Business.Abstract
 {
@@ -10,9 +11,10 @@ namespace Business.Abstract
         ResultItem Delete(int id);
         ResultItem UnDelete(int id);
         ResultItem Update(JobAdvert jobAdvert);
-        ResultItem GetPaginationData(PaginationItem<JobAdvert> pi);
+        ResultItem GetPaginationData(PaginationItem<JobAdvertDto> pi);
         ResultItem GetById(int id);
         ResultItem GetAll();
+        ResultItem GetAllDetails();
 
     }
 }

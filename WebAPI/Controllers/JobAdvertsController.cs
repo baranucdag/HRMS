@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Helpers.PaginationHelper;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers.BaseControllers
@@ -17,9 +18,20 @@ namespace WebAPI.Controllers.BaseControllers
         }
 
         [HttpPost("GetPaginationData")]
-        public IActionResult GetPaginationData(PaginationItem<JobAdvert> paginationItem)
+        public IActionResult GetPaginationData(PaginationItem<JobAdvertDto> paginationItem)
         {
             var result = jobAdvertService.GetPaginationData(paginationItem);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("GetDetails")]
+        public IActionResult GetDetails()
+        {
+            var result = jobAdvertService.GetAllDetails();
             if (result.IsOk)
             {
                 return Ok(result);

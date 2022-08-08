@@ -9,7 +9,8 @@ namespace Entities.Dto
         public int JobAdvertId { get; set; }
         public string PositionName { get; set; }
         public string QualificationLevel { get; set; }
-        public string WorkType { get; set; }
+        public string WorkTimeType { get; set; }
+        public string WorkPlaceType { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime Deadline { get; set; }
         public int CandidateId { get; set; }
@@ -18,6 +19,7 @@ namespace Entities.Dto
         public string CandidateFullName { get; set; }
         public DateTime ApplicationDate { get; set; }
         public int IsDeleted { get; set; }
+        public string IsDeletedText => (IsDeleted == 1) ? "yes" : "no";
 
     }
 }
