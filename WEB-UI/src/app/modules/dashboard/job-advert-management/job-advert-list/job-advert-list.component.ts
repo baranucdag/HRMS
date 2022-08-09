@@ -92,7 +92,6 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
             data: this.workPlaceTypeOptions,
             defaultValue: this.workPlaceTypeOptions[0].value,
           },
-          //template: '<i>{{isDeletedText}}</i>',
         },
         {
           title: 'Work Time Type',
@@ -105,7 +104,6 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
             data: this.workTimeTypeOptions,
             defaultValue: this.workTimeTypeOptions[0].value,
           },
-          //template: '<i>{{isDeletedText}}</i>',
         },
         {
           field: 'qualificationLevel',

@@ -40,33 +40,39 @@
       </div>
     </div>
   </div>
-
-  <div class="form-label">
-    <label for="type" class="form-label" translate>Work Place Type (*)</label>
-    <div class="input-group">
-      <div class="input-group-append">
-        <app-dropdown
-          *ngIf="workPlaceTypeDropdownOptions"
-          [options]="workPlaceTypeDropdownOptions"
+  <div class="grid-container">
+    <div class="grid-item">
+      <div class="form-label">
+        <label for="type" class="form-label" translate
+          >Work Place Type (*)</label
         >
-        </app-dropdown>
+        <div class="input-group">
+          <div class="input-group-append">
+            <app-dropdown
+              *ngIf="workPlaceTypeDropdownOptions"
+              [options]="workPlaceTypeDropdownOptions"
+            >
+            </app-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="form-label">
+        <label class="form-label" translate>Work Time Type (*)</label>
+        <div class="input-group">
+          <div class="input-group-append">
+            <app-dropdown
+              *ngIf="workTimeTypeDropdownOptions"
+              [options]="workTimeTypeDropdownOptions"
+            >
+            </app-dropdown>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="form-label">
-    <label class="form-label" translate>Work Time Type (*)</label>
-    <div class="input-group">
-      <div class="input-group-append">
-        <app-dropdown
-          *ngIf="workTimeTypeDropdownOptions"
-          [options]="workTimeTypeDropdownOptions"
-        >
-        </app-dropdown>
-      </div>
-    </div>
-  </div>
-  
   <div class="form-label">
     <label class="form-label" translate>Description (*)</label>
     <textarea
@@ -87,7 +93,7 @@
     </div>
   </div>
 
-  <div class="form-label">
+  <div class="form-label" style="margin-top: 20px;">
     <label class="form-label" translate>deadline (*)</label>
     <p-calendar
       [ngClass]="{

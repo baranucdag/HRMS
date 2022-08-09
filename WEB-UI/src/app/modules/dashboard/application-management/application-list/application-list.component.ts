@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TableComponent } from 'src/app/core/components/tables';
 import { ITableOptions } from 'src/app/core/components/tables/table/models';
-import { isDeletedOptions } from 'src/app/core/enums';
+import {
+  isDeletedOptions,
+  workPlaceTypeOptions,
+  workTimeTypeOptions,
+} from 'src/app/core/enums';
 import { enumToArray } from 'src/app/core/helpers/enum';
 import { ApplicationService } from 'src/app/core/services/api';
 
@@ -15,8 +19,16 @@ export class ApplicationListComponent implements OnInit {
 
   // component içerisinde kullanılan değişkenler
   tableOptions!: ITableOptions;
-  
+
   isDeletedOptions: any = enumToArray(isDeletedOptions).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
+
+  workTimeTypeOptions: any = enumToArray(workTimeTypeOptions).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
+
+  workPlaceTypeOptions: any = enumToArray(workPlaceTypeOptions).map((m) => {
     return { label: m.description.toCapitalize(), value: m.id };
   });
 
@@ -36,8 +48,30 @@ export class ApplicationListComponent implements OnInit {
           title: 'Qualification Level',
           type: 'text',
         },
-        { field: 'workTimeType', title: 'Work Time Type', type: 'text' },
-        { field: 'workPlaceType', title: 'Work Place Type', type: 'text' },
+        {
+          title: 'Work Place Type',
+          type: 'text',
+          field: 'workPlaceType',
+          sortable: true,
+          filterable: true,
+          filter: {
+            type: 'dropdown',
+            data: this.workPlaceTypeOptions,
+            defaultValue: this.workPlaceTypeOptions[0].value,
+          },
+        },
+        {
+          title: 'Work Time Type',
+          type: 'text',
+          field: 'workTimeType',
+          sortable: true,
+          filterable: true,
+          filter: {
+            type: 'dropdown',
+            data: this.workTimeTypeOptions,
+            defaultValue: this.workTimeTypeOptions[0].value,
+          },
+        },
         {
           field: 'candidateFullName',
           title: 'Candidate Full Name',
@@ -75,8 +109,8 @@ export class ApplicationListComponent implements OnInit {
           placeholder: 'Search',
         },
       },
-      lazyLoad:true,
-      dataService:this.applicationService
+      lazyLoad: true,
+      dataService: this.applicationService,
     };
   }
 }
