@@ -1,4 +1,6 @@
-﻿using Entities.Abstract;
+﻿using Entites.Enums;
+using Entities.Abstract;
+using Entities.Enums;
 using System;
 
 namespace Entities.Concrete
@@ -8,8 +10,8 @@ namespace Entities.Concrete
         public int Id { get; set; }
         public string PositionName { get; set; }
         public string QualificationLevel { get; set; }
-        public string WorkPlaceType { get; set; }
-        public string WorkTimeType { get; set; }
+        public WorkPlaceTypeEnum WorkPlaceType { get; set; }
+        public WorkTimeTypeEnum WorkTimeType { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime Deadline { get; set; }
         public string Description { get; set; }

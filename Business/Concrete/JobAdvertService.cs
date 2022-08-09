@@ -53,7 +53,7 @@ namespace Business.Concrete
         }
 
 
-        //Get single data bu id
+        //Get single data by id
         public ResultItem GetById(int id)
         {
             var result = jobAdvertDal.Get(x => x.Id == id);
@@ -110,16 +110,6 @@ namespace Business.Concrete
                                         case nameof(JobAdvertDto.QualificationLevel):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.QualificationLevel.ToLowerEng().Contains(oVal)).ToList();
-                                                break;
-                                            }
-                                        case nameof(JobAdvertDto.WorkTimeType):
-                                            {
-                                                res = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Contains(oVal)).ToList();
-                                                break;
-                                            }
-                                        case nameof(JobAdvertDto.WorkPlaceType):
-                                            {
-                                                res = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
                                         case nameof(JobAdvertDto.Description):
@@ -199,64 +189,6 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(JobAdvertDto.WorkTimeType):
-                                        {
-                                            switch (matchMode.ToLowerEng())
-                                            {
-                                                case "startswith":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().StartsWith(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "endswith":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().EndsWith(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "contains":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Contains(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "equals":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Equals(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                default:
-                                                    break;
-                                            }
-                                            break;
-                                        }
-                                    case nameof(JobAdvertDto.WorkPlaceType):
-                                        {
-                                            switch (matchMode.ToLowerEng())
-                                            {
-                                                case "startswith":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().StartsWith(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "endswith":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().EndsWith(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "contains":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Contains(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "equals":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Equals(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                default:
-                                                    break;
-                                            }
-                                            break;
-                                        }
                                     case nameof(JobAdvertDto.Description):
                                         {
                                             switch (matchMode.ToLowerEng())
@@ -290,6 +222,70 @@ namespace Business.Concrete
                                         {
                                             var a = Convert.ToDateTime(val);
                                             rows = rows.Where(x => x.Deadline <= a);
+                                            break;
+                                        }
+                                    case nameof(JobAdvertDto.PublishDate):
+                                        {
+                                            var a = Convert.ToDateTime(val);
+                                            rows = rows.Where(x => x.PublishDate <= a);
+                                            break;
+                                        }
+                                    case nameof(JobAdvertDto.WorkTimeType):
+                                        {
+                                            switch (Convert.ToInt32(oVal))
+                                            {
+                                                case 0: // getAll
+                                                    {
+                                                        break;
+                                                    }
+                                                case 1: // partTime
+                                                    {
+                                                        rows = rows.Where(x => x.WorkTimeType == "PartTime");
+                                                        break;
+                                                    }
+                                                case 2: // fullTime
+                                                    {
+                                                        rows = rows.Where(x => x.WorkTimeType == "FullTime");
+                                                        break;
+                                                    }
+                                                case 3: // Intern
+                                                    {
+                                                        rows = rows.Where(x => x.WorkTimeType == "Intern");
+                                                        break;
+                                                    }
+
+                                                default:
+                                                    break;
+                                            }
+                                            break;
+                                        }
+                                    case nameof(JobAdvertDto.WorkPlaceType):
+                                        {
+                                            switch (Convert.ToInt32(oVal))
+                                            {
+                                                case 0: // getAll
+                                                    {
+                                                        break;
+                                                    }
+                                                case 1: // Remote
+                                                    {
+                                                        rows = rows.Where(x => x.WorkPlaceType == "Remote");
+                                                        break;
+                                                    }
+                                                case 2: // Hybrid
+                                                    {
+                                                        rows = rows.Where(x => x.WorkPlaceType == "Hybrid");
+                                                        break;
+                                                    }
+                                                case 3: // FromOffice
+                                                    {
+                                                        rows = rows.Where(x => x.WorkPlaceType == "FromOffice");
+                                                        break;
+                                                    }
+
+                                                default:
+                                                    break;
+                                            }
                                             break;
                                         }
                                     case nameof(JobAdvertDto.IsDeleted):

@@ -1,6 +1,7 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using DataAccess.Concrete.Contexts;
+using Entites.Enums;
 using Entities.Concrete;
 using Entities.Dto;
 using System.Collections.Generic;
@@ -33,8 +34,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  PositionName = t3.PositionName,
                                  QualificationLevel = t3.QualificationLevel,
                                  PublishDate = t3.PublishDate,
-                                 WorkTimeType = t3.WorkTimeType,
-                                 WorkPlaceType = t3.WorkPlaceType,
+                                 WorkTimeType = t3.WorkTimeType.ToString(),
+                                 WorkPlaceType = t3.WorkPlaceType.ToString(),
                                  Deadline = t3.Deadline,
                                  IsDeleted = t1.IsDeleted
                              };

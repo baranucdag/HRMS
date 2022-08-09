@@ -1,4 +1,6 @@
-﻿using Entities.Abstract;
+﻿using Entites.Enums;
+using Entities.Abstract;
+using Entities.Enums;
 using System;
 
 namespace Entities.Dto
