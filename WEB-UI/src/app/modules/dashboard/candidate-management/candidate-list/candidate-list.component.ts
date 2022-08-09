@@ -9,7 +9,7 @@ import {
   ITableOptions,
 } from 'src/app/core/components/tables/table/models';
 import { enumToArray } from 'src/app/core/helpers/enum';
-import { isDeletedOptions } from 'src/app/core/enums';
+import { genderOptions, isDeletedOptions } from 'src/app/core/enums';
 import {
   ButtonColor,
   ButtonSize,
@@ -36,6 +36,10 @@ export class CandidateListComponent implements OnInit {
   unDeletionDialogOptions!: IDialogOptions;
 
   isDeletedOptions: any = enumToArray(isDeletedOptions).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
+
+  genderOptions: any = enumToArray(genderOptions).map((m) => {
     return { label: m.description.toCapitalize(), value: m.id };
   });
 
@@ -70,7 +74,19 @@ export class CandidateListComponent implements OnInit {
         { field: 'profession', title: 'Profession', type: 'text' },
         { field: 'phoneNumber', title: 'Phone Number', type: 'text' },
         { field: 'adress', title: 'Adress', type: 'text' },
-        { field: 'gender', title: 'Gender', type: 'text' },
+        {
+          title: 'Gender',
+          type: 'text',
+          field: 'gender',
+          sortable: true,
+          filterable: true,
+          filter: {
+            type: 'dropdown',
+            data: this.genderOptions,
+            defaultValue: this.genderOptions[0].value,
+          },
+        //template: '<i>{{isDeletedText}}</i>',
+        },
         {
           title: 'Is Deleted',
           type: 'text',
@@ -82,7 +98,7 @@ export class CandidateListComponent implements OnInit {
             data: this.isDeletedOptions,
             defaultValue: this.isDeletedOptions[1].value,
           },
-        //template: '<i>{{isDeletedText}}</i>',
+        template: '<i>{{isDeletedText}}</i>',
         },
         { title: 'Actions', type: 'actions', buttons: this.getButtons() },
       ],

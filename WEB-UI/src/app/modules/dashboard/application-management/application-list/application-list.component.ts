@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TableComponent } from 'src/app/core/components/tables';
 import { ITableOptions } from 'src/app/core/components/tables/table/models';
+import { isDeletedOptions } from 'src/app/core/enums';
+import { enumToArray } from 'src/app/core/helpers/enum';
 import { ApplicationService } from 'src/app/core/services/api';
 
 @Component({
@@ -13,6 +15,11 @@ export class ApplicationListComponent implements OnInit {
 
   // component içerisinde kullanılan değişkenler
   tableOptions!: ITableOptions;
+  
+  isDeletedOptions: any = enumToArray(isDeletedOptions).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
+
   constructor(private applicationService: ApplicationService) {}
 
   ngOnInit(): void {
@@ -29,13 +36,27 @@ export class ApplicationListComponent implements OnInit {
           title: 'Qualification Level',
           type: 'text',
         },
-        { field: 'deadline', title: 'deadline', type: 'text' },
+        { field: 'workTimeType', title: 'Work Time Type', type: 'text' },
+        { field: 'workPlaceType', title: 'Work Place Type', type: 'text' },
         {
           field: 'candidateFullName',
           title: 'Candidate Full Name',
           type: 'text',
         },
-        { field: 'applicationDate', title: 'Application Date', type: 'text' },
+        { field: 'applicationDate', title: 'Application Date', type: 'date' },
+        {
+          title: 'Is Deleted',
+          type: 'text',
+          field: 'isDeleted',
+          sortable: true,
+          filterable: true,
+          filter: {
+            type: 'dropdown',
+            data: this.isDeletedOptions,
+            defaultValue: this.isDeletedOptions[1].value,
+          },
+          template: '<i>{{isDeletedText}}</i>',
+        },
       ],
       filterable: true,
       sortable: true,

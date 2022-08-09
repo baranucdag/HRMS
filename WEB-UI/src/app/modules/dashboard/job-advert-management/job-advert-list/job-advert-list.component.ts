@@ -1,3 +1,4 @@
+import { workPlaceTypeEnum, workTimeTypeOptions, workTimeType, workPlaceTypeOptions } from './../../../../core/enums/dropdown-select-options';
 import { formatDate } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'src/app/core/services/dialog';
@@ -51,6 +52,14 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
     return { label: m.description.toCapitalize(), value: m.id };
   });
 
+  workTimeTypeOptions: any = enumToArray(workTimeTypeOptions).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
+
+  workPlaceTypeOptions: any = enumToArray(workPlaceTypeOptions).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
+
   private readonly onDestroy = new Subject<void>();
 
   constructor(
@@ -68,14 +77,36 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
   }
 
   createTable() {
-    
-    
     this.tableOptions = {
       data: [],
       columns: [
         { field: 'positionName', title: 'Position Name', type: 'text' },
-        { field: 'workPlaceType', title: 'Work Place Type', type: 'text' },
-        { field: 'workTimeType', title: 'Work Time Type', type: 'text' },
+        {
+          title: 'Work Place Type',
+          type: 'text',
+          field: 'workPlaceType',
+          sortable: true,
+          filterable: true,
+          filter: {
+            type: 'dropdown',
+            data: this.workPlaceTypeOptions,
+            defaultValue: this.workPlaceTypeOptions[0].value,
+          },
+          //template: '<i>{{isDeletedText}}</i>',
+        },
+        {
+          title: 'Work Time Type',
+          type: 'text',
+          field: 'workTimeType',
+          sortable: true,
+          filterable: true,
+          filter: {
+            type: 'dropdown',
+            data: this.workTimeTypeOptions,
+            defaultValue: this.workTimeTypeOptions[0].value,
+          },
+          //template: '<i>{{isDeletedText}}</i>',
+        },
         {
           field: 'qualificationLevel',
           title: 'Qualification Level',
