@@ -45,9 +45,7 @@ export class CandidateListComponent implements OnInit {
 
   private readonly onDestroy = new Subject<void>();
 
-  constructor(
-    private candidateService: CandidateService,
-  ) {}
+  constructor(private candidateService: CandidateService) {}
 
   ngOnInit(): void {
     this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
@@ -72,6 +70,7 @@ export class CandidateListComponent implements OnInit {
           type: 'text',
         },
         { field: 'profession', title: 'Profession', type: 'text' },
+        { field: 'dateOfBirth', title: 'Date Of Birth', type: 'date' },
         { field: 'phoneNumber', title: 'Phone Number', type: 'text' },
         { field: 'adress', title: 'Adress', type: 'text' },
         {
@@ -85,7 +84,7 @@ export class CandidateListComponent implements OnInit {
             data: this.genderOptions,
             defaultValue: this.genderOptions[0].value,
           },
-        //template: '<i>{{isDeletedText}}</i>',
+          //template: '<i>{{isDeletedText}}</i>',
         },
         {
           title: 'Is Deleted',
@@ -98,7 +97,7 @@ export class CandidateListComponent implements OnInit {
             data: this.isDeletedOptions,
             defaultValue: this.isDeletedOptions[1].value,
           },
-        template: '<i>{{isDeletedText}}</i>',
+          template: '<i>{{isDeletedText}}</i>',
         },
         { title: 'Actions', type: 'actions', buttons: this.getButtons() },
       ],
@@ -217,6 +216,19 @@ export class CandidateListComponent implements OnInit {
         onClick: (row: any, index: number) => {
           this.onUnDeleteButtonClick(row, index);
         },
+      },
+      {
+        options: {
+          properties: [
+            ButtonType.link,
+            ButtonType.plain,
+            ButtonSize.small,
+            ButtonColor.primary,
+          ],
+          icon: ICON.user,
+          tooltip: 'Detail',
+        },
+        onClick: (row: any, index: number) => {},
       },
     ] as IColumnButton[]; // cast ediliyor
   }

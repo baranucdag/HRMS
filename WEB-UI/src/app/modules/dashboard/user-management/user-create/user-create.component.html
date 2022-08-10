@@ -1,0 +1,87 @@
+<form [formGroup]="userForm">
+  <div class="form-label" style="margin-top: 1px">
+    <label for="display-text" translate>User First Name (*)</label>
+    <input
+      type="text"
+      formControlName="firstName"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': f.firstName.dirty && f.firstName.errors
+      }"
+    />
+    <div
+      *ngIf="f.firstName.dirty && f.firstName.errors"
+      class="invalid-feedback"
+    >
+      <div *ngIf="f.firstName.errors.required" translate>
+        Please enter the user first name
+      </div>
+    </div>
+  </div>
+
+  <div class="form-label">
+    <label class="form-label" translate>User Last Name (*)</label>
+    <input
+      type="text"
+      formControlName="lastName"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': f.lastName.dirty && f.lastName.errors
+      }"
+    />
+    <div *ngIf="f.lastName.dirty && f.lastName.errors" class="invalid-feedback">
+      <div *ngIf="f.lastName.errors.required" translate>
+        Please enter the user last name
+      </div>
+    </div>
+  </div>
+
+  <div class="form-label">
+    <label class="form-label" translate>User Email (*)</label>
+    <input
+      type="text"
+      formControlName="email"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': f.email.dirty && f.email.errors
+      }"
+    />
+    <div *ngIf="f.email.dirty && f.email.errors" class="invalid-feedback">
+      <div *ngIf="f.email.errors.required" translate>
+        Please enter the user email
+      </div>
+    </div>
+  </div>
+
+  <div class="form-label">
+    <label class="form-label" translate>Password (*)</label>
+    <input
+      type="text"
+      formControlName="password"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': f.password.dirty && f.password.errors
+      }"
+    />
+    <div *ngIf="f.password.dirty && f.password.errors" class="invalid-feedback">
+      <div *ngIf="f.password.errors.required" translate>
+        Please enter the password
+      </div>
+    </div>
+  </div>
+
+  <div class="form-label">
+        <div class="form-label">
+          <label class="form-label" translate>Operation Claim (*)</label>
+          <div class="input-group">
+            <div class="input-group-append">
+              <app-dropdown
+                *ngIf="claimDropdownOptions"
+                [options]="claimDropdownOptions"
+              >
+              </app-dropdown>
+            </div>
+      </div>
+    </div>
+  </div>
+</form>
