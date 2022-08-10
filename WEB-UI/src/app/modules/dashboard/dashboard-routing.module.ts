@@ -40,6 +40,13 @@ const routes: Routes = [
         import('./application-management/application-management.module').then(
           (m) => m.ApplicationManagementModule
         ),
+      },
+      {
+        path:PATHS.user,
+        loadChildren:() =>
+        import('./user-management/user-management.module').then(
+          (m) => m.UserManagementModule
+        ),
       }
     ]
   }

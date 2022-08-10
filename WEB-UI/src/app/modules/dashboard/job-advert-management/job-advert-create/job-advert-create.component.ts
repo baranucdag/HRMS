@@ -36,8 +36,6 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
   initialData!: { id: number };
   jobAdvertForm!: FormGroup;
   selectedJobAdvert?: any;
-  // workPlaceTypes:string[]=['Remote','From Office','Hybrit']
-  //workTimeTypes:string[]=['Full Time','half']
   selectedWorkPlaceType: any;
   selectedWorkTimeType: any;
   workPlaceTypeDropdownOptions?: IDropdownOptions;
@@ -69,6 +67,7 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     this.createForm();
   }
 
+  //set data (id)
   setData(data: any) {
     this.initialData = data;
     if (this.initialData.id) {
@@ -79,6 +78,7 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     }
   }
 
+  //get jobAdverts by id
   getJobAdvert(id: number) {
     this.jobAdvertService
       .getById(id)
@@ -90,6 +90,7 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       });
   }
 
+  //set dropdown options
   setWorkPlaceTypeDropdownOptions(data: any, selected?: any) {
     // if (selected == undefined) {
     //   selected = data[0];
@@ -107,11 +108,14 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     this.workPlaceTypeDropdownOptions.errors?.next([]);
   }
 
+
+  //set dropdown options
   setWorkTimeTypeDropdownOptions(data: any, selected?: any) {
     // if (selected == undefined) {
     //   selected = data[0];
     //   this.selectedWorkPlaceType = selected;
     // }
+    
     this.workTimeTypeDropdownOptions = {
       items: data,
       onSelectionChange: (value) => {
@@ -124,6 +128,8 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     this.workTimeTypeDropdownOptions.errors?.next([]);
   }
 
+
+  //create form options
   createForm(jobAdvert?: IJobAdvert) {
     //gelen deadline verisinin uygun formata dönüştürülmesi
     let deadLine = this.datePipe.transform(jobAdvert?.deadline, 'yyyy-MM-dd');
@@ -140,10 +146,10 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     let selectedWorkTimeType;
     if (this.selectedJobAdvert) {
       selectedWorkTimeType = this.workTimeTypes.find(
-        (x: any) => x.label === this.selectedJobAdvert.workTimeType
+        (x: any) => x.value === this.selectedJobAdvert.workTimeType
       );
       selectedWorkPlaceType = this.workPlaceTypes.find(
-        (x: any) => x.label === this.selectedJobAdvert.workPlaceType
+        (x: any) => x.value === this.selectedJobAdvert.workPlaceType
       );
     }
     this.setWorkTimeTypeDropdownOptions(
@@ -156,6 +162,8 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     );
   }
 
+
+  //add operation
   save() {
     Object.keys(this.jobAdvertForm.controls).forEach((key) => {
       this.jobAdvertForm.get(key)?.markAsDirty();
@@ -170,9 +178,9 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     let sendModel: IJobAdvert = Object.assign({}, this.jobAdvertForm.value);
 
     sendModel.deadline = dateTransformForBackend(sendModel.deadline);
-    sendModel.workPlaceType = this.selectedWorkPlaceType.label;
-    sendModel.workTimeType = this.selectedWorkTimeType.label;
-
+    sendModel.workPlaceType = this.selectedWorkPlaceType.value;
+    sendModel.workTimeType = this.selectedWorkTimeType.value;
+    
     return this.jobAdvertService
       .add(sendModel)
       .pipe(takeUntil(this.onDestroy))
@@ -189,6 +197,8 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       );
   }
 
+
+  //update operation
   update() {
     Object.keys(this.jobAdvertForm.controls).forEach((key) => {
       this.jobAdvertForm.get(key)?.markAsDirty();
@@ -206,10 +216,10 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       this.jobAdvertForm.value
     );
     if (this.selectedWorkPlaceType != undefined) {
-      jobAdvertModel.workPlaceType = this.selectedWorkPlaceType.label;
+      jobAdvertModel.workPlaceType = this.selectedWorkPlaceType.value;
     }
     if (this.selectedWorkTimeType != undefined) {
-      jobAdvertModel.workTimeType = this.selectedWorkTimeType?.label;
+      jobAdvertModel.workTimeType = this.selectedWorkTimeType.value;
     }
 
     if (this.initialData.id) {

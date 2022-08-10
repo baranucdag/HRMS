@@ -108,7 +108,7 @@ export class SidebarComponent implements OnInit {
       },
       {
         id: 7,
-        displayText: 'Application Management',
+        displayText: 'Petition Management',
         icon: 'pi pi-list',
         orderNum: 11,
         url: 'application',
@@ -116,11 +116,28 @@ export class SidebarComponent implements OnInit {
       },
       {
         id: 8,
-        displayText: 'Application List',
+        displayText: 'Petition List',
         icon: 'bi bi-table',
         parentId: 7,
         orderNum: 11,
         url: 'application/application-list',
+        menuGuid: 'assadasdasdadsdasdasdasdasd',
+      },
+      {
+        id: 9,
+        displayText: 'User Management',
+        icon: 'pi pi-list',
+        orderNum: 11,
+        url: 'user',
+        menuGuid: 'asdasdasdasdasda',
+      },
+      {
+        id: 10,
+        displayText: 'User List',
+        icon: 'bi bi-table',
+        parentId: 9,
+        orderNum: 11,
+        url: 'user/user-list',
         menuGuid: 'assadasdasdadsdasdasdasdasd',
       },
     

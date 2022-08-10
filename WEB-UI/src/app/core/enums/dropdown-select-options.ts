@@ -1,130 +1,40 @@
-export enum isPublishedOptions {
-  all = 0,
-  published = 1,
-  IsNotPublished = 2
-}
-
 export enum isDeletedOptions {
   all = 0,
   notDeleted = 1,
   deleted = 2
 }
 
-export enum genderOptions{
+export enum workPlaceTypeOptions {
+  all=0,
+  remote=1,
+  hybrid=2,
+  fromOffice=3
+}
+
+export enum workTimeTypeOptions {
+  all=0,
+  partTime = 1,
+  fullTime=2,
+  ıntern=3
+}
+
+export enum gender{
   male=0,
   female=1,
   unspecified=2
 }
 
-export enum productTypeOptions {
-  all = 0,
-  software = 1,
-  system
-}
-
-export enum partnerTypeOptions {
-  all = 0,
-  gold,
-  silver,
-  bronze
-}
-
-export enum customerTypeOptions {
-  all = 0,
-  individual,
-  corporate
-}
-
-export enum licenseTypeOptions {
-  all = 0,
-  free,
-  demo,
-  standart,
-  advanced ,
-  enterprise
-}
-
-export enum isConfirmOptions {
-  all = 0,
-  yes,
-  no
-}
-
-export enum isExpiredOptions {
-  all = 0,
-  yes,
-  no
-}
-
-export enum isEmailSentOptions {
-  all = 0,
-  yes,
-  no
-}
-
-export enum isActivatedOptions {
-  all = 0,
-  yes,
-  no
-}
-
-export enum isDemoRequestOptions {
-  all = 0,
-  yes,
-  no
-}
-
-export enum isEnabledOptions {
-  all = 0,
-  yes,
-  no
-}
-
-export enum userTypeOptions {
-  all = 0,
-  activeDirectory,
-  custom
-}
-
-export enum groupTypeOptions {
-  all = 0,
-  activeDirectory,
-  custom
-}
-
-export enum licenseExpireDateOptions {
-  all = 0,
-  threeDaysRemaining,
-  sevenDaysRemaining,
-  normal,
-  expired,
-  free,
-}
-
-export enum isAssignedOptions {
-  all = 0,
-  yes,
-  no
-}
-
-export enum hasParentOptions {
-  all = 0,
-  yes,
-  no
-}
-
-export enum propertyTypeOptions {
-  all = "",
-  string = "string",
-  integer = "integer",
-  boolean = "boolean",
-  date = "date"
+export enum genderOptions{
+  all=0,
+  male=1,
+  female=2,
+  unspecified=3
 }
 
 export enum workTimeType {
   partTime = 0,
   fullTime,
-  Intern
+  intern
 }
 
 export enum workPlaceTypeEnum {

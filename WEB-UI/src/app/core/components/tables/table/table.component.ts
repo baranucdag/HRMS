@@ -392,8 +392,8 @@ export class TableComponent implements OnInit {
   }
 
   getIsDeleteStyle(row:any){
-    let color = "red";
-    if(row.isDeleted==true) color="red";
+    let color = "#da3e56";
+    if(row.isDeleted==true) color="#da3e56";
     else color="white"
     return color
   }
