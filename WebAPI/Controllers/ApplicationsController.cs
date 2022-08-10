@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("GetPaginationData")]
-        public IActionResult GetPaginationData(PaginationItem<ApplicationDetailDto> pi)
+        public IActionResult GetPaginationData(PaginationItem<ApplicationDto> pi)
         {
             var result = applicationService.GetApplicationPaginated(pi);
             if (result.IsOk)

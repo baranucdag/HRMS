@@ -2,7 +2,7 @@
 
 namespace Entities.Dto
 {
-    public  class AnswerDetailDto:IDto
+    public  class AnswerDto:IDto
     {
         public int Id { get; set; }
         public int  QuestionId { get; set; }

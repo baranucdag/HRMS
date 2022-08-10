@@ -10,7 +10,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfAnswerDal : EfEntityRepositoryBase<Answer, DataContext>, IAnswerDal
     {
-        public List<AnswerDetailDto> GetAnswerDetails()
+        public List<AnswerDto> GetAnswerDetails()
         {
             using (var context = new DataContext())
             {
@@ -18,7 +18,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join t2 in context.Questions
                              on t1.QuestionId equals t2.Id
 
-                             select new AnswerDetailDto
+                             select new AnswerDto
                              {
                                  Id = t1.Id,
                                  QuestionId = t2.Id,

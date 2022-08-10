@@ -51,7 +51,7 @@ namespace Business.Concrete
             applicationDal.Update(application);
             return new ResultItem();
         }
-        public ResultItem GetApplicationPaginated(PaginationItem<ApplicationDetailDto> pi)
+        public ResultItem GetApplicationPaginated(PaginationItem<ApplicationDto> pi)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace Business.Concrete
                 // Grid kolonlarından veya global searchden arama geldiyse
                 if (pi.Filters != null && pi.Filters.Count() > 0)
                 {
-                    List<ApplicationDetailDto> globalList = new List<ApplicationDetailDto>();
+                    List<ApplicationDto> globalList = new List<ApplicationDto>();
                     foreach (var item in pi.Filters)
                     {
                         string key = item.Key.ToFirstCharUpper(true);
@@ -76,30 +76,30 @@ namespace Business.Concrete
                             // grid global search
                             if (item.Key.ToLowerEng() == "global")
                             {
-                                var props = typeof(ApplicationDetailDto).GetProperties();
+                                var props = typeof(ApplicationDto).GetProperties();
 
                                 foreach (var prop in props)
                                 {
-                                    var res = new List<ApplicationDetailDto>();
+                                    var res = new List<ApplicationDto>();
 
                                     switch (prop.Name)
                                     {
-                                        case nameof(ApplicationDetailDto.PositionName):
+                                        case nameof(ApplicationDto.PositionName):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.PositionName.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(ApplicationDetailDto.CandidateFullName):
+                                        case nameof(ApplicationDto.CandidateFullName):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.CandidateFullName.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(ApplicationDetailDto.WorkTimeType):
+                                        case nameof(ApplicationDto.WorkTimeType):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
-                                        case nameof(ApplicationDetailDto.WorkPlaceType):
+                                        case nameof(ApplicationDto.WorkPlaceType):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
@@ -111,13 +111,13 @@ namespace Business.Concrete
 
                                 }
                                 rows = globalList.GroupBy(x => x.Id).Select(x => x.First()).AsQueryable();
-                                globalList = new List<ApplicationDetailDto>();
+                                globalList = new List<ApplicationDto>();
                             }
                             else // grid column search - spesifik kolon bazlı işlemler için
                             {
                                 switch (key)
                                 {
-                                    case nameof(ApplicationDetailDto.PositionName):
+                                    case nameof(ApplicationDto.PositionName):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -147,7 +147,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(ApplicationDetailDto.CandidateFullName):
+                                    case nameof(ApplicationDto.CandidateFullName):
                                         {
                                             switch (matchMode.ToLowerEng())
                                             {
@@ -176,70 +176,91 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(ApplicationDetailDto.WorkTimeType):
-                                        {
-                                            switch (matchMode.ToLowerEng())
-                                            {
-                                                case "startswith":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().StartsWith(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "endswith":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().EndsWith(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "contains":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Contains(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "equals":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Equals(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                default:
-                                                    break;
-                                            }
-
-                                            break;
-                                        }
-                                    case nameof(ApplicationDetailDto.WorkPlaceType):
-                                        {
-                                            switch (matchMode.ToLowerEng())
-                                            {
-                                                case "startswith":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().StartsWith(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "endswith":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().EndsWith(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "contains":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Contains(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                case "equals":
-                                                    {
-                                                        rows = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Equals(oVal)).AsQueryable();
-                                                        break;
-                                                    }
-                                                default:
-                                                    break;
-                                            }
-
-                                            break;
-                                        }
-                                    case nameof(ApplicationDetailDto.Deadline):
+                                    case nameof(ApplicationDto.Deadline):
                                         {
                                             var a = Convert.ToDateTime(val);
                                             rows = rows.Where(x => x.Deadline <= a);
+                                            break;
+                                        }
+                                    case nameof(ApplicationDto.WorkTimeType):
+                                        {
+                                            switch (Convert.ToInt32(oVal))
+                                            {
+                                                case 0: // getAll
+                                                    {
+                                                        break;
+                                                    }
+                                                case 1: // partTime
+                                                    {
+                                                        rows = rows.Where(x => x.WorkTimeType == "PartTime");
+                                                        break;
+                                                    }
+                                                case 2: // fullTime
+                                                    {
+                                                        rows = rows.Where(x => x.WorkTimeType == "FullTime");
+                                                        break;
+                                                    }
+                                                case 3: // Intern
+                                                    {
+                                                        rows = rows.Where(x => x.WorkTimeType == "Intern");
+                                                        break;
+                                                    }
+
+                                                default:
+                                                    break;
+                                            }
+                                            break;
+                                        }
+                                    case nameof(ApplicationDto.WorkPlaceType):
+                                        {
+                                            switch (Convert.ToInt32(oVal))
+                                            {
+                                                case 0: // getAll
+                                                    {
+                                                        break;
+                                                    }
+                                                case 1: // Remote
+                                                    {
+                                                        rows = rows.Where(x => x.WorkPlaceType == "Remote");
+                                                        break;
+                                                    }
+                                                case 2: // Hybrid
+                                                    {
+                                                        rows = rows.Where(x => x.WorkPlaceType == "Hybrid");
+                                                        break;
+                                                    }
+                                                case 3: // FromOffice
+                                                    {
+                                                        rows = rows.Where(x => x.WorkPlaceType == "FromOffice");
+                                                        break;
+                                                    }
+
+                                                default:
+                                                    break;
+                                            }
+                                            break;
+                                        }
+                                    case nameof(ApplicationDto.IsDeleted):
+                                        {
+                                            switch (Convert.ToInt32(oVal))
+                                            {
+                                                case 0: // getAll
+                                                    {
+                                                        break;
+                                                    }
+                                                case 1: // IsNotDeleted
+                                                    {
+                                                        rows = rows.Where(x => x.IsDeleted == 0);
+                                                        break;
+                                                    }
+                                                case 2: // IsDeleted
+                                                    {
+                                                        rows = rows.Where(x => x.IsDeleted == 1);
+                                                        break;
+                                                    }
+                                                default:
+                                                    break;
+                                            }
                                             break;
                                         }
 
@@ -267,7 +288,7 @@ namespace Business.Concrete
                         {
                             orderBy = item.Order == 1 ? "OrderBy" : "OrderByDescending";
                         }
-                        rows = rows.ToApplyOrder<ApplicationDetailDto>(key, orderBy);
+                        rows = rows.ToApplyOrder<ApplicationDto>(key, orderBy);
                     }
                 }
 

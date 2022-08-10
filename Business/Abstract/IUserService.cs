@@ -1,4 +1,7 @@
 ﻿using Core.Entites.Concrete;
+using Core.Utilities.Helpers.PaginationHelper;
+using Core.Utilities.Result;
+using Entities.Dto;
 using System.Collections.Generic;
 
 namespace Business.Abstract
@@ -9,8 +12,10 @@ namespace Business.Abstract
         void Update(User user);
         void Delete(int id);
         List<User> GetAll();
-        User GetById(int id);
+        ResultItem GetById(int id);
         User GetByMail(string email);
+        ResultItem GetUsersPaginated(PaginationItem<UserDto> pi);
         List<OperationClaim> GetClaims(User user);
+        ResultItem GetClaim(User user);
     }
 }

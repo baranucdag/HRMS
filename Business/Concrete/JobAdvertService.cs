@@ -49,7 +49,7 @@ namespace Business.Concrete
         public ResultItem Update(JobAdvert jobAdvert)
         {
             jobAdvertDal.Update(jobAdvert);
-            return new ResultItem(true);
+            return new ResultItem(true,null,Messages.UpdateSuccess);
         }
 
 

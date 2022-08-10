@@ -11,7 +11,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfApplicationDal : EfEntityRepositoryBase<Application, DataContext>, IApplicationDal
     {
-        public List<ApplicationDetailDto> GetApplicationDetails()
+        public List<ApplicationDto> GetApplicationDetails()
         {
             using (var context = new DataContext())
             {
@@ -22,7 +22,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join t3 in context.JobAdverts
                              on t1.JobAdvertId equals t3.Id
 
-                             select new ApplicationDetailDto
+                             select new ApplicationDto
                              {
                                  Id = t1.Id,
                                  ApplicationDate = t1.ApplicationDate,

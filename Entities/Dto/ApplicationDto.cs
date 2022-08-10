@@ -3,7 +3,7 @@ using System;
 
 namespace Entities.Dto
 {
-    public class ApplicationDetailDto : IDto
+    public class ApplicationDto : IDto
     {
         public int Id { get; set; }
         public int JobAdvertId { get; set; }
