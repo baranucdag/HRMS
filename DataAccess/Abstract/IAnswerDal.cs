@@ -7,6 +7,6 @@ namespace DataAccess.Abstract
 {
     public interface IAnswerDal : IEntityRepository<Answer>
     {
-        public List<AnswerDetailDto> GetAnswerDetails();
+        public List<AnswerDto> GetAnswerDetails();
     }
 }

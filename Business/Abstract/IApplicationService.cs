@@ -8,7 +8,7 @@ namespace Business.Abstract
     public interface IApplicationService
     {
         ResultItem GetApplicationDetails();
-        ResultItem GetApplicationPaginated(PaginationItem<ApplicationDetailDto> pi);
+        ResultItem GetApplicationPaginated(PaginationItem<ApplicationDto> pi);
         ResultItem Add(Application application);
         ResultItem Update(Application application);
         ResultItem Delete(int id);

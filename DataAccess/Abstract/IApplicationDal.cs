@@ -7,6 +7,6 @@ namespace DataAccess.Abstract
 {
     public interface IApplicationDal:IEntityRepository<Application>
     {
-         List<ApplicationDetailDto> GetApplicationDetails();
+         List<ApplicationDto> GetApplicationDetails();
     }
 }

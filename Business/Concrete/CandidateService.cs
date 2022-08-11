@@ -53,9 +53,10 @@ namespace Business.Concrete
             return new ResultItem();
         }
 
-        //Get Candidates filtering, sorting and paging
+        //Get Candidates filtered, sorted and paged
         public ResultItem GetCandidatesPaginated(PaginationItem<CandidateDto> pi)
         {
+            //SecuredOperationTool securedOperation = new SecuredOperationTool("admin"); 
             try
             {
                 var rows = candidateDal.GetCandidateDetails().AsQueryable();
@@ -262,6 +263,12 @@ namespace Business.Concrete
                                                 default:
                                                     break;
                                             }
+                                            break;
+                                        }
+                                    case nameof(CandidateDto.DateOfBirth):
+                                        {
+                                            var a = Convert.ToDateTime(val);
+                                            rows = rows.Where(x => x.DateOfBirth <= a);
                                             break;
                                         }
                                     case nameof(CandidateDto.IsDeleted):
