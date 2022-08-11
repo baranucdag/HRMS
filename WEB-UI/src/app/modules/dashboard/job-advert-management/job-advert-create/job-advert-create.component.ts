@@ -1,4 +1,5 @@
 import {
+  department,
   workPlaceTypeEnum,
   workTimeType,
 } from './../../../../core/enums/dropdown-select-options';
@@ -38,8 +39,14 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
   selectedJobAdvert?: any;
   selectedWorkPlaceType: any;
   selectedWorkTimeType: any;
+  selectedDepartment: any;
   workPlaceTypeDropdownOptions?: IDropdownOptions;
   workTimeTypeDropdownOptions?: IDropdownOptions;
+  departmentDropdownOptions?: IDropdownOptions;
+
+  departments: any = enumToArray(department).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
 
   workTimeTypes: any = enumToArray(workTimeType).map((m) => {
     return { label: m.description.toCapitalize(), value: m.id };
@@ -91,6 +98,24 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
   }
 
   //set dropdown options
+  setDepartmentDropdownOptions(data: any, selected?: any) {
+    // if (selected == undefined) {
+    //   selected = data[0];
+    //   this.selectedWorkPlaceType = selected;
+    // }
+    this.departmentDropdownOptions = {
+      items: data,
+      onSelectionChange: (value) => {
+        this.selectedDepartment = value;
+      },
+      optionLabel: 'label',
+      placeholder: 'Select',
+      selected: selected,
+    };
+    this.departmentDropdownOptions.errors?.next([]);
+  }
+
+  //set dropdown options
   setWorkPlaceTypeDropdownOptions(data: any, selected?: any) {
     // if (selected == undefined) {
     //   selected = data[0];
@@ -106,8 +131,8 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       selected: selected,
     };
     this.workPlaceTypeDropdownOptions.errors?.next([]);
+    
   }
-
 
   //set dropdown options
   setWorkTimeTypeDropdownOptions(data: any, selected?: any) {
@@ -115,7 +140,7 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     //   selected = data[0];
     //   this.selectedWorkPlaceType = selected;
     // }
-    
+
     this.workTimeTypeDropdownOptions = {
       items: data,
       onSelectionChange: (value) => {
@@ -127,7 +152,6 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     };
     this.workTimeTypeDropdownOptions.errors?.next([]);
   }
-
 
   //create form options
   createForm(jobAdvert?: IJobAdvert) {
@@ -144,6 +168,7 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
 
     let selectedWorkPlaceType;
     let selectedWorkTimeType;
+    let selectedDepartment;
     if (this.selectedJobAdvert) {
       selectedWorkTimeType = this.workTimeTypes.find(
         (x: any) => x.value === this.selectedJobAdvert.workTimeType
@@ -151,17 +176,21 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       selectedWorkPlaceType = this.workPlaceTypes.find(
         (x: any) => x.value === this.selectedJobAdvert.workPlaceType
       );
+      selectedDepartment = this.departments.find(
+        (x: any) => x.value === this.selectedJobAdvert.department
+      );
+      
     }
     this.setWorkTimeTypeDropdownOptions(
       this.workTimeTypes,
       selectedWorkTimeType
     );
+    this.setDepartmentDropdownOptions(this.departments, selectedDepartment);
     this.setWorkPlaceTypeDropdownOptions(
       this.workPlaceTypes,
       selectedWorkPlaceType
     );
   }
-
 
   //add operation
   save() {
@@ -177,10 +206,9 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     setSavingStatus(this.onInitializing, true);
     let sendModel: IJobAdvert = Object.assign({}, this.jobAdvertForm.value);
 
-    sendModel.deadline = dateTransformForBackend(sendModel.deadline);
     sendModel.workPlaceType = this.selectedWorkPlaceType.value;
     sendModel.workTimeType = this.selectedWorkTimeType.value;
-    
+
     return this.jobAdvertService
       .add(sendModel)
       .pipe(takeUntil(this.onDestroy))
@@ -196,7 +224,6 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
         }
       );
   }
-
 
   //update operation
   update() {
@@ -221,7 +248,11 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
     if (this.selectedWorkTimeType != undefined) {
       jobAdvertModel.workTimeType = this.selectedWorkTimeType.value;
     }
+    if (this.selectedDepartment != undefined) {
+      jobAdvertModel.department = this.selectedDepartment.value;
+    }
 
+    
     if (this.initialData.id) {
       this.jobAdvertService
         .update(jobAdvertModel)

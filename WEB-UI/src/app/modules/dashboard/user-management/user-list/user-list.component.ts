@@ -40,6 +40,7 @@ export class UserListComponent implements OnInit {
       columns: [
         { field: 'fullName', title: 'Full Name', type: 'text' },
         { field: 'email', title: 'Email', type: 'text' },
+        { field: 'userClaim', title: 'User Claim', type: 'text' },
         { title: 'Actions', type: 'actions', buttons: this.getButtons() },
       ],
       filterable: true,

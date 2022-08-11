@@ -3,6 +3,7 @@ import { IBaseModel } from './../base.model';
 export interface IJobAdvert extends IBaseModel{
     positionName:string,
     qualificationLevel:string,
+    department:string,
     workTimeType:string,
     workPlaceType:string,
     publishDate:Date,
