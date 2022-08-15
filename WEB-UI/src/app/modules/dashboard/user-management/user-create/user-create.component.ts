@@ -65,7 +65,6 @@ export class UserCreateComponent implements OnInit, IFormComponent {
     if (this.initialData.id) {
       // update
       this.getUserOperationClaim(this.initialData.id);
-      this.getUser(this.initialData.id);
     } else {
       // create
     }
@@ -90,14 +89,14 @@ export class UserCreateComponent implements OnInit, IFormComponent {
       .subscribe((response: any) => {
         const data = response.body.data
         this.selectedClaim = data;
-        this.createForm(data);
+        this.getUser(this.initialData.id);
       });
   }
 
   createForm(user?: IUser) {
     this.userForm = this.formBuilder.group({
       firstName: [user?.firstName, Validators.required],
-      password: ['', Validators.required],
+      password: ['***', Validators.required],
       lastName: [user?.lastName, Validators.required],
       email: [user?.email, Validators.required],
     });
@@ -105,13 +104,19 @@ export class UserCreateComponent implements OnInit, IFormComponent {
       this.selectedClaim = this.claimTypes.find(
         (x: any) => x.value === this.selectedClaim.operationClaimId
       );
-      
     }
+   
+    
+    
     this.setClaimDropdownOptions(this.claimTypes, this.selectedClaim);
   }
 
   //set dropdown options
   setClaimDropdownOptions(data: any, selected?: any) {
+    console.log(data);
+    console.log(selected);
+    
+    
     // if (selected == undefined) {
     //   selected = data[0];
     //   this.selectedWorkPlaceType = selected;
@@ -122,7 +127,7 @@ export class UserCreateComponent implements OnInit, IFormComponent {
         this.selectedClaim = value;
       },
       optionLabel: 'label',
-      placeholder: 'Select',
+      placeholder: 'selected',
       selected: selected,
     };
     this.claimDropdownOptions.errors?.next([]);
@@ -166,6 +171,9 @@ export class UserCreateComponent implements OnInit, IFormComponent {
 
   //update operation
   update() {
+    if(!this.selectedClaim){
+      return
+    }  
     this.userForm.disable();
     setUpdatingStatus(this.onInitializing, true);
 

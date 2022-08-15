@@ -3,6 +3,8 @@ export const PATHS = {
     slash: "/",
     auth: "auth",
     login: "login",
+    register:"register",
+    admin:"admin",
     pageNotFound: "404",
     unauthorized: "unauthorized",
     menuManagement: "menu-management",
@@ -14,5 +16,6 @@ export const PATHS = {
     application:"application",
     applicationList:"application-list",
     user:"user",
-    userList:"user-list"
+    userList:"user-list",
+    job:"job"
 }

@@ -1,0 +1,40 @@
+<header class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center">
+        <h1 class="fw-light">Vertically Centered Masthead Content</h1>
+        <p class="lead">A great starter layout for a landing page</p>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="row" style=" margin-top: 35px; margin-bottom: 35px;">
+  <div class="col-lg-9 col-md-10 mx-auto" *ngIf="jobAdverts">
+    <div *ngFor="let jobAdvert of jobAdverts">
+      <div class="card" style="text-align: center; margin-top: 5px;">
+        <div class="row">
+          <div class="col-3" style="margin-top: 35px;">
+            position
+            <h5>{{ jobAdvert.positionName }}</h5>
+          </div>
+          <div class="col">
+              Qualification Level 
+              <h5>{{ jobAdvert.qualificationLevel }}</h5>
+          </div>
+          <div class="col">
+            publish date  
+            <h5>{{ jobAdvert.publishDate | date: "mediumDate" }}</h5>
+          </div>
+
+          <div class="col">
+            department <br />
+            <h5>{{ jobAdvert.department }}</h5>
+          </div>
+          <div class="col">
+            <button class="btn btn-primary">Apply now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

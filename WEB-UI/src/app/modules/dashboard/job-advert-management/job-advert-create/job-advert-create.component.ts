@@ -131,7 +131,6 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       selected: selected,
     };
     this.workPlaceTypeDropdownOptions.errors?.next([]);
-    
   }
 
   //set dropdown options
@@ -179,7 +178,6 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       selectedDepartment = this.departments.find(
         (x: any) => x.value === this.selectedJobAdvert.department
       );
-      
     }
     this.setWorkTimeTypeDropdownOptions(
       this.workTimeTypes,
@@ -252,7 +250,6 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
       jobAdvertModel.department = this.selectedDepartment.value;
     }
 
-    
     if (this.initialData.id) {
       this.jobAdvertService
         .update(jobAdvertModel)
