@@ -21,14 +21,14 @@ namespace WebAPI.Controllers.BaseControllers
         public IActionResult GetPaginationData(PaginationItem<JobAdvertDto> paginationItem)
         {
             var result = jobAdvertService.GetPaginationData(paginationItem);
-            if (result.IsOk)
+            if (result.IsOk)    
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
 
-        [HttpPost("GetAll")]
+        [HttpGet("GetAll")]
         public IActionResult GetDetails()
         {
             var result = jobAdvertService.GetAllDetails();
@@ -39,10 +39,10 @@ namespace WebAPI.Controllers.BaseControllers
             return BadRequest(result);
         }
 
-        [HttpGet("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("GetAllPaged")]
+        public IActionResult GetAll([FromQuery] QueryObject queryObject)
         {
-            var result = jobAdvertService.GetAll();
+            var result = jobAdvertService.GetAllPaged(queryObject);
             if (result.IsOk)
             {
                 return Ok(result);

@@ -8,7 +8,7 @@ namespace Entities.Enums
         System = 0,
 
         [Description("Software")]
-        software = 1,
+        Software = 1,
 
         [Description("Human Resources")]
         HumanResources = 2

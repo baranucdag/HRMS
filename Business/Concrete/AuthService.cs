@@ -90,7 +90,7 @@ namespace Business.Concrete
 
         }
 
-        //Create access token when user is logged or registered
+        //Create access token when user is logged in or registered
         public ResultItem CreateAccessToken(User user)
         {
             var claims = userService.GetClaims(user);

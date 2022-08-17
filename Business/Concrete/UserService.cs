@@ -56,7 +56,7 @@ namespace Business.Concrete
             return userDal.Get(x => x.Email == email);
         }
 
-        public bool CheckUpdatedUser(int userId, string email)
+        public bool CheckUpdatedUserMail(int userId, string email)
         {
             //eğer kullanıcı email alanını değiştirmiyorsa
             if (userDal.Get(x => x.Id == userId).Email == email)
@@ -100,7 +100,7 @@ namespace Business.Concrete
 
             if (userUpdateWithClaimDto.Password == "*****")
             {
-                if (this.CheckUpdatedUser(updatedUser.Id, updatedUser.Email))
+                if (this.CheckUpdatedUserMail(updatedUser.Id, updatedUser.Email))
                 {
                     //eski password salt ve hash bilgilerinin yeni değere atama
                     User user = userDal.Get(x => x.Id == updatedUser.Id);
@@ -113,7 +113,7 @@ namespace Business.Concrete
             }
             else
             {
-                if (this.CheckUpdatedUser(updatedUser.Id, updatedUser.Email))
+                if (this.CheckUpdatedUserMail(updatedUser.Id, updatedUser.Email))
                 {
                     HashingHelper.CreatePasswordHash(userUpdateWithClaimDto.Password, out passwordHash, out passwordSalt);
                     updatedUser.PasswordHash = passwordHash;

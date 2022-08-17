@@ -5,10 +5,10 @@ namespace Entites.Enums
     public enum WorkTimeTypeEnum
     {
         [Description("Full-Time")]
-        FullTime =0,
+        PartTime=0,
 
         [Description("Part-Time")]
-        PartTime =1,
+         FullTime =1,
 
         [Description("Intern")]
         Intern = 2
