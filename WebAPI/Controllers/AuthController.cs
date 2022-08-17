@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
             var userToLogin = authService.Login(userLoginDto);
             if (!userToLogin.IsOk)
             {
-                return BadRequest(userToLogin.Message);
+                return BadRequest(userToLogin);
             }
             User userToCheck = (User)userToLogin.Data;
             var result = authService.CreateAccessToken(userToCheck);
@@ -32,7 +32,6 @@ namespace WebAPI.Controllers
             {
                 return Ok(result);
             }
-
             return BadRequest(result.Message);
         }
 
@@ -44,27 +43,31 @@ namespace WebAPI.Controllers
                 var userExists = authService.IsUserExists(userForRegisterDto.Email);
                 if (!userExists.IsOk)
                 {
-                    return BadRequest(userExists.Message);
+                    return BadRequest(userExists);
                 }
 
                 var registerResult = authService.RegisterUser(userForRegisterDto);
                 if (registerResult.IsOk)
                 {
                     User registerUser = (User)registerResult.Data;
+                    userOperationClaimService.Add(new UserOperationClaim(){ OperationClaimId=3,UserId=registerUser.Id});
                     var result = authService.CreateAccessToken(registerUser);
                     if (result.IsOk)
                     {
                         return Ok(result);
                     }
 
-                    return BadRequest(result.Message);
+                    return BadRequest(result);
                 }
-                return BadRequest(registerResult.Message);
+                return BadRequest(registerResult);
 
             }
             return BadRequest("Dto cannot be null !");
         }
 
+
+        //todo : refactor this function
+        //register a user with claim (only admin can access)
         [HttpPost("RegisterWithClaim")]
         public ActionResult RegisterWithAddClaim([FromForm] UserRegisterDto userForRegisterDto, [FromForm] OperationClaim operationClaim)
         {
@@ -73,7 +76,7 @@ namespace WebAPI.Controllers
                 var userExists = authService.IsUserExists(userForRegisterDto.Email);
                 if (!userExists.IsOk)
                 {
-                    return BadRequest(userExists.Message);
+                    return BadRequest(userExists);
                 }
 
                 var registerResult = authService.RegisterUser(userForRegisterDto);
@@ -88,15 +91,23 @@ namespace WebAPI.Controllers
                         return Ok(result);
                     }
 
-                    return BadRequest(result.Message);
+                    return BadRequest(result);
                 }
-                return BadRequest(registerResult.Message);
+                return BadRequest(registerResult);
 
             }
             return BadRequest("Dto cannot be null !");
-
         }
 
-
+        [HttpPost("ChangePassword")]
+        public IActionResult ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            var result = authService.ChangePassword(changePasswordDto);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

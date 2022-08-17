@@ -62,7 +62,7 @@ namespace Business.Concrete
 
         public ResultItem GetAll()
         {
-            var result = jobAdvertDal.GetAll();
+            var result = jobAdvertDal.GetJobAdvertDtos().Where(x=>x.IsDeleted == 0);
             return new ResultItem(true, result, Messages.DataListed);
         }
 

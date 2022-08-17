@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserOperationClaimDal : EfEntityRepositoryBase<UserOperationClaim, DataContext>, IUserOperationClaimDal
     {
-        public List<UserOperationClaimDto> GetOperationClaimList()
+        public UserOperationClaimDto GetOperationClaimDetail(Expression<Func<UserOperationClaimDto, bool>> filter = null)
         {
             using (var context = new DataContext())
             {
@@ -32,13 +32,12 @@ namespace DataAccess.Concrete.EntityFramework
                                  LastName = t2.LastName,
                                  OperationClaimId = t3.Id,
                                  ClaimName = t3.Name,
-
                              };
-                return result.ToList();
+                return filter == null ? result.FirstOrDefault() : result.Where(filter).FirstOrDefault();
             }
         }
 
-        public List<UserOperationClaimDto> GetDetailsById(Expression<Func<UserOperationClaimDto, bool>> filter = null)
+        public List<UserOperationClaimDto> GetDetails(Expression<Func<UserOperationClaimDto, bool>> filter = null)
         {
             using (var context = new DataContext())
             {

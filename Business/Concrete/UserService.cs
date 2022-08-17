@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
+using Business.Constans;
 using Core.Entites.Concrete;
 using Core.Extensions;
 using Core.Utilities.Helpers.PaginationHelper;
 using Core.Utilities.Result;
+using Core.Utilities.Security.Hashing;
 using DataAccess.Abstract;
 using Entities.Dto;
 using Newtonsoft.Json.Linq;
@@ -15,9 +17,11 @@ namespace Business.Concrete
     public class UserService : IUserService
     {
         private readonly IUserDal userDal;
-        public UserService(IUserDal userDal)
+        private readonly IUserOperationClaimService claimService;
+        public UserService(IUserDal userDal, IUserOperationClaimService claimService)
         {
             this.userDal = userDal;
+            this.claimService = claimService;
         }
         public void Add(User user)
         {
@@ -40,11 +44,6 @@ namespace Business.Concrete
         {
             return userDal.GetClaims(user);
         }
-        //get single claim of user (firstOrDefault)
-        public ResultItem GetClaim(User user)
-        {
-            throw new NotImplementedException();
-        }
 
         public ResultItem GetById(int id)
         {
@@ -57,9 +56,73 @@ namespace Business.Concrete
             return userDal.Get(x => x.Email == email);
         }
 
+        public bool CheckUpdatedUser(int userId, string email)
+        {
+            //eğer kullanıcı email alanını değiştirmiyorsa
+            if (userDal.Get(x => x.Id == userId).Email == email)
+            {
+                return true;
+            }
+            else
+            {
+                if (userDal.Get(x => x.Email == email) != null)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
         public void Update(User user)
         {
             userDal.Update(user);
+        }
+
+        //update user with claim (only admin can access)
+        //todo: refactor this function
+        public ResultItem UpdateWithClaim(UserUpdateWithClaimDto userUpdateWithClaimDto)
+        {
+            Byte[] passwordHash, passwordSalt;
+            UserOperationClaim claim = new UserOperationClaim()
+            {
+                OperationClaimId = userUpdateWithClaimDto.OperationClamId,
+                UserId = userUpdateWithClaimDto.Id
+            };
+            User updatedUser = new User()
+            {
+                Id = userUpdateWithClaimDto.Id,
+                FirstName = userUpdateWithClaimDto.FirstName,
+                LastName = userUpdateWithClaimDto.LastName,
+                Email = userUpdateWithClaimDto.Email,
+            };
+
+            claimService.Add(claim);
+
+            if (userUpdateWithClaimDto.Password == "*****")
+            {
+                if (this.CheckUpdatedUser(updatedUser.Id, updatedUser.Email))
+                {
+                    //eski password salt ve hash bilgilerinin yeni değere atama
+                    User user = userDal.Get(x => x.Id == updatedUser.Id);
+                    updatedUser.PasswordHash = user.PasswordHash;
+                    updatedUser.PasswordSalt = user.PasswordSalt;
+                    userDal.Update(updatedUser);
+                    return new ResultItem(true, null, Messages.UpdateSuccess);
+                }
+                return new ResultItem(false, null, Messages.UserAlreadyExist);
+            }
+            else
+            {
+                if (this.CheckUpdatedUser(updatedUser.Id, updatedUser.Email))
+                {
+                    HashingHelper.CreatePasswordHash(userUpdateWithClaimDto.Password, out passwordHash, out passwordSalt);
+                    updatedUser.PasswordHash = passwordHash;
+                    updatedUser.PasswordSalt = passwordSalt;
+                    userDal.Update(updatedUser);
+                    return new ResultItem(true, null, Messages.UpdateSuccess);
+                }
+                return new ResultItem(false,null,Messages.UserAlreadyExist);
+            }
         }
 
         //Get users filtered, sorted and paged
@@ -68,7 +131,7 @@ namespace Business.Concrete
             //SecuredOperationTool securedOperation = new SecuredOperationTool("admin"); 
             try
             {
-                var rows = userDal.GetUserDetails().AsQueryable();
+                var rows = userDal.GetAllDetails().AsQueryable();
 
                 // Grid kolonlarından veya global searchden arama geldiyse
                 if (pi.Filters != null && pi.Filters.Count() > 0)

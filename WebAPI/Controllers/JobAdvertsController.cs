@@ -28,7 +28,7 @@ namespace WebAPI.Controllers.BaseControllers
             return BadRequest(result);
         }
 
-        [HttpPost("GetDetails")]
+        [HttpPost("GetAll")]
         public IActionResult GetDetails()
         {
             var result = jobAdvertService.GetAllDetails();
