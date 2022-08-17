@@ -1,6 +1,6 @@
 <form [formGroup]="jobAdvertForm">
   <div class="row">
-    <div class="col-6">
+    <div class="form-label">
       <label for="display-text" translate>Position Name (*)</label>
       <input
         type="text"
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="col-6">
+  <div class="form-label">
     <label class="form-label" translate>Qualification Level (*)</label>
     <input
       type="text"
@@ -40,25 +40,40 @@
       </div>
     </div>
   </div>
+
   <div class="grid-container">
     <div class="grid-item">
-        <div class="form-label">
-          <label for="type" class="form-label" translate
-            >Work Place Type (*)</label
-          >
-          <div class="input-group">
-            <div class="input-group-append">
-              <app-dropdown
-                *ngIf="workPlaceTypeDropdownOptions"
-                [options]="workPlaceTypeDropdownOptions"
-                style="width: 200px;"
-              >
-              </app-dropdown>
-            </div>
+      <div class="form-label">
+        <label class="form-label" translate>Department (*)</label>
+        <div class="input-group">
+          <div class="input-group-append">
+            <app-dropdown
+              *ngIf="departmentDropdownOptions"
+              [options]="departmentDropdownOptions"
+            >
+            </app-dropdown>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-6">
+    <div class="grid-item">
+      <div class="form-label">
+        <label for="type" class="form-label" translate
+          >Work Place Type (*)</label
+        >
+        <div class="input-group">
+          <div class="input-group-append">
+            <app-dropdown
+              *ngIf="workPlaceTypeDropdownOptions"
+              [options]="workPlaceTypeDropdownOptions"
+            >
+            </app-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-item">
       <div class="form-label">
         <label class="form-label" translate>Work Time Type (*)</label>
         <div class="input-group">
@@ -66,7 +81,6 @@
             <app-dropdown
               *ngIf="workTimeTypeDropdownOptions"
               [options]="workTimeTypeDropdownOptions"
-         
             >
             </app-dropdown>
           </div>

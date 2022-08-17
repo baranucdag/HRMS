@@ -1,3 +1,5 @@
+import { NavigationComponent } from './../../core/components/user-interface/navigation/navigation.component';
+import { FooterComponent } from './../../core/components/user-interface/footer/footer.component';
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -44,7 +46,7 @@ import '../../core/extensions';
     ToolbarComponent,
     DialogComponent,
     InsertionDirective,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -98,7 +100,7 @@ import '../../core/extensions';
     PanelModule,
     PanelMenuModule,
     HeaderComponent,
-    CalendarModule
+    CalendarModule,
 
   ],
   providers:[

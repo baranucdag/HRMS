@@ -69,7 +69,7 @@ export class SidebarComponent implements OnInit {
         icon: 'bi bi-table',
         parentId: 1,
         orderNum: 11,
-        url: 'menu-management/menu-list',
+        url: 'admin/menu-management/menu-list',
         menuGuid: 'assadasdasdadsdasdasdasdasd',
       },
       {
@@ -86,7 +86,7 @@ export class SidebarComponent implements OnInit {
         icon: 'bi bi-table',
         parentId: 3,
         orderNum: 11,
-        url: 'jobadvert/jobadvert-list',
+        url: 'admin/jobadvert/jobadvert-list',
         menuGuid: 'assadasdasdadsdasdasdasdasd',
       },
       {
@@ -94,7 +94,7 @@ export class SidebarComponent implements OnInit {
         displayText: 'Candidate Management',
         icon: 'pi pi-list',
         orderNum: 11,
-        url: 'jobadvert',
+        url: 'canidate',
         menuGuid: 'asdasdasdasdasda',
       },
       {
@@ -103,7 +103,7 @@ export class SidebarComponent implements OnInit {
         icon: 'bi bi-table',
         parentId: 5,
         orderNum: 11,
-        url: 'candidate/candidate-list',
+        url: 'admin/candidate/candidate-list',
         menuGuid: 'assadasdasdadsdasdasdasdasd',
       },
       {
@@ -120,7 +120,7 @@ export class SidebarComponent implements OnInit {
         icon: 'bi bi-table',
         parentId: 7,
         orderNum: 11,
-        url: 'application/application-list',
+        url: 'admin/application/application-list',
         menuGuid: 'assadasdasdadsdasdasdasdasd',
       },
       {
@@ -137,7 +137,7 @@ export class SidebarComponent implements OnInit {
         icon: 'bi bi-table',
         parentId: 9,
         orderNum: 11,
-        url: 'user/user-list',
+        url: 'admin/user/user-list',
         menuGuid: 'assadasdasdadsdasdasdasdasd',
       },
     

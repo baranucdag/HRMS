@@ -16,7 +16,10 @@ export class AuthService extends BaseService<IUser> {
   }
 
   //register a user with setting a claim
-  registerWithClaim(sendForm:any):Observable<HttpResponse<IUser>>{
-    return this.httpClient.post<HttpResponse<IUser>>(super.getFullPath("RegisterWithClaim"),sendForm);
+  registerWithClaim(sendForm: any): Observable<HttpResponse<IUser>> {
+    return this.httpClient.post<HttpResponse<IUser>>(
+      super.getFullPath('RegisterWithClaim'),
+      sendForm
+    );
   }
 }

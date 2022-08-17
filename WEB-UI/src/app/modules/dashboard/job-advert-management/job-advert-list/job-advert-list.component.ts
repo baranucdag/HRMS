@@ -1,4 +1,9 @@
-import { workPlaceTypeEnum, workTimeTypeOptions, workTimeType, workPlaceTypeOptions } from './../../../../core/enums/dropdown-select-options';
+import {
+  workPlaceTypeEnum,
+  workTimeTypeOptions,
+  workTimeType,
+  workPlaceTypeOptions,
+} from './../../../../core/enums/dropdown-select-options';
 import { formatDate } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { DialogService } from 'src/app/core/services/dialog';
@@ -72,7 +77,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
     this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
     this.onUnDeleteButtonClick = this.onUnDeleteButtonClick.bind(this);
     this.createTable();
-    this.createDeleteDialog();  
+    this.createDeleteDialog();
     this.createUnDeleteDialog();
   }
 
@@ -110,9 +115,10 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
           title: 'Qualification Level',
           type: 'text',
         },
+        { field: 'department', title: 'Department', type: 'text' },
         { field: 'description', title: 'Description', type: 'text' },
         { field: 'publishDate', title: 'Publish Date', type: 'date' },
-        { field: 'deadline', title: 'Deadline', type: 'date', },
+        { field: 'deadline', title: 'Deadline', type: 'date' },
         {
           title: 'Is Deleted',
           type: 'text',
