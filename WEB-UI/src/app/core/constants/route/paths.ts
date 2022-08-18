@@ -17,5 +17,6 @@ export const PATHS = {
     applicationList:"application-list",
     user:"user",
     userList:"user-list",
-    job:"job"
+    job:"job",
+    
 }
