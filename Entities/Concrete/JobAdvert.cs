@@ -10,6 +10,7 @@ namespace Entities.Concrete
         public int Id { get; set; }
         public string PositionName { get; set; }
         public string QualificationLevel { get; set; }
+        public DepartmentEnum Department { get; set; }
         public WorkPlaceTypeEnum WorkPlaceType { get; set; }
         public WorkTimeTypeEnum WorkTimeType { get; set; }
         public DateTime PublishDate { get; set; }

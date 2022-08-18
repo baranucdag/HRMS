@@ -1,6 +1,4 @@
-﻿using Entites.Enums;
-using Entities.Abstract;
-using Entities.Enums;
+﻿using Entities.Abstract;
 using System;
 
 namespace Entities.Dto
@@ -10,6 +8,7 @@ namespace Entities.Dto
         public int Id { get; set; }
         public string PositionName { get; set; }
         public string QualificationLevel { get; set; }
+        public string Department { get; set; }
         public string WorkPlaceType { get; set; }
         public string WorkTimeType { get; set; }
         public DateTime PublishDate { get; set; }

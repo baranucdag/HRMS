@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Core.Entites.Concrete;
+using Core.Utilities.Helpers.PaginationHelper;
+using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +28,30 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpPost("GetDetailsPaginated")]
+        public IActionResult GetPaginationData(PaginationItem<UserOperationClaimDto> pi)
+        {
+            var result = userOperationClaimService.GetclaimsPaginated(pi);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+        [HttpGet("GetById/{id}")]
+        public IActionResult GetById(int id)
+        {
+            var result = userOperationClaimService.GetByUserId(id);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
 
         [HttpPost("Add")]
         public IActionResult Add(UserOperationClaim userOperationClaim)

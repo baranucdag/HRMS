@@ -49,7 +49,7 @@ namespace Business.Concrete
         public ResultItem Update(JobAdvert jobAdvert)
         {
             jobAdvertDal.Update(jobAdvert);
-            return new ResultItem(true,null,Messages.UpdateSuccess);
+            return new ResultItem(true, null, Messages.UpdateSuccess);
         }
 
 
@@ -60,11 +60,61 @@ namespace Business.Concrete
             return new ResultItem(true, result, null);
         }
 
-        public ResultItem GetAll()
+        //get all paged and with global search
+        public ResultItem GetAllPaged(QueryObject queryObject)
         {
-            var result = jobAdvertDal.GetAll();
-            return new ResultItem(true, result, Messages.DataListed);
+            var rows = jobAdvertDal.GetJobAdvertDtos().AsQueryable();
+
+            var props = typeof(JobAdvertDto).GetProperties();
+            List<JobAdvertDto> searchedList = new List<JobAdvertDto>();
+            foreach (var prop in props)
+            {
+                var res = new List<JobAdvertDto>();
+                switch (prop.Name)
+                {
+                    case nameof(JobAdvertDto.PositionName):
+                        {
+                            res = rows.AsEnumerable().Where(x => x.PositionName.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
+                            break;
+                        }
+                    case nameof(JobAdvertDto.QualificationLevel):
+                        {
+                            res = rows.AsEnumerable().Where(x => x.QualificationLevel.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
+                            break;
+                        }
+                    case nameof(JobAdvertDto.Description):
+                        {
+                            res = rows.AsEnumerable().Where(x => x.Description.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
+                            break;
+                        }
+                    case nameof(JobAdvertDto.Department):
+                        {
+                            res = rows.AsEnumerable().Where(x => x.Department.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
+                            break;
+                        }
+                    case nameof(JobAdvertDto.WorkTimeType):
+                        {
+                            res = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
+                            break;
+                        }
+                    case nameof(JobAdvertDto.WorkPlaceType):
+                        {
+                            res = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
+                            break;
+                        }
+
+                    default:
+                        break;
+                }
+                searchedList.AddRange(res.ToList());
+            }
+            rows = searchedList.GroupBy(x => x.Id).Select(x => x.First()).AsQueryable();
+            searchedList = new List<JobAdvertDto>();
+            queryObject.Items = rows.Skip((queryObject.PageNumber - 1) * queryObject.PageSize).Take(queryObject.PageSize);
+            queryObject.TotalCount = queryObject.Items.Count();
+            return new ResultItem(true, queryObject, Messages.DataListed);
         }
+
 
 
         //Get Data paginated, sorted and filtered
@@ -288,6 +338,35 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
+                                    case nameof(JobAdvertDto.Department):
+                                        {
+                                            switch (Convert.ToInt32(oVal))
+                                            {
+                                                case 0: // getAll
+                                                    {
+                                                        break;
+                                                    }
+                                                case 1: // system
+                                                    {
+                                                        rows = rows.Where(x => x.Department == "System");
+                                                        break;
+                                                    }
+                                                case 2: // software
+                                                    {
+                                                        rows = rows.Where(x => x.Department == "Software");
+                                                        break;
+                                                    }
+                                                case 3: // humanresources
+                                                    {
+                                                        rows = rows.Where(x => x.Department == "HumanResources");
+                                                        break;
+                                                    }
+
+                                                default:
+                                                    break;
+                                            }
+                                            break;
+                                        }
                                     case nameof(JobAdvertDto.IsDeleted):
                                         {
                                             switch (Convert.ToInt32(oVal))
@@ -356,6 +435,6 @@ namespace Business.Concrete
 
 
     }
-
-
 }
+
+

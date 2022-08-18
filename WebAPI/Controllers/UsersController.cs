@@ -40,6 +40,15 @@ namespace WebAPI.Controllers
 
         }
 
+        [HttpPost("UpdateWithClaim")]
+        public IActionResult Update([FromForm] UserUpdateWithClaimDto userUpdateWithClaimDto)
+        {
+            var result = userService.UpdateWithClaim(userUpdateWithClaimDto);
+            if (result.IsOk)
+                return Ok(result);
+            else return BadRequest(result);
+        }
+
         [HttpPost("Add")]
         public IActionResult Add(User user)
         {

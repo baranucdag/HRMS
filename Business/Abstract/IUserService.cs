@@ -14,8 +14,8 @@ namespace Business.Abstract
         List<User> GetAll();
         ResultItem GetById(int id);
         User GetByMail(string email);
+        ResultItem UpdateWithClaim(UserUpdateWithClaimDto userUpdateWithClaimDto);
         ResultItem GetUsersPaginated(PaginationItem<UserDto> pi);
         List<OperationClaim> GetClaims(User user);
-        ResultItem GetClaim(User user);
     }
 }

@@ -11,5 +11,7 @@ namespace Business.Abstract
         ResultItem Login(UserLoginDto userForLoginDto);
         ResultItem IsUserExists(string email);
         ResultItem CreateAccessToken(User user);
+        ResultItem ChangePassword(ChangePasswordDto changePasswordDto);
+       
     }
 }

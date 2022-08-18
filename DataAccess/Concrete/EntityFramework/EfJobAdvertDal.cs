@@ -27,6 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
                     PublishDate = x.PublishDate,
                     QualificationLevel = x.QualificationLevel,
                     Status = x.Status,
+                    Department = x.Department.ToString(),
                     WorkPlaceType = x.WorkPlaceType.ToString(),
                     WorkTimeType = x.WorkTimeType.ToString(),
                     IsDeleted = x.IsDeleted

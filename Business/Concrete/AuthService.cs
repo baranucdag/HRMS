@@ -43,15 +43,36 @@ namespace Business.Concrete
             var userToCheck = userService.GetByMail(userForLoginDto.Email);
             if (userToCheck == null)
             {
-                return new ResultItem(true,null,Messages.UserNotFound, System.Net.HttpStatusCode.OK, "1");
+                return new ResultItem(false,null,Messages.UserNotFound);
             }
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return new ResultItem(true,null,Messages.PasswordError, System.Net.HttpStatusCode.OK, "1");
+                return new ResultItem(false,null,Messages.PasswordError);
             }
 
-            return new ResultItem(true,userToCheck,Messages.SuccessfulLogin,System.Net.HttpStatusCode.OK, "1");
+            return new ResultItem(true,userToCheck,Messages.SuccessfulLogin);
+        }
+
+        //change password by verify old password
+        public ResultItem ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            byte[] passwordHash, passwordSalt;
+            var userToCheck = userService.GetById(changePasswordDto.UserId).Data;
+            User user = (User)userToCheck;
+            if(userToCheck == null)
+            {
+                return new ResultItem(false,null,Messages.UserNotFound);
+            }
+            if (!HashingHelper.VerifyPasswordHash(changePasswordDto.OldPassword,user.PasswordHash,user.PasswordSalt))
+            {
+                return new ResultItem(false,null,Messages.PasswordError);
+            }
+            HashingHelper.CreatePasswordHash(changePasswordDto.NewPassword,out passwordHash,out passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            userService.Update(user);
+            return new ResultItem(true, user, Messages.passwordUpdated);
         }
 
         //Check if user is already exist
@@ -61,15 +82,15 @@ namespace Business.Concrete
             {
                 if (userService.GetByMail(email) != null)
                 {
-                    return new ResultItem(false,null,Messages.UserAlreadyExists,System.Net.HttpStatusCode.OK, "1");
+                    return new ResultItem(false,null,Messages.UserAlreadyExists,System.Net.HttpStatusCode.BadRequest, "1");
                 }
                 return new ResultItem();
             }
-            return new ResultItem(false,null,Messages.EmailNullError,System.Net.HttpStatusCode.OK, "1");
+            return new ResultItem(false,null,Messages.EmailNullError,System.Net.HttpStatusCode.BadRequest, "1");
 
         }
 
-        //Create access token when user is logged or registered
+        //Create access token when user is logged in or registered
         public ResultItem CreateAccessToken(User user)
         {
             var claims = userService.GetClaims(user);

@@ -22,7 +22,7 @@
         public static string DeleteFail = "Silme başarısız";
         public static string UpdateFail = "Güncelleme başarısız";
         public static string UpdateSuccess = "Güncelleme başarılı";
-        public static string UnDeleteSuccess = "kayıt güncellendi"; 
-
+        public static string UnDeleteSuccess = "kayıt güncellendi";
+        public static string passwordUpdated = "Parola başarıyla güncellendi";
     }
 }
