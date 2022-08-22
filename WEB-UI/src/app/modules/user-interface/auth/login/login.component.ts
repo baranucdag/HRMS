@@ -1,3 +1,5 @@
+import { Route, Router } from '@angular/router';
+import { LocalStorageService } from './../../../../core/services/local-storage/local-storage.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from './../../../../core/services/api/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -15,7 +17,9 @@ export class LoginComponent implements OnInit,OnDestroy {
   
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private localStorageService:LocalStorageService,
+    private formBuilder: FormBuilder,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -38,10 +42,10 @@ export class LoginComponent implements OnInit,OnDestroy {
   login(){
    const sendForm =  Object.assign({},this.loginForm.value)
    this.authService.login(sendForm).pipe(takeUntil(this.onDestroy)).subscribe((response)=>{
-    console.log(response);
+    //this.localStorageService.set('token',response.data.token)
+    //this.authService.getUserDetailsFromToken();
+    this.router.navigate(['/'])
    },(responseError)=>{
-    console.log(responseError.data);
-    
    })
   }
 }

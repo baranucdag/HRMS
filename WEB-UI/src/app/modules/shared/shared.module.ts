@@ -111,7 +111,6 @@ import '../../core/extensions';
     PanelMenuModule,
     HeaderComponent,
     CalendarModule,
-
   ],
   providers:[
     DatePipe,

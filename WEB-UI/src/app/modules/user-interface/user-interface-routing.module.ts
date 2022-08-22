@@ -23,6 +23,13 @@ const routes: Routes = [
             (m) => m.AuthModule
           ),
       },
+      {
+        path: PATHS.apply,
+        loadChildren: () =>
+          import('./apply/apply.module').then(
+            (m) => m.ApplyModule
+          ),
+      },
     ],
   },
 ];

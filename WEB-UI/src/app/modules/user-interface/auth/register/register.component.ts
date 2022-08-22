@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,7 +15,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -43,7 +45,7 @@ export class RegisterComponent implements OnInit {
       .pipe(takeUntil(this.onDestroy))
       .subscribe(
         (response) => {
-          console.log(response);
+          this.router.navigate(['/auth/login']);
         },
         (responseError) => {
           console.log(responseError);

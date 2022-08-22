@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/core/services/api/auth.service';
 import { IQueryObject } from './../../../../core/models/views/queryObject.model';
 import { Component, OnInit } from '@angular/core';
 import { Subject, takeLast, takeUntil } from 'rxjs';
@@ -10,16 +11,23 @@ import { JobAdvertService } from 'src/app/core/services/api';
 })
 export class JobadvertsComponent implements OnInit {
   jobAdverts?: any[] = [];
-  pageNumber: number=1;
-  pageSize: number=5;
-  queryString: string='';
+  pageNumber: number = 1;
+  pageSize: number = 5;
+  queryString: string = '';
   totalCount!: number;
   private readonly onDestroy = new Subject<void>();
 
-  constructor(private jobAdvertService: JobAdvertService) {}
+  constructor(
+    private jobAdvertService: JobAdvertService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.get();
+    console.log(this.authService.decodedToken);
+    console.log(this.authService.isTokenExpired());
+    console.log(this.authService.isAuthenticated());
+    
   }
 
   ngOnDestroy() {
@@ -45,7 +53,7 @@ export class JobadvertsComponent implements OnInit {
   }
 
   paginate(event: any) {
-    this.pageNumber = event.page+1;
-    this.get()
+    this.pageNumber = event.page + 1;
+    this.get();
   }
 }

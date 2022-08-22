@@ -1,58 +1,54 @@
 <html>
-  <body class="text-center">
+  <body class="text-center" >
     <form class="form-signin" [formGroup]="registerForm">
-      <img
-        class="mb-4"
-        src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
-        alt=""
-        width="72"
-        height="72"
-      />
+      <br />
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <label for="inputEmail" class="sr-only">First Name</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="firstName"
-        placeholder="First Name"
-        autofocus
-      />
-      <label for="inputEmail" class="sr-only">Last Name</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="lastName"
-        placeholder="Last Name"
-        autofocus
-      />
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input
-        type="email"
-        class="form-control"
-        formControlName="email"
-        placeholder="Email address"
-        autofocus
-      />
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input
-        type="password"
-        formControlName="password"
-        class="form-control"
-        placeholder="Password"
-      />
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me" /> Remember me
-        </label>
-      </div>
+      <br /><br />
+      <span class="p-float-label" >
+        <input
+          class="form-control"
+          type="text"
+          pInputText
+          formControlName="firstName"
+        />
+        <label for="float-input">First Name</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 25px">
+        <input
+          class="form-control"
+          type="text"
+          pInputText
+          formControlName="lastName"
+        />
+        <label for="float-input">Last Name</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 25px;">
+        <input
+          class="form-control"
+          type="email"
+          pInputText
+          formControlName="email"
+        />
+        <label for="float-input">Email</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 25px; margin-bottom: 25px">
+        <input
+          class="form-control"
+          type="password"
+          pInputText
+          formControlName="password"
+        />
+        <label for="float-input">Password</label>
+      </span>
       <button
-        class="btn btn-lg btn-primary btn-block"
+        style="width: 100%; margin-bottom: 45px;"
+        pButton
+        pRipple
+        type="button"
+        label=" Sign in"
+        class="p-button-raised"
         (click)="register()"
-        type="submit"
-      >
-        Sign in
-      </button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+      ></button>
     </form>
   </body>
 </html>
