@@ -3,6 +3,7 @@ import {
   workTimeTypeOptions,
   workTimeType,
   workPlaceTypeOptions,
+  departmentOptions,
 } from './../../../../core/enums/dropdown-select-options';
 import { formatDate } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
@@ -65,6 +66,10 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
     return { label: m.description.toCapitalize(), value: m.id };
   });
 
+  departmentOptions: any = enumToArray(departmentOptions).map((m) => {
+    return { label: m.description.toCapitalize(), value: m.id };
+  });
+
   private readonly onDestroy = new Subject<void>();
 
   constructor(
@@ -115,7 +120,18 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
           title: 'Qualification Level',
           type: 'text',
         },
-        { field: 'department', title: 'Department', type: 'text' },
+        {
+          title: 'Department',
+          type: 'text',
+          field: 'department',
+          sortable: true,
+          filterable: true,
+          filter: {
+            type: 'dropdown',
+            data: this.departmentOptions,
+            defaultValue: this.departmentOptions[0].value,
+          },
+        },
         { field: 'description', title: 'Description', type: 'text' },
         { field: 'publishDate', title: 'Publish Date', type: 'date' },
         { field: 'deadline', title: 'Deadline', type: 'date' },

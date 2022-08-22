@@ -1,0 +1,36 @@
+<html>
+  <body class="text-center">
+    <form class="form-signin" [formGroup]="loginForm">
+      <br />
+      <h1 class="h3 mb-3 font-weight-normal" style="margin-bottom: 35px;">Please log in</h1>
+      <br /><br />
+      <span class="p-float-label">
+        <input
+          class="form-control"
+          type="email"
+          pInputText
+          formControlName="email"
+        />
+        <label for="float-input">Username</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 35px;margin-bottom: 35px;">
+        <input
+          class="form-control"
+          type="password"
+          pInputText
+          formControlName="password"
+        />
+        <label for="float-input">Password</label>
+      </span>
+      <button style="width: 100%;" pButton pRipple type="button" label="login" class="p-button-raised" (click)="login()"></button>
+      <div>
+        <a
+          [routerLink]="['/auth/register']"
+          routerLinkActive="router-link-active"
+          >register now</a
+        >
+      </div>
+      <p class="mt-5 mb-3 text-muted"></p>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<header class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center">
+        <h1 class="fw-light">Vertically Centered Masthead Content</h1>
+        <p class="lead">A great starter layout for a landing page</p>
+      </div>
+    </div>
+  </div>
+</header>
+<div style="text-align: center; margin-top: 35px">
+  <span class="p-input-icon-right" (click)="get()" (keyup.enter)="get()">
+    <i class="pi pi-search"></i>
+    <input
+      type="text"
+      pInputText
+      [(ngModel)]="queryString"
+      placeholder="Search for new opportunities"
+      style="width: 650px"
+    />
+  </span>
+</div>
+<hr />
+<div class="row" style="margin-top: 15px; margin-bottom: 35px">
+  <div class="col-lg-9 col-md-10 mx-auto" *ngIf="jobAdverts">
+    <div *ngFor="let jobAdvert of jobAdverts">
+      <div style="text-align: center; margin-top: 5px">
+        <p-accordion>
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              
+
+              <div class="row" style="width:100%">
+                <div class="col-3" style="margin-top: 35px">
+                  position
+                  <h5>{{ jobAdvert.positionName }}</h5>
+                </div>
+                <div class="col">
+                  Qualification Level
+                  <h5>{{ jobAdvert.qualificationLevel }}</h5>
+                </div>
+                <div class="col">
+                  publish date
+                  <h5>{{ jobAdvert.publishDate | date: "mediumDate" }}</h5>
+                </div>
+
+                <div class="col">
+                  department <br />
+                  <h5>{{ jobAdvert.department }}</h5>
+                </div>
+                <div class="col">
+                  deadline
+                  <h5>{{ jobAdvert.deadline | date: "mediumDate" }}</h5>
+                </div>
+                <div class="col">
+                  <p-button title="Delete" (onClick)="$event.stopPropagation()"
+                    >Apply now</p-button
+                  >
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content">
+              description
+              <h5>{{ jobAdvert.description }}</h5>
+            </ng-template>
+          
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+    <p-paginator [rows]="5" [totalRecords]="totalCount" (onPageChange)="paginate($event)"></p-paginator>
+  </div>
+</div>

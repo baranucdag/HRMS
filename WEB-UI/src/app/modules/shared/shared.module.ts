@@ -17,8 +17,10 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { InputSwitchModule} from 'primeng/inputswitch';
 import { InputNumberModule } from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
 import { TableComponent } from 'src/app/core/components/tables';
 import { SidebarComponent } from 'src/app/core/components/navigation';
+import {AccordionModule} from 'primeng/accordion';
 import { SkeletonModule } from 'primeng/skeleton';
 import { RouterModule } from '@angular/router';
 import { DialogComponent, SidebarDialogComponent } from 'src/app/core/components/dialogs';
@@ -30,6 +32,7 @@ import { PanelModule } from 'primeng/panel';
 import { InsertionDirective } from 'src/app/core/directives';
 import { HeaderComponent } from 'src/app/core/components/navigation/header/header.component';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import {MenubarModule} from 'primeng/menubar';
 import {Calendar, CalendarModule} from 'primeng/calendar';
 import '../../core/extensions';
 
@@ -62,13 +65,17 @@ import '../../core/extensions';
     ToastModule,
     InputSwitchModule,
     InputNumberModule,
+    InputTextModule,
+    AccordionModule,
     SkeletonModule,
     RouterModule,
     SidebarModule,
     ToolbarModule,
     DialogModule,
     PanelModule,
-    PanelMenuModule
+    PanelMenuModule,
+    MenubarModule,
+    
   ],
   exports:[
     CommonModule,
@@ -79,6 +86,7 @@ import '../../core/extensions';
     DropdownComponent,
     TranslateModule,
     TooltipModule,
+    AccordionModule,
     ButtonModule,
     CustomDatePipe,
     SafeHtmlPipe,
@@ -89,10 +97,12 @@ import '../../core/extensions';
     TableComponent,
     InputSwitchModule,
     InputNumberModule,
+    InputTextModule,
     SkeletonModule,
     SidebarComponent,
     RouterModule,
     ToolbarComponent,
+    MenubarModule,
     ToolbarModule,
     SidebarModule,
     DialogComponent,
@@ -101,7 +111,6 @@ import '../../core/extensions';
     PanelMenuModule,
     HeaderComponent,
     CalendarModule,
-
   ],
   providers:[
     DatePipe,

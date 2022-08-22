@@ -18,7 +18,7 @@ export enum departmentOptions {
   humanResources = 3,
 }
 
-export enum department {
+export enum departments {
   system ,
   software ,
   humanResources ,

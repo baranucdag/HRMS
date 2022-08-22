@@ -1,7 +1,6 @@
 import { IUserOperationClaim } from './../../../../core/models/views/userOperationClaim.model';
 import {
   claims,
-  department,
 } from './../../../../core/enums/dropdown-select-options';
 import { UserOperationClaimService } from './../../../../core/services/api/user-operation-claim.service';
 import { AuthService } from './../../../../core/services/api/auth.service';
@@ -96,7 +95,7 @@ export class UserCreateComponent implements OnInit, IFormComponent {
   createForm(user?: IUser) {
     this.userForm = this.formBuilder.group({
       firstName: [user?.firstName, Validators.required],
-      password: ['***', Validators.required],
+      password: ['*****', Validators.required],
       lastName: [user?.lastName, Validators.required],
       email: [user?.email, Validators.required],
     });
@@ -105,17 +104,11 @@ export class UserCreateComponent implements OnInit, IFormComponent {
         (x: any) => x.value === this.selectedClaim.operationClaimId
       );
     }
-   
-    
-    
     this.setClaimDropdownOptions(this.claimTypes, this.selectedClaim);
   }
 
   //set dropdown options
   setClaimDropdownOptions(data: any, selected?: any) {
-    console.log(data);
-    console.log(selected);
-    
     
     // if (selected == undefined) {
     //   selected = data[0];
@@ -153,11 +146,12 @@ export class UserCreateComponent implements OnInit, IFormComponent {
     sendForm.append('firstName', sendModel.firstName);
     sendForm.append('lastName', sendModel.lastName);
     sendForm.append('password', sendModel.password);
-    sendForm.append('id', this.selectedClaim.id),
-      sendForm.append('name', this.selectedClaim.value);
-
+    sendForm.append('id', this.selectedClaim.value),
+    sendForm.append('name', this.selectedClaim.label);
+    
     return this.authService.registerWithClaim(sendForm).subscribe(
       (response) => {
+        
         setSavingStatus(this.onInitializing, false);
         this.onResult.emit({ status: SidebarDialogResultStatus.saveSuccess });
       },
@@ -174,18 +168,25 @@ export class UserCreateComponent implements OnInit, IFormComponent {
     if(!this.selectedClaim){
       return
     }  
+    console.log(this.selectedClaim);
+    
     this.userForm.disable();
     setUpdatingStatus(this.onInitializing, true);
+   
+    let sendModel: IUser = Object.assign({}, this.userForm.value);
 
-    const sendModel: any = {
-      userId: this.initialData.id,
-      operationClaimId: this.selectedClaim.value,
-    };
-    console.log(sendModel);
-
+    const sendForm = new FormData();
+    sendForm.append('id',this.selectedUser.id)
+    sendForm.append('email', sendModel.email);
+    sendForm.append('firstName', sendModel.firstName);
+    sendForm.append('lastName', sendModel.lastName);
+    sendForm.append('password', sendModel.password);
+    sendForm.append('operationClamId', this.selectedClaim.value);
+    console.log(this.selectedClaim.value);
+    
     if (this.initialData.id) {
-      this.userOperationClaimService
-        .add(sendModel)
+      this.userService
+        .updateWithClaim(sendForm)
         .pipe(takeUntil(this.onDestroy))
         .subscribe(
           (response) => {

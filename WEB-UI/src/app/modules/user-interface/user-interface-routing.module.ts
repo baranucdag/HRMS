@@ -8,7 +8,29 @@ const routes: Routes = [
   {
     path: PATHS.empty,
     component: UserInterfaceComponent,
-    children: [{ path: PATHS.empty, component: HomeComponent }],
+    children: [
+      {
+        path: PATHS.empty,
+        loadChildren: () =>
+          import('./home/home.module').then(
+            (m) => m.HomeModule
+          ),
+      },
+      {
+        path: PATHS.auth,
+        loadChildren: () =>
+          import('./auth/auth.module').then(
+            (m) => m.AuthModule
+          ),
+      },
+      {
+        path: PATHS.apply,
+        loadChildren: () =>
+          import('./apply/apply.module').then(
+            (m) => m.ApplyModule
+          ),
+      },
+    ],
   },
 ];
 

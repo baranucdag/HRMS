@@ -9,27 +9,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit,OnDestroy {
-  jobAdverts?: IJobAdvert[] = [];
-  private readonly onDestroy = new Subject<void>();
+export class HomeComponent implements OnInit {
 
-  constructor(private jobAdvertService: JobAdvertService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.getJobAdverts();
   }
 
-  getJobAdverts() {
-    this.jobAdvertService
-      .getAll()
-      .pipe(takeUntil(this.onDestroy))
-      .subscribe((response) => {
-        this.jobAdverts = response.body?.data;
-      });
-  }
-
-  ngOnDestroy() {
-    this.onDestroy.next();
-    this.onDestroy.complete();
-  }
 }
