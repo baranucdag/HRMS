@@ -16,8 +16,10 @@ namespace Entities.Dto
         public int CandidateId { get; set; }
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
-        public string CandidateFullName { get; set; }
+        public string CandidateFullName => $"{CandidateFirstName} {CandidateLastName}";
         public DateTime ApplicationDate { get; set; }
+        public string ApplicationStatus { get; set; }
+        public DateTime CraetedAt { get; set; }
         public int IsDeleted { get; set; }
         public string IsDeletedText => (IsDeleted == 1) ? "yes" : "no";
 

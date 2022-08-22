@@ -12,6 +12,7 @@ namespace Business.Abstract
         ResultItem Delete(int id);
         ResultItem UnDelete(int id);
         ResultItem GetById(int id);
+        ResultItem GetByUserId(int id);
         ResultItem GetCandidatesPaginated(PaginationItem<CandidateDto> pi);
     }
 }

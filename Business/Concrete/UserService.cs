@@ -121,7 +121,7 @@ namespace Business.Concrete
                     userDal.Update(updatedUser);
                     return new ResultItem(true, null, Messages.UpdateSuccess);
                 }
-                return new ResultItem(false,null,Messages.UserAlreadyExist);
+                return new ResultItem(false, null, Messages.UserAlreadyExist);
             }
         }
 
@@ -168,6 +168,11 @@ namespace Business.Concrete
                                         case nameof(UserDto.FullName):
                                             {
                                                 res = rows.AsEnumerable().Where(x => x.FullName.ToLowerEng().Contains(oVal)).ToList();
+                                                break;
+                                            }
+                                        case nameof(UserDto.UserClaim):
+                                            {
+                                                res = rows.AsEnumerable().Where(x => x.UserClaim.ToLowerEng().Contains(oVal)).ToList();
                                                 break;
                                             }
                                         default:
@@ -241,29 +246,36 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    //case nameof(CandidateDto.IsDeleted):
-                                    //    {
-                                    //        switch (Convert.ToInt32(oVal))
-                                    //        {
-                                    //            case 0: // getAll
-                                    //                {
-                                    //                    break;
-                                    //                }
-                                    //            case 1: // IsNotDeleted
-                                    //                {
-                                    //                    rows = rows.Where(x => x.IsDeleted == 0);
-                                    //                    break;
-                                    //                }
-                                    //            case 2: // IsDeleted
-                                    //                {
-                                    //                    rows = rows.Where(x => x.IsDeleted == 1);
-                                    //                    break;
-                                    //                }
-                                    //            default:
-                                    //                break;
-                                    //        }
-                                    //        break;
-                                    //    }
+                                    case nameof(UserDto.UserClaim):
+                                        {
+                                            switch (matchMode.ToLowerEng())
+                                            {
+                                                case "startswith":
+                                                    {
+                                                        rows = rows.AsEnumerable().Where(x => x.UserClaim.ToLowerEng().StartsWith(oVal)).AsQueryable();
+                                                        break;
+                                                    }
+                                                case "endswith":
+                                                    {
+                                                        rows = rows.AsEnumerable().Where(x => x.UserClaim.ToLowerEng().EndsWith(oVal)).AsQueryable();
+                                                        break;
+                                                    }
+                                                case "contains":
+                                                    {
+                                                        rows = rows.AsEnumerable().Where(x => x.UserClaim.ToLowerEng().Contains(oVal)).AsQueryable();
+                                                        break;
+                                                    }
+                                                case "equals":
+                                                    {
+                                                        rows = rows.AsEnumerable().Where(x => x.UserClaim.ToLowerEng().Equals(oVal)).AsQueryable();
+                                                        break;
+                                                    }
+                                                default:
+                                                    break;
+                                            }
+                                            break;
+                                        }
+
                                     default:
                                         {
                                             break;

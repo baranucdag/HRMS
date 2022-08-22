@@ -23,15 +23,17 @@ namespace DataAccess.Concrete.EntityFramework
                              join t3 in context.Answers
                              on t1.AnswerId equals t3.Id
 
+                             join t4 in context.Users
+                             on t2.UserId equals t4.Id
                              select new CandidateAnswerDto
                              {
                                  Id = t1.Id,
                                  AnswerId = t3.Id,
                                  AnswerText = t3.Text,
                                  AnswerValue = t1.AnswerValue,
-                                 CandidateFirstName = t2.FirstName,
-                                 CandidateLastName = t2.LastName,
-                                 CandidateFullName = $"{t2.FirstName} {t2.LastName}",
+                                 CandidateFirstName = t4.FirstName,
+                                 CandidateLastName = t4.LastName,
+                                 CandidateFullName = $"{t4.FirstName} {t4.LastName}",
                                  CandidateId = t2.Id,
                                  IsDeleted = t1.IsDeleted
 

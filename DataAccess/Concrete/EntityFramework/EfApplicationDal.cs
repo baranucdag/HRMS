@@ -22,21 +22,25 @@ namespace DataAccess.Concrete.EntityFramework
                              join t3 in context.JobAdverts
                              on t1.JobAdvertId equals t3.Id
 
+                             join t4 in context.Users
+                             on t2.UserId equals t4.Id
+
                              select new ApplicationDto
                              {
                                  Id = t1.Id,
                                  ApplicationDate = t1.ApplicationDate,
                                  CandidateId = t2.Id,
-                                 CandidateFirstName = t2.FirstName,
-                                 CandidateLastName = t2.LastName,
-                                 CandidateFullName = $"{t2.FirstName} {t2.LastName}",
                                  JobAdvertId = t3.Id,
                                  PositionName = t3.PositionName,
                                  QualificationLevel = t3.QualificationLevel,
                                  PublishDate = t3.PublishDate,
                                  WorkTimeType = t3.WorkTimeType.ToString(),
                                  WorkPlaceType = t3.WorkPlaceType.ToString(),
+                                 ApplicationStatus = t1.ApplicationStatus.ToString(),
                                  Deadline = t3.Deadline,
+                                 CandidateFirstName = t4.FirstName,
+                                 CandidateLastName = t4.LastName,
+                                 CraetedAt = t1.CreatedAt,
                                  IsDeleted = t1.IsDeleted
                              };
                 return result.ToList();

@@ -28,6 +28,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpGet("GetByUserIdAndCandidateId")]
+        public IActionResult GetByUserIdAndCandidateId(int candidateId, int jobAdvertId)
+        {
+            var result = applicationService.GetByUserIdAndCandidateId(candidateId,jobAdvertId);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("GetPaginationData")]
         public IActionResult GetPaginationData(PaginationItem<ApplicationDto> pi)
         {

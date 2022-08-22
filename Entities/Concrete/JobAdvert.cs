@@ -5,9 +5,8 @@ using System;
 
 namespace Entities.Concrete
 {
-    public class JobAdvert : IEntity
+    public class JobAdvert : BaseEntity, IEntity
     {
-        public int Id { get; set; }
         public string PositionName { get; set; }
         public string QualificationLevel { get; set; }
         public DepartmentEnum Department { get; set; }
@@ -17,6 +16,5 @@ namespace Entities.Concrete
         public DateTime Deadline { get; set; }
         public string Description { get; set; }
         public bool Status { get; set; }
-        public int IsDeleted { get; set; }
     }
 }
