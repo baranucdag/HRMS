@@ -1,23 +1,87 @@
-<div class="grid p-fluid">
-    <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-            <input type="text" pInputText placeholder="Username">         
+<div class="container" *ngIf="currentJobAdvert">
+  <div class="row" *ngIf="currentUser">
+    <div class="col-4">
+      <p-card
+        header="Job Advert Details"
+        [style]="{
+          width: '28rem',
+          'margin-bottom': '2em',
+          'text-align': 'center'
+        }"
+      >
+        <div style="text-align: center">
+          <div class="text">
+            <h5>Position Name</h5>
+            <p>{{ currentJobAdvert.positionName }}</p>
+          </div>
+          <div class="text">
+            <h5>Qualification Level</h5>
+            <p>{{ currentJobAdvert.qualificationLevel }}</p>
+          </div>
+          <div class="text">
+            <h5>Work Place Type</h5>
+            {{ currentJobAdvert.workPlaceType }}
+          </div>
+          <div class="text">
+            <h5>Work Time Type</h5>
+            {{ currentJobAdvert.workTimeType }}
+          </div>
+          <div>
+            <h5>Deadline</h5>
+            {{ currentJobAdvert.deadline | date: "mediumDate" }}
+          </div>
+          <div style="margin-top: 25px">
+            <app-button
+              *ngIf="applyButtonOptions"
+              [options]="applyButtonOptions"
+              (click)="addApplication()"
+            ></app-button>
+          </div>
         </div>
+      </p-card>
     </div>
-    
-    <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon">$</span>
-            <input type="text" pInputText placeholder="Price">   
-            <span class="p-inputgroup-addon">.00</span>      
+    <div class="col-8" *ngIf="currentCandidate">
+      <div *ngIf="currentCandidate.cvPath" else cvUpload>
+        <h5 *ngIf="!showCvInput">
+          Cv bilginiz zaten sistemimizde mevcut, cv bilgisini güncellemek
+          istiyorsanız
+          <a else cvUpload2 (click)="showCvInput = true">tıklayınız</a>
+        </h5>
+      </div>
+      <div *ngIf="!currentCandidate.cvPath">
+        <div>
+          <p-fileUpload
+            name="myfile[]"
+            [customUpload]="true"
+            (uploadHandler)="myUploader($event)"
+          ></p-fileUpload>
         </div>
-    </div>
-            
-    <div class="col-12 md:col-4">
-        <div class="p-inputgroup">
-            <span class="p-inputgroup-addon">www</span>
-            <input type="text" pInputText placeholder="Website">      
+      </div>
+      <div *ngIf="showCvInput">
+        <div>
+          <p-fileUpload
+            name="myfile[]"
+            [customUpload]="true"
+            (uploadHandler)="myUploader($event)"
+          ></p-fileUpload>
         </div>
+      </div>
+      <div style="margin-top: 150px">
+        <p-card
+          header="Job Advert Description"
+          [style]="{
+            width: '65rem',
+            'margin-bottom': '2em',
+            'text-align': 'center'
+          }"
+        >
+          <div style="text-align: center">
+            <div class="text">
+              <p>{{ currentJobAdvert.description }}</p>
+            </div>
+          </div>
+        </p-card>
+      </div>
     </div>
+  </div>
 </div>

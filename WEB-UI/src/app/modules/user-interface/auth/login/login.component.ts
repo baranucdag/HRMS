@@ -42,10 +42,12 @@ export class LoginComponent implements OnInit,OnDestroy {
   login(){
    const sendForm =  Object.assign({},this.loginForm.value)
    this.authService.login(sendForm).pipe(takeUntil(this.onDestroy)).subscribe((response)=>{
-    //this.localStorageService.set('token',response.data.token)
-    //this.authService.getUserDetailsFromToken();
+    this.localStorageService.set('token',response.data.token)
+    this.authService.getUserDetailsFromToken();
     this.router.navigate(['/'])
    },(responseError)=>{
+    console.log(responseError);
+    
    })
   }
 }

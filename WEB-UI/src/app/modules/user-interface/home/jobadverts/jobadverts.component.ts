@@ -1,8 +1,15 @@
+import { IApplication } from './../../../../core/models/views/application.model';
+import { CandidateService } from './../../../../core/services/api/candidate.service';
+import { IJobAdvert } from './../../../../core/models/views/jobAdvert.model';
 import { AuthService } from 'src/app/core/services/api/auth.service';
 import { IQueryObject } from './../../../../core/models/views/queryObject.model';
 import { Component, OnInit } from '@angular/core';
-import { Subject, takeLast, takeUntil } from 'rxjs';
-import { JobAdvertService } from 'src/app/core/services/api';
+import { Subject, takeLast, takeUntil, pipe } from 'rxjs';
+import {
+  JobAdvertService,
+  ApplicationService,
+} from 'src/app/core/services/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-jobadverts',
@@ -10,6 +17,9 @@ import { JobAdvertService } from 'src/app/core/services/api';
   styleUrls: ['./jobadverts.component.scss'],
 })
 export class JobadvertsComponent implements OnInit {
+  curentUser: any;
+  currentCandidate: any;
+  userApplication!: IApplication;
   jobAdverts?: any[] = [];
   pageNumber: number = 1;
   pageSize: number = 5;
@@ -19,15 +29,17 @@ export class JobadvertsComponent implements OnInit {
 
   constructor(
     private jobAdvertService: JobAdvertService,
-    private authService: AuthService
+    private canidateService: CandidateService,
+    private authService: AuthService,
+    private router: Router,
+    private applicationService: ApplicationService
   ) {}
 
   ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.curentUser = this.authService.decodedToken;
+    }
     this.get();
-    console.log(this.authService.decodedToken);
-    console.log(this.authService.isTokenExpired());
-    console.log(this.authService.isAuthenticated());
-    
   }
 
   ngOnDestroy() {
@@ -49,9 +61,42 @@ export class JobadvertsComponent implements OnInit {
       .subscribe((response) => {
         this.jobAdverts = response.data.items;
         this.totalCount = response.data.totalCount;
+        this.getCandidateByUserId(this.curentUser.UserId);
       });
   }
 
+  navigateToApply(jobAdvert: IJobAdvert) {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/apply/' + jobAdvert.id + '/cv']);
+    } else this.router.navigate(['/auth/login']);
+  }
+
+  checkIfApplied(jobAdvert:IJobAdvert){
+    this.getApplication(jobAdvert.id,this.curentUser.UserId)
+    if(this.userApplication){
+      return true
+    }return false
+  }
+
+  getApplication(jobAdvertId: number, userId: number) {
+    this.applicationService
+      .getByUserAndCandidateId(jobAdvertId, userId)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe((response) => {
+        this.userApplication = response.data;
+        console.log(response);
+        console.log(this.currentCandidate);
+      });
+  }
+
+  getCandidateByUserId(id: number) {
+    this.canidateService
+      .getByUserId(id)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe((response) => {
+        this.currentCandidate = response.data;
+      });
+  }
   paginate(event: any) {
     this.pageNumber = event.page + 1;
     this.get();

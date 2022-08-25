@@ -1,8 +1,8 @@
-import { ApplyComponent } from './apply.component';
 import { ApplyCvComponent } from './apply-cv/apply-cv.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PATHS } from 'src/app/core/constants';
+import { ApplyComponent } from './apply.component';
 
 const routes: Routes = [
   {
@@ -10,12 +10,11 @@ const routes: Routes = [
     component: ApplyComponent,
     children: [
       {
-        path: 'cv',
+        path: ':id/'+PATHS.cv,
         component: ApplyCvComponent,
       },
     ],
   },
-  
 ];
 
 @NgModule({

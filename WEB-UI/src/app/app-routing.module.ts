@@ -1,4 +1,3 @@
-import { UserInterfaceModule } from './modules/user-interface/user-interface.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PATHS } from './core/constants';
