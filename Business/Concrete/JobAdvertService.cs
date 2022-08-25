@@ -63,7 +63,7 @@ namespace Business.Concrete
         //get all paged and with global search
         public ResultItem GetAllPaged(QueryObject queryObject)
         {
-            var rows = jobAdvertDal.GetJobAdvertDtos().AsQueryable();
+            var rows = jobAdvertDal.GetJobAdvertDtos().Where(x => x.IsDeleted == 0).AsQueryable();
 
             var props = typeof(JobAdvertDto).GetProperties();
             List<JobAdvertDto> searchedList = new List<JobAdvertDto>();
@@ -111,7 +111,7 @@ namespace Business.Concrete
             rows = searchedList.GroupBy(x => x.Id).Select(x => x.First()).AsQueryable();
             searchedList = new List<JobAdvertDto>();
             queryObject.Items = rows.Skip((queryObject.PageNumber - 1) * queryObject.PageSize).Take(queryObject.PageSize);
-            queryObject.TotalCount = queryObject.Items.Count();
+            queryObject.TotalCount = rows.Count();
             return new ResultItem(true, queryObject, Messages.DataListed);
         }
 

@@ -47,6 +47,12 @@ namespace Business.Concrete
             return new ResultItem(true, result,Messages.DataListed);
         }
 
+        public ResultItem GetByUserId(int id)
+        {
+            var result = candidateDal.Get(x => x.UserId == id);
+            return new ResultItem(true, result, Messages.DataListed);
+        }
+
         public ResultItem Update(Candidate candidate)
         {
             candidateDal.Update(candidate);

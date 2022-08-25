@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entites.Concrete;
+using Entities.Concrete;
 using Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +12,13 @@ namespace WebAPI.Controllers
     {
         private IAuthService authService;
         private readonly IUserOperationClaimService userOperationClaimService;
+        private readonly ICandidateService candidateService;
 
-        public AuthController(IAuthService authService, IUserOperationClaimService userOperationClaimService)
+        public AuthController(IAuthService authService, IUserOperationClaimService userOperationClaimService, ICandidateService candidateService)
         {
             this.authService = authService;
             this.userOperationClaimService = userOperationClaimService;
+            this.candidateService = candidateService;
         }
 
         [HttpPost("Login")]
@@ -50,7 +53,17 @@ namespace WebAPI.Controllers
                 if (registerResult.IsOk)
                 {
                     User registerUser = (User)registerResult.Data;
+
+                    //insert user claim
                     userOperationClaimService.Add(new UserOperationClaim(){ OperationClaimId=3,UserId=registerUser.Id});
+
+                    //create candidate
+                    candidateService.Add(new Candidate()
+                    {
+                        UserId = registerUser.Id,
+                    });
+
+                    //create access token
                     var result = authService.CreateAccessToken(registerUser);
                     if (result.IsOk)
                     {
@@ -82,10 +95,14 @@ namespace WebAPI.Controllers
                 var registerResult = authService.RegisterUser(userForRegisterDto);
                 if (registerResult.IsOk)
                 {
+                    //get user from returned data
                     User registerUser = (User)registerResult.Data;
+
+                    //create access token
                     var result = authService.CreateAccessToken(registerUser);
                     if (result.IsOk)
                     {
+                        //insert claim for user
                         UserOperationClaim userOperationClaim = new UserOperationClaim() { OperationClaimId = operationClaim.Id, UserId = registerUser.Id };
                         userOperationClaimService.Add(userOperationClaim);
                         return Ok(result);

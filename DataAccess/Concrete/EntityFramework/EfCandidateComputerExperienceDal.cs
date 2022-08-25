@@ -20,12 +20,15 @@ namespace DataAccess.Concrete.EntityFramework
                              join t2 in context.Candidates
                              on t1.CandidateId equals t2.Id
 
+                             join t4 in context.Users
+                             on t2.UserId equals t4.Id
+
                              select new CandidateComputerExperienceDto
                              {
                                  Id = t1.Id,
-                                 CandidateFirstName = t2.FirstName,
-                                 CandidateLastName = t2.LastName,
-                                 CandidateFullName = $"{t2.FirstName} {t2.LastName}",
+                                 CandidateFirstName = t4.FirstName,
+                                 CandidateLastName = t4.LastName,
+                                 CandidateFullName = $"{t4.FirstName} {t4.LastName}",
                                  CandidateId = t2.Id,
                                  Duration = t1.Duration,
                                  ExperienceType = t1.ExperienceType,
@@ -33,7 +36,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  WorksDone = t1.WorksDone,
                                  IsDeleted = t1.IsDeleted
                              };
-                return filter == null ? result.ToList() : result.Where(filter).ToList(); 
+                return filter == null ? result.ToList() : result.Where(filter).ToList();
             }
         }
 
@@ -45,12 +48,15 @@ namespace DataAccess.Concrete.EntityFramework
                              join t2 in context.Candidates
                              on t1.CandidateId equals t2.Id
 
+                             join t4 in context.Users
+                             on t2.UserId equals t4.Id
+
                              select new CandidateComputerExperienceDto
                              {
                                  Id = t1.Id,
-                                 CandidateFirstName = t2.FirstName,
-                                 CandidateLastName = t2.LastName,
-                                 CandidateFullName = $"{t2.FirstName} {t2.LastName}",
+                                 CandidateFirstName = t4.FirstName,
+                                 CandidateLastName = t4.LastName,
+                                 CandidateFullName = $"{t4.FirstName} {t4.LastName}",
                                  CandidateId = t2.Id,
                                  Duration = t1.Duration,
                                  ExperienceType = t1.ExperienceType,

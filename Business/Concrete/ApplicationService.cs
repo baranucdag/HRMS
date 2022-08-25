@@ -51,6 +51,12 @@ namespace Business.Concrete
             applicationDal.Update(application);
             return new ResultItem();
         }
+
+        public ResultItem GetByUserIdAndCandidateId(int candidateId, int jobAdvertId)
+        {
+            var result = applicationDal.Get(x => x.JobAdvertId == jobAdvertId && x.CandidateId == candidateId);
+            return new ResultItem(true, result, null);
+        }
         public ResultItem GetApplicationPaginated(PaginationItem<ApplicationDto> pi)
         {
             try
