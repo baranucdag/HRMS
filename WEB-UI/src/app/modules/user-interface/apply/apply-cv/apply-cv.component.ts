@@ -1,20 +1,14 @@
 import { IButtonOptions } from './../../../../core/components/buttons/button/models/button-options.model';
-import { Form } from '@angular/forms';
 import { CandidateService } from './../../../../core/services/api/candidate.service';
-import { ICandidate } from './../../../../core/models/views/candidate.model';
-import { IApplication } from './../../../../core/models/views/application.model';
 import { AuthService } from './../../../../core/services/api/auth.service';
-import { IJobAdvert } from 'src/app/core/models/views/jobAdvert.model';
 import { Subject, takeUntil } from 'rxjs';
 import {
   ApplicationService,
   JobAdvertService,
 } from 'src/app/core/services/api';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { take } from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { ICON } from 'src/app/core/constants';
 import {
   ButtonColor,
   ButtonSize,
@@ -32,7 +26,7 @@ export class ApplyCvComponent implements OnInit, OnDestroy {
   currentUser!: any;
   currentJobAdvert?: any;
   applyButtonOptions!: IButtonOptions;
-  showCvInput:boolean=false
+  showCvInput: boolean = false;
 
   private readonly onDestroy = new Subject<void>();
 
@@ -41,7 +35,8 @@ export class ApplyCvComponent implements OnInit, OnDestroy {
     private jobAdvertService: JobAdvertService,
     private candidateService: CandidateService,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +77,6 @@ export class ApplyCvComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         this.currentJobAdvert = response.body?.data;
         this.getCandidatebyUserId(this.currentUser.UserId);
-        
       });
   }
 
@@ -97,10 +91,21 @@ export class ApplyCvComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy))
       .subscribe(
         (response) => {
-          console.log(response);
+          this.getApplicationById(
+            this.currentJobAdvert.id,
+            this.currentCandidate.id
+          );
+          this.messageService.add({
+            severity: 'success',
+            detail: response.body?.message,
+          });
         },
         (responseError) => {
-          console.log(responseError);
+          this.messageService.add({
+            severity: 'error',
+            detail: responseError,
+            data: responseError,
+          });
         }
       );
   }
@@ -116,7 +121,6 @@ export class ApplyCvComponent implements OnInit, OnDestroy {
             this.currentJobAdvert.id,
             this.currentCandidate.id
           );
-          console.log(this.currentCandidate);
         },
         (responseError) => {}
       );
@@ -131,19 +135,13 @@ export class ApplyCvComponent implements OnInit, OnDestroy {
   setButtonOptions() {
     this.applyButtonOptions = {
       label: 'Apply',
-      icon: ICON.machine,
-      disabled: this.checkButton(),
+      hidden:
+        this.currentCandidate.cvPath === null || this.application
+          ? true
+          : false,
       properties: [ButtonSize.normal, ButtonColor.primary],
       class: 'w-100',
-      
     };
-  }
-
-  checkButton() {
-    if (this.currentCandidate.cvPath == null || this.application) {
-      return true;
-    }
-    return false;
   }
 
   getApplicationById(jobAdvertId: number, candidateId: number) {
@@ -166,12 +164,18 @@ export class ApplyCvComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy))
       .subscribe(
         (response) => {
-          console.log(response);
+          this.messageService.add({
+            severity: 'success',
+            detail: response.body?.message,
+          });
           this.checkIfCvExist();
-          this.getCandidatebyUserId(this.currentUser.UserId)
+          this.getCandidatebyUserId(this.currentUser.UserId);
         },
         (responseError) => {
-          console.log(responseError);
+          this.messageService.add({
+            severity: 'error',
+            detail: responseError.body?.message,
+          });
         }
       );
   }

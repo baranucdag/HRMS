@@ -39,8 +39,8 @@ export class AuthService extends BaseService<IUser> {
   }
 
   //register
-  register(senModel: IRegister): Observable<HttpResponse<IRegister>> {
-    return this.httpClient.post<HttpResponse<IRegister>>(
+  register(senModel: IRegister): Observable<any> {
+    return this.httpClient.post<any>(
       super.getFullPath('register'),
       senModel
     );

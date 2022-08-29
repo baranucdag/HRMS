@@ -1,5 +1,5 @@
 import {
-  departments,
+  department,
   workPlaceTypeEnum,
   workTimeType,
 } from './../../../../core/enums/dropdown-select-options';
@@ -44,7 +44,7 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
   workTimeTypeDropdownOptions?: IDropdownOptions;
   departmentDropdownOptions?: IDropdownOptions;
 
-  departments: any = enumToArray(departments).map((m) => {
+  departments: any = enumToArray(department).map((m) => {
     return { label: m.description.toCapitalize(), value: m.id };
   });
 
@@ -165,20 +165,17 @@ export class JobAdvertCreateComponent implements OnInit, IFormComponent {
 
     if (this.selectedJobAdvert) {
       selectedWorkTimeType = this.workTimeTypes.find(
-        (x: any) => x.label === this.selectedJobAdvert.workTimeType
+        (x: any) => x.value === this.selectedJobAdvert.workTimeType
       );
       selectedWorkPlaceType = this.workPlaceTypes.find(
-        (x: any) => x.label === this.selectedJobAdvert.workPlaceType
+        (x: any) => x.value === this.selectedJobAdvert.workPlaceType
       );
       selectedDepartment = this.departments.find(
-        (x: any) => x.label === this.selectedJobAdvert.department
+        (x: any) => x.value === this.selectedJobAdvert.department
       );
+      
     }
-    console.log(this.selectedJobAdvert);
-    console.log(this.departments);
-    
-    
-    
+
     this.setWorkTimeTypeDropdownOptions(
       this.workTimeTypes,
       selectedWorkTimeType

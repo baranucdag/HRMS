@@ -3,7 +3,8 @@ import { IApplication } from './../../models/views/application.model';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { ICandidate } from '../../models/views/candidate.model';
+import { IResult } from '../../models';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,23 @@ export class ApplicationService extends BaseService<IApplication> {
         candidateId +
         '&jobAdvertId=' +
         jobAdvertId
+    );
+  }
+
+  getApplicationPaginationDataPath(url?:any) {
+    if(url != undefined)
+      return `${environment.apiUrl}${this.apiPath}/getapplicationspaginationdata/${url}`;
+
+    return `${environment.apiUrl}${this.apiPath}/getapplicationspaginationdata`;
+  }
+
+  getApplicationsPeginationData(
+    t: IApplication,
+    url?: any
+  ): Observable<HttpResponse<IResult<IApplication>>> {
+    return this.httpClient.post<HttpResponse<IResult<IApplication>>>(
+      super.getPaginationDataPath(url),
+      t
     );
   }
 }

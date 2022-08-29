@@ -1,3 +1,4 @@
+import { JobAdvertApplicationsComponent } from './../job-advert-applications/job-advert-applications.component';
 import {
   workPlaceTypeEnum,
   workTimeTypeOptions,
@@ -21,6 +22,7 @@ import { IToolbarOptions } from 'src/app/core/components/toolbars/toolbar/models
 import {
   SidebarDialogResult,
   SidebarDialogResultStatus,
+  SidebarDialogSize,
 } from 'src/app/core/components/dialogs/sidebar-dialog/enums';
 import * as _ from 'lodash';
 import { IDialogOptions } from 'src/app/core/components/dialogs/dialog/models';
@@ -94,7 +96,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
         {
           title: 'Work Place Type',
           type: 'text',
-          field: 'workPlaceType',
+          field: 'workPlaceTypeText',
           sortable: true,
           filterable: true,
           filter: {
@@ -106,7 +108,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
         {
           title: 'Work Time Type',
           type: 'text',
-          field: 'workTimeType',
+          field: 'workTimeTypeText',
           sortable: true,
           filterable: true,
           filter: {
@@ -123,7 +125,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
         {
           title: 'Department',
           type: 'text',
-          field: 'department',
+          field: 'departmentText',
           sortable: true,
           filterable: true,
           filter: {
@@ -133,7 +135,7 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
           },
         },
         { field: 'description', title: 'Description', type: 'text' },
-        { field: 'publishDate', title: 'Publish Date', type: 'date' },
+        //{ field: 'publishDate', title: 'Publish Date', type: 'date' },
         { field: 'deadline', title: 'Deadline', type: 'date' },
         {
           title: 'Is Deleted',
@@ -279,6 +281,27 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
     });
   }
 
+  //applications butonuna tıklandığında çalışacak metod
+  onApplicationsButtonClick(row: any, index: number) {
+    const ref = this.dialogService.open(JobAdvertApplicationsComponent, {
+      title: 'Applications',
+      size:SidebarDialogSize.large,
+      buttons: {
+        update: false,
+        cancel: false,
+      },
+      onResult: (result: SidebarDialogResult) => {
+        if (_.isEqual(result.status, SidebarDialogResultStatus.updateFail)) {
+          ref.close();
+          this.table?.refreshData();
+        }
+      },
+      data: {
+        id: row.id,
+      },
+    });
+  }
+
   // delete butonuna tıklanıldığında çalışacak metod
   onDeleteButtonClick(row: any, index: number) {
     this.selectedMenu = row;
@@ -337,6 +360,21 @@ export class JobAdvertListComponent implements OnInit, IGridComponent {
         },
         onClick: (row: any, index: number) => {
           this.onUnDeleteButtonClick(row, index);
+        },
+      },
+      {
+        options: {
+          properties: [
+            ButtonType.raised,
+            ButtonType.rounded,
+            ButtonSize.small,
+            ButtonColor.primary,
+          ],
+          icon: ICON.book,
+          tooltip: 'Applications',
+        },
+        onClick: (row: any, index: number) => {
+          this.onApplicationsButtonClick(row, index);
         },
       },
     ] as IColumnButton[]; // cast ediliyor
