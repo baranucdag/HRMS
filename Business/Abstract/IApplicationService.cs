@@ -9,6 +9,7 @@ namespace Business.Abstract
     {
         ResultItem GetApplicationDetails();
         ResultItem GetApplicationPaginated(PaginationItem<ApplicationDto> pi);
+        ResultItem GetApplicationPaginatedByJobAdvertId(PaginationItem<ApplicationDto> pi,int id);
         ResultItem GetByUserIdAndCandidateId(int candidateId, int jobAdvertId);
         ResultItem Add(Application application);
         ResultItem Update(Application application);

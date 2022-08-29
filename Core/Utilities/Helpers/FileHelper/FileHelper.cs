@@ -1,22 +1,22 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Utilities.Result;
+using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Utilities.Helpers.FileHelper
 {
-    public class FileHelper
+    public class FileHelper : IFileHelper
     {
+        //C:\Users\90544\source\repos\HRMS\WebAPI\wwwroot\Uploads\cv\004e9022-701c-4304-95a7-3be5c2d56c39.pdf
         public void Delete(string filePath)
         {
+            string fullPath = "wwwroot\\Uploads\\cv\\" + filePath;
             try
             {
-                if (File.Exists(filePath))
+                if (File.Exists(fullPath))
                 {
-                    File.Delete(filePath);
+                    File.Delete(fullPath);
                 }
             }
             catch (Exception e)
@@ -29,7 +29,7 @@ namespace Core.Utilities.Helpers.FileHelper
 
         //todo : check file extensions (allow extensions)
         //todo : change return type by allowed file extensions 
-        public string Upload(IFormFile file, string root)
+        public ResultItem Upload(IFormFile file, string root)
         {
 
             if (file.Length > 0)
@@ -42,7 +42,7 @@ namespace Core.Utilities.Helpers.FileHelper
                 string guid = Guid.NewGuid().ToString();
                 string filePath = guid + extension;
 
-                string[] allowExtensions = {  };
+                string[] allowExtensions = { ".pdf", ".word" };
                 if (allowExtensions.FirstOrDefault(x => x.ToUpper() == extension.ToUpper()) != null)
                 {
                     using (FileStream fileStream = File.Create(root + filePath))
@@ -50,14 +50,13 @@ namespace Core.Utilities.Helpers.FileHelper
 
                         file.CopyTo(fileStream);
                         fileStream.Flush();
-                        return filePath;
+                        return new ResultItem(true, filePath, "file added succesfully");
                     }
                 }
-                else return "file type is not allowed";
-
+                else return new ResultItem(false, null, "file type is not allowed");
 
             }
-            return "file is empty";
+            return new ResultItem(false, null, "file cannot be null");
         }
 
     }

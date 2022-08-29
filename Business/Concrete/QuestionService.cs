@@ -17,7 +17,6 @@ namespace Business.Concrete
 
         public void Add(Question question)
         {
-            SecuredOperationTool securedOperation = new SecuredOperationTool("admin");
             questionDal.Add(question);
         }
 
@@ -38,7 +37,8 @@ namespace Business.Concrete
 
         public ResultItem GetAll()
         {
-            return new ResultItem(true, questionDal.GetAll(), Messages.DataListed);
+            var result = questionDal.GetAll();
+            return new ResultItem(true, result, Messages.DataListed);
         }
 
     }

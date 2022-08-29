@@ -2,6 +2,7 @@
 using Core.Utilities.Helpers.PaginationHelper;
 using Entities.Concrete;
 using Entities.Dto;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -17,6 +18,17 @@ namespace WebAPI.Controllers
             this.candidateService = candidateService;
         }
 
+        [HttpPost("AddWithFile")]
+        public IActionResult AddWithFile([FromForm(Name = ("cv"))] IFormFile file,[FromForm()] Candidate candidate)
+        {
+            var result = candidateService.UpdateWithFile(file, candidate);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("Add")]
         public IActionResult Add(Candidate candidate)
         {
@@ -27,6 +39,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
         [HttpPost("Update")]
         public IActionResult Update(Candidate candidate)
         {

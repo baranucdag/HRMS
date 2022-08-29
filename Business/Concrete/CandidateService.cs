@@ -1,11 +1,13 @@
 ﻿using Business.Abstract;
 using Business.Constans;
 using Core.Extensions;
+using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Helpers.PaginationHelper;
 using Core.Utilities.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.Dto;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -16,16 +18,41 @@ namespace Business.Concrete
     public class CandidateService : ICandidateService
     {
         private readonly ICandidateDal candidateDal;
+        private readonly IFileHelper fileHelper;
 
-        public CandidateService(ICandidateDal candidateDal)
+        public CandidateService(ICandidateDal candidateDal, IFileHelper fileHelper)
         {
             this.candidateDal = candidateDal;
+            this.fileHelper = fileHelper;
         }
+
+        //add a candidate with cv file
+        public ResultItem UpdateWithFile(IFormFile file, Candidate candidate)
+        {
+            Candidate candidateToUpdate = candidateDal.Get(x => x.Id == candidate.Id);
+            if (candidateToUpdate.CvPath != null)
+            {
+                fileHelper.Delete(candidateToUpdate.CvPath);
+            }
+            var fileResult = fileHelper.Upload(file, PathConstans.ImagesPath);
+            if (fileResult.IsOk)
+            {
+
+                candidateToUpdate.CvPath = Convert.ToString(fileResult.Data);
+                candidateDal.Update(candidateToUpdate);
+                return new ResultItem(true, null, Messages.CvUpdated);
+            }
+
+            return new ResultItem(false, null, fileResult.Message);
+        }
+
+        //add a candidate
         public ResultItem Add(Candidate candidate)
         {
             candidateDal.Add(candidate);
             return new ResultItem();
         }
+
 
         public ResultItem Delete(int id)
         {
@@ -43,13 +70,13 @@ namespace Business.Concrete
 
         public ResultItem GetById(int id)
         {
-            var result =  candidateDal.Get(x => x.Id == id);
-            return new ResultItem(true, result,Messages.DataListed);
+            var result = candidateDal.GetCandidateDetail(x => x.Id == id);
+            return new ResultItem(true, result, Messages.DataListed);
         }
 
         public ResultItem GetByUserId(int id)
         {
-            var result = candidateDal.Get(x => x.UserId == id);
+            var result = candidateDal.GetCandidateDetail(x => x.UserId == id);
             return new ResultItem(true, result, Messages.DataListed);
         }
 
@@ -344,6 +371,6 @@ namespace Business.Concrete
 
     }
 }
-    
+
 
 

@@ -27,5 +27,12 @@ namespace WebAPI.Controllers
             questionService.Add(question);
             return Ok();
         }
+
+        [HttpPost("Update")]
+        public IActionResult Update(Question question)
+        {
+            questionService.Update(question);
+            return Ok();
+        }
     }
 }

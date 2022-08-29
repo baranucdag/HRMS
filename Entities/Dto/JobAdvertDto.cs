@@ -8,9 +8,12 @@ namespace Entities.Dto
         public int Id { get; set; }
         public string PositionName { get; set; }
         public string QualificationLevel { get; set; }
-        public string Department { get; set; }
-        public string WorkPlaceType { get; set; }
-        public string WorkTimeType { get; set; }
+        public string DepartmentText { get; set; }
+        public int Department { get; set; }
+        public string WorkPlaceTypeText { get; set; }
+        public int WorkPlaceType { get; set; }
+        public string WorkTimeTypeText { get; set; }
+        public int WorkTimeType { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime Deadline { get; set; }
         public string Description { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Business.Abstract;
 using Business.Concrete;
+using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -44,6 +45,8 @@ namespace Business.DependencyResolver
 
             builder.RegisterType<AuthService>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
+            builder.RegisterType<FileHelper>().As<IFileHelper>();
 
         }
     }

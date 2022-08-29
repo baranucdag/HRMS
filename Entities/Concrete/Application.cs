@@ -9,6 +9,8 @@ namespace Entities.Concrete
         public int JobAdvertId { get; set; }
         public int CandidateId { get; set; }
         public ApplicationStatusEnum ApplicationStatus { get; set; }
+        public ApplicationStatusEnum PrevApplicationStatus { get; set; }
+        public bool HasEmailSent { get; set; }
         public DateTime ApplicationDate { get; set; }
     }
 }
