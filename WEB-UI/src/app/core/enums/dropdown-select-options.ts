@@ -18,7 +18,7 @@ export enum departmentOptions {
   humanResources = 3,
 }
 
-export enum departments {
+export enum department {
   system ,
   software ,
   humanResources ,
@@ -52,12 +52,12 @@ export enum genderOptions {
 
 export enum workTimeType {
   partTime = 0,
-  fullTime,
-  intern,
+  fullTime=1,
+  intern=2,
 }
 
 export enum workPlaceTypeEnum {
-  remote,
-  hybrid,
-  fromOffice,
+  remote=0,
+  hybrid=1,
+  fromOffice=2,
 }

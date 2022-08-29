@@ -28,9 +28,7 @@
         <p-accordion>
           <p-accordionTab>
             <ng-template pTemplate="header">
-              
-
-              <div class="row" style="width:100%">
+              <div class="row" style="width: 100%">
                 <div class="col-3" style="margin-top: 35px">
                   position
                   <h5>{{ jobAdvert.positionName }}</h5>
@@ -53,8 +51,15 @@
                   <h5>{{ jobAdvert.deadline | date: "mediumDate" }}</h5>
                 </div>
                 <div class="col">
-                  <p-button title="Delete" (onClick)="$event.stopPropagation()"
+                  <p-button *ngIf="checkIfApplied"else applied
+                    (onClick)="
+                      $event.stopPropagation(); navigateToApply(jobAdvert)
+                    "
                     >Apply now</p-button
+                  >
+                  <p-button #applied *ngIf="!checkIfApplied"
+                    (onClick)="$event.stopPropagation()"
+                    >Applied</p-button
                   >
                 </div>
               </div>
@@ -63,11 +68,14 @@
               description
               <h5>{{ jobAdvert.description }}</h5>
             </ng-template>
-          
           </p-accordionTab>
         </p-accordion>
       </div>
     </div>
-    <p-paginator [rows]="5" [totalRecords]="totalCount" (onPageChange)="paginate($event)"></p-paginator>
+    <p-paginator
+      [rows]="5"
+      [totalRecords]="totalCount"
+      (onPageChange)="paginate($event)"
+    ></p-paginator>
   </div>
 </div>

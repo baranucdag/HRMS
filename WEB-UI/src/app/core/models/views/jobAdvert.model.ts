@@ -1,6 +1,7 @@
 import { IBaseModel } from './../base.model';
 
 export interface IJobAdvert extends IBaseModel{
+    id:number,
     positionName:string,
     qualificationLevel:string,
     department:string,
@@ -12,4 +13,5 @@ export interface IJobAdvert extends IBaseModel{
     status:boolean,
     isDeleted:number,
     isDeletedText:string
+    createdAt:Date
 }

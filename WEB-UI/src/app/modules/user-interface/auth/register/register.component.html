@@ -7,6 +7,7 @@
       <span class="p-float-label" >
         <input
           class="form-control"
+          required minlength="2"
           type="text"
           pInputText
           formControlName="firstName"
@@ -16,6 +17,7 @@
       <span class="p-float-label" style="margin-top: 25px">
         <input
           class="form-control"
+          required minlength="2"
           type="text"
           pInputText
           formControlName="lastName"
@@ -26,7 +28,9 @@
         <input
           class="form-control"
           type="email"
+          required minlength="6"
           pInputText
+          email="true"
           formControlName="email"
         />
         <label for="float-input">Email</label>
@@ -35,6 +39,7 @@
         <input
           class="form-control"
           type="password"
+          required minlength="5"
           pInputText
           formControlName="password"
         />
@@ -52,3 +57,4 @@
     </form>
   </body>
 </html>
+<p-toast position="top-right"></p-toast>

@@ -10,8 +10,6 @@ export class ApplyComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log("sadasd");
-    
   }
 
 }
