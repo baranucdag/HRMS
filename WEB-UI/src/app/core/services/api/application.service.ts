@@ -28,20 +28,13 @@ export class ApplicationService extends BaseService<IApplication> {
     );
   }
 
-  getApplicationPaginationDataPath(url?:any) {
-    if(url != undefined)
-      return `${environment.apiUrl}${this.apiPath}/getapplicationspaginationdata/${url}`;
-
-    return `${environment.apiUrl}${this.apiPath}/getapplicationspaginationdata`;
-  }
-
-  getApplicationsPeginationData(
-    t: IApplication,
-    url?: any
-  ): Observable<HttpResponse<IResult<IApplication>>> {
-    return this.httpClient.post<HttpResponse<IResult<IApplication>>>(
-      super.getPaginationDataPath(url),
-      t
+  getByJobAdvertId(
+    id: number
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      super.getFullPath('GetByJobAdvertId') +
+        '?jobAdvertId=' +
+        id
     );
   }
 }

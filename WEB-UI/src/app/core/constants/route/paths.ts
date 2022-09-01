@@ -19,6 +19,9 @@ export const PATHS = {
     userList:"user-list",
     job:"job",
     apply:"apply",
-    cv:"cv"
-    
+    cv:"cv",
+    form:"form",
+    education:"education",
+    confirmation:"confirmation",
+    personal:"personal"
 }

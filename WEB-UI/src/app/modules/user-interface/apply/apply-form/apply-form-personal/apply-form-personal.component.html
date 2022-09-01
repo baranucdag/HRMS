@@ -1,0 +1,79 @@
+<div class="stepsdemo-content">
+    <p-card>
+        <ng-template pTemplate="title">
+            Personal Information
+        </ng-template>
+        <ng-template pTemplate="subtitle">
+            Enter your personal information
+        </ng-template>
+        <ng-template pTemplate="content">
+            <div class="container">
+                <h3 style="text-align: center; margin-bottom: 15px">Required inputs</h3>
+                <form >
+                  <div class="row">
+                    <div class="col-4">
+                      <span class="p-float-label">
+                        <input
+                          type="date"
+                          style="width: 100%"
+                          id="inputtext"
+                          pInputText
+                        />
+                      </span>
+                    </div>
+                    <div class="col-4">
+                      <span class="p-float-label">
+                        <input
+                          style="width: 100%"
+                          type="text"
+                          id="inputtext-left"
+                          pInputText
+                        />
+                        <label for="inputtext-left">paceOfBirth</label>
+                      </span>
+                    </div>
+                    <div class="col-4">
+                      <span class="p-float-label">
+                        <input
+                          style="width: 100%"
+                          type="text"
+                          id="inputtext-right"
+                          pInputText
+                        />
+                        <label for="inputtext-right">gender</label>
+                      </span>
+                    </div>
+                    <div class="col-4">
+                      <span class="p-float-label">
+                        <input
+                          style="width: 100%"
+                          type="text"
+                          id="inputtext-right"
+                          pInputText
+                        />
+                        <label for="inputtext-right">profession</label>
+                      </span>
+                    </div>
+                    <div class="col-4">
+                      <span class="p-float-label">
+                        <input
+                          style="width: 100%"
+                          formControlName="isMarried"
+                          type="text"
+                          id="inputtext-right"
+                          pInputText
+                        />
+                        <label for="inputtext-right">isMarried</label>
+                      </span>
+                    </div>
+                  </div>
+                </form>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <div class="grid grid-nogutter justify-content-end">
+                <p-button label="Next"  icon="pi pi-angle-right" iconPos="right"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>

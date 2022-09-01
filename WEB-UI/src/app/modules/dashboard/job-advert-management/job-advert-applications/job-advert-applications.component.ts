@@ -1,8 +1,15 @@
-import { Subject } from 'rxjs';
-import { ApplicationService } from './../../../../core/services/api/application.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { ApplicationService } from 'src/app/core/services/api';
+import { Form, FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { IApplication } from './../../../../core/models/views/application.model';
+import { IGridComponent } from 'src/app/core/components/interfaces';
+import { Subject, take, takeUntil } from 'rxjs';
+import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { TableComponent } from 'src/app/core/components/tables';
 import { ITableOptions } from 'src/app/core/components/tables/table/models';
+import { SidebarDialogResult } from 'src/app/core/components/dialogs/sidebar-dialog/enums';
+import { enumToArray } from 'src/app/core/helpers/enum';
+import { applicationStatusOptions, department } from 'src/app/core/enums';
 
 @Component({
   selector: 'app-job-advert-applications',
@@ -11,15 +18,29 @@ import { ITableOptions } from 'src/app/core/components/tables/table/models';
 })
 export class JobAdvertApplicationsComponent implements OnInit {
   @ViewChild('table') table?: TableComponent;
+  baseCvPath: string = 'https://localhost:44313/Uploads/cv/';
 
   initialData!: { id: number };
   tableOptions!: ITableOptions;
+  applications?: any[];
+  status: any = 0;
 
+  aapplicationStatusOptions: any = enumToArray(applicationStatusOptions).map(
+    (m) => {
+      return { label: m.description.toCapitalize(), value: m.id };
+    }
+  );
+
+  public readonly onResult = new EventEmitter<SidebarDialogResult>();
   private readonly onDestroy = new Subject<void>();
-  constructor(private applciationService: ApplicationService) {}
+
+  constructor(
+    private applicationService: ApplicationService,
+    private formBuilder: FormBuilder,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
-    this.createTable();
   }
 
   ngOnDestroy() {
@@ -31,39 +52,57 @@ export class JobAdvertApplicationsComponent implements OnInit {
   setData(data: any) {
     this.initialData = data;
     if (this.initialData.id) {
-      // update
+      this.getApplicationsByJobAdvertId(this.initialData.id);
     } else {
       // create
     }
   }
 
-  createTable() {
-    this.tableOptions = {
-      data: [],
-      columns: [
-        { field: 'positionName', title: 'positionName', type: 'text' },
-        { field: 'publishDate', title: 'Publish Date', type: 'text' },
-        { field: 'candidateFullName', title: 'candidateFullName', type: 'text' },
-      ],
-      filterable: true,
-      sortable: true,
-      sortMode: 'multiple',
-      scrollable: false,
-      selectable: true,
-      pageOptions: {
-        pageSize: 25,
-        pageSizes: [25, 50, 100, 250, 500],
-      },
-      globalFilterOptions: {
-        clearButtonOptions: {
-          label: 'Clear',
+  getApplicationsByJobAdvertId(id: number) {
+    this.applicationService
+      .getByJobAdvertId(id)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(
+        (response) => {
+          this.applications = response.data;
+          
         },
-        searchOptions: {
-          placeholder: 'Search',
-        },
-      },
-      lazyLoad: true,
-      dataService: this.applciationService,
+        (resposeError) => {}
+      );
+  }
+
+  getCandidateCvPath(cvPath: string) {
+    if (cvPath !== null) {
+      console.log(this.baseCvPath + cvPath);
+      return this.baseCvPath + cvPath;
+    } else
+      return this.messageService.add({
+        severity: 'success',
+        detail: 'file not exist',
+      });
+  }
+
+  save(application: any) {
+    let applicationToUpdate: IApplication = {
+      id: application.id,
+      candidateId: application.candidateId,
+      applicationStatus: application.applicationStatus,
+      prevApplicationStatus: application.applicationStatus - 1,
+      applicationDate: application.applicationDate,
+      hasEmailSent: application.hasEmailSent,
+      isDeleted: application.isDeleted,
+      jobAdvertId: application.jobAdvertId,
     };
+
+    this.applicationService
+      .update(applicationToUpdate)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe((response) => {
+        this.messageService.add({
+          severity: 'success',
+          detail: response.body?.message,
+        });
+        this.getApplicationsByJobAdvertId(this.initialData.id);
+      });
   }
 }

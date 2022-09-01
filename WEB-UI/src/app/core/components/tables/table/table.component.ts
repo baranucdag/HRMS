@@ -249,6 +249,15 @@ export class TableComponent implements OnInit {
                 matchMode: 'equals',
               };
             }
+          }else if (column.filter?.type == 'text') {
+            this.filterValues[column.field ?? ''] =
+              column.filter?.defaultValue?.value;
+            this.firstTableEvent.filters[column.field ?? ''] = {
+              value: column.filter?.defaultValue?.value
+                ? column.filter?.defaultValue.value.toString()
+                : null,
+              matchMode: 'contains',
+            };
           }
         });
       });
@@ -298,6 +307,17 @@ export class TableComponent implements OnInit {
                   ? column.filter?.defaultValue.toString()
                   : null,
                 matchMode: 'equals',
+              };
+            }else if (column.filter?.type == 'numeric') {
+              console.log("a");
+              
+              this.filterValues[column.field ?? ''] =
+                column.filter?.defaultValue?.value;
+              event.filters[column.field ?? ''] = {
+                value: column.filter?.defaultValue?.value
+                  ? column.filter?.defaultValue.value
+                  : null,
+                matchMode: 'contains',
               };
             }
           }
