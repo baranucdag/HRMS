@@ -1,15 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Core.Utilities.Result;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.Utilities.Helpers.FileHelper
 {
     public interface IFileHelper
     {
-        string Upload(IFormFile file, string root);
+        ResultItem Upload(IFormFile file, string root);
         void Delete(string filePath);
     }
 }

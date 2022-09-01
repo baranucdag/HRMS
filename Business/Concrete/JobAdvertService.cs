@@ -32,7 +32,7 @@ namespace Business.Concrete
         public ResultItem GetAllDetails()
         {
             var result = jobAdvertDal.GetJobAdvertDtos();
-            return new ResultItem(true, result, Messages.DataListed);
+            return new ResultItem(true, result, null);
         }
         public ResultItem Delete(int id)
         {
@@ -56,7 +56,7 @@ namespace Business.Concrete
         //Get single data by id
         public ResultItem GetById(int id)
         {
-            var result = jobAdvertDal.Get(x => x.Id == id);
+            var result = jobAdvertDal.GetJobAdvertDto(x => x.Id == id);
             return new ResultItem(true, result, null);
         }
 
@@ -89,17 +89,17 @@ namespace Business.Concrete
                         }
                     case nameof(JobAdvertDto.Department):
                         {
-                            res = rows.AsEnumerable().Where(x => x.Department.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
+                            res = rows.AsEnumerable().Where(x => x.DepartmentText.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
                             break;
                         }
                     case nameof(JobAdvertDto.WorkTimeType):
                         {
-                            res = rows.AsEnumerable().Where(x => x.WorkTimeType.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
+                            res = rows.AsEnumerable().Where(x => x.WorkTimeTypeText.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
                             break;
                         }
                     case nameof(JobAdvertDto.WorkPlaceType):
                         {
-                            res = rows.AsEnumerable().Where(x => x.WorkPlaceType.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
+                            res = rows.AsEnumerable().Where(x => x.WorkPlaceTypeText.ToLowerEng().Contains(queryObject.QueryString.ToLowerEng())).ToList();
                             break;
                         }
 
@@ -280,7 +280,7 @@ namespace Business.Concrete
                                             rows = rows.Where(x => x.PublishDate <= a);
                                             break;
                                         }
-                                    case nameof(JobAdvertDto.WorkTimeType):
+                                    case nameof(JobAdvertDto.WorkTimeTypeText):
                                         {
                                             switch (Convert.ToInt32(oVal))
                                             {
@@ -290,17 +290,17 @@ namespace Business.Concrete
                                                     }
                                                 case 1: // partTime
                                                     {
-                                                        rows = rows.Where(x => x.WorkTimeType == "PartTime");
+                                                        rows = rows.Where(x => x.WorkTimeTypeText == "PartTime");
                                                         break;
                                                     }
                                                 case 2: // fullTime
                                                     {
-                                                        rows = rows.Where(x => x.WorkTimeType == "FullTime");
+                                                        rows = rows.Where(x => x.WorkTimeTypeText == "FullTime");
                                                         break;
                                                     }
                                                 case 3: // Intern
                                                     {
-                                                        rows = rows.Where(x => x.WorkTimeType == "Intern");
+                                                        rows = rows.Where(x => x.WorkTimeTypeText == "Intern");
                                                         break;
                                                     }
 
@@ -309,7 +309,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(JobAdvertDto.WorkPlaceType):
+                                    case nameof(JobAdvertDto.WorkPlaceTypeText):
                                         {
                                             switch (Convert.ToInt32(oVal))
                                             {
@@ -319,17 +319,17 @@ namespace Business.Concrete
                                                     }
                                                 case 1: // Remote
                                                     {
-                                                        rows = rows.Where(x => x.WorkPlaceType == "Remote");
+                                                        rows = rows.Where(x => x.WorkPlaceTypeText == "Remote");
                                                         break;
                                                     }
                                                 case 2: // Hybrid
                                                     {
-                                                        rows = rows.Where(x => x.WorkPlaceType == "Hybrid");
+                                                        rows = rows.Where(x => x.WorkPlaceTypeText == "Hybrid");
                                                         break;
                                                     }
                                                 case 3: // FromOffice
                                                     {
-                                                        rows = rows.Where(x => x.WorkPlaceType == "FromOffice");
+                                                        rows = rows.Where(x => x.WorkPlaceTypeText == "FromOffice");
                                                         break;
                                                     }
 
@@ -338,7 +338,7 @@ namespace Business.Concrete
                                             }
                                             break;
                                         }
-                                    case nameof(JobAdvertDto.Department):
+                                    case nameof(JobAdvertDto.DepartmentText):
                                         {
                                             switch (Convert.ToInt32(oVal))
                                             {
@@ -348,17 +348,17 @@ namespace Business.Concrete
                                                     }
                                                 case 1: // system
                                                     {
-                                                        rows = rows.Where(x => x.Department == "System");
+                                                        rows = rows.Where(x => x.DepartmentText == "System");
                                                         break;
                                                     }
                                                 case 2: // software
                                                     {
-                                                        rows = rows.Where(x => x.Department == "Software");
+                                                        rows = rows.Where(x => x.DepartmentText == "Software");
                                                         break;
                                                     }
                                                 case 3: // humanresources
                                                     {
-                                                        rows = rows.Where(x => x.Department == "HumanResources");
+                                                        rows = rows.Where(x => x.DepartmentText == "HumanResources");
                                                         break;
                                                     }
 

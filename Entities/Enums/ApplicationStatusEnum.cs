@@ -4,13 +4,26 @@ namespace Entities.Enums
 {
     public enum ApplicationStatusEnum
     {
-        [Description("FirstStep")]
-        Applied = 0,
+        [Description("Rejected")]
+        Rejected = -1,
 
-        [Description("SecondStep")]
-        Proved = 1,
+        [Description("evaluation")]
+        evaluation = 0,
+
+        [Description("OnlineMeeting")]
+        OnlineMeeting = 1,
+
+        [Description("FaceToFaceMeeting")]
+        FaceToFaceMeeting = 2,
 
         [Description("Offered")]
-        Offered = 2
+        Offered = 3,
+
+        [Description("AcceptOffer")]
+        AcceptOffer = 4,
+
+        [Description("StartToWork")]
+        StartToWork = 5,
+
     }
 }

@@ -86,6 +86,8 @@ namespace WebAPI
 
             app.UseAuthentication();
 
+            app.UseStaticFiles();
+
             app.UseAuthorization();
 
             app.AddTBExceptionHandlingMiddleware(opt =>

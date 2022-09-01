@@ -24,5 +24,7 @@
         public static string UpdateSuccess = "Güncelleme başarılı";
         public static string UnDeleteSuccess = "kayıt güncellendi";
         public static string passwordUpdated = "Parola başarıyla güncellendi";
+        public static string CvUpdated = "Cv güncellendi";
+        public static string ApplicationCreated = "Başvuru gerçekleşti";
     }
 }

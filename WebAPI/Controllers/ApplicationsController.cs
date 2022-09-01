@@ -50,6 +50,17 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("GetApplicationPaginatedByJobAdvertId")]
+        public IActionResult GetApplicationPaginatedByJobAdvertId(PaginationItem<ApplicationDto> pi,int id)
+        {
+            var result = applicationService.GetApplicationPaginatedByJobAdvertId(pi,id);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("Add")]
         public IActionResult Add(Application application)
         {

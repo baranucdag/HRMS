@@ -4,14 +4,16 @@ using DataAccess.Concrete.Contexts;
 using Entites.Enums;
 using Entities.Concrete;
 using Entities.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfApplicationDal : EfEntityRepositoryBase<Application, DataContext>, IApplicationDal
     {
-        public List<ApplicationDto> GetApplicationDetails()
+        public List<ApplicationDto> GetApplicationDetails(Expression<Func<ApplicationDto, bool>> filter = null)
         {
             using (var context = new DataContext())
             {
@@ -37,13 +39,15 @@ namespace DataAccess.Concrete.EntityFramework
                                  WorkTimeType = t3.WorkTimeType.ToString(),
                                  WorkPlaceType = t3.WorkPlaceType.ToString(),
                                  ApplicationStatus = t1.ApplicationStatus.ToString(),
+                                 HasEmailSent = t1.HasEmailSent,
+                                 PrevApplicationStatus = t1.PrevApplicationStatus.ToString(),
                                  Deadline = t3.Deadline,
                                  CandidateFirstName = t4.FirstName,
                                  CandidateLastName = t4.LastName,
                                  CraetedAt = t1.CreatedAt,
                                  IsDeleted = t1.IsDeleted
                              };
-                return result.ToList();
+                return filter == null ? result.ToList() : result.Where(filter).ToList();
             }
         }
     }

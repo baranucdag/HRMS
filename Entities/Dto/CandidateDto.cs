@@ -10,6 +10,7 @@ namespace Entities.Dto
     public class CandidateDto : IDto
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string CandidateFullName => $"{FirstName} {LastName}";
