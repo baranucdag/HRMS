@@ -39,10 +39,11 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("GetPaginationData")]
-        public IActionResult GetPaginationData(PaginationItem<ApplicationDto> pi)
+
+        [HttpGet("GetByJobAdvertId")]
+        public IActionResult GetByJobAdvertId(int jobAdvertId)
         {
-            var result = applicationService.GetApplicationPaginated(pi);
+            var result = applicationService.GetByJobAdvertId(jobAdvertId);
             if (result.IsOk)
             {
                 return Ok(result);
@@ -50,10 +51,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("GetApplicationPaginatedByJobAdvertId")]
-        public IActionResult GetApplicationPaginatedByJobAdvertId(PaginationItem<ApplicationDto> pi,int id)
+        [HttpPost("GetPaginationData")]
+        public IActionResult GetPaginationData(PaginationItem<ApplicationDto> pi)
         {
-            var result = applicationService.GetApplicationPaginatedByJobAdvertId(pi,id);
+            var result = applicationService.GetApplicationPaginated(pi);
             if (result.IsOk)
             {
                 return Ok(result);
