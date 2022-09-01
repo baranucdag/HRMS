@@ -1,6 +1,37 @@
-<div class="row">
-    <div class="col-12">
-      <app-table *ngIf="tableOptions" #table [options]="tableOptions">
-      </app-table>
-    </div>
-  </div>
+<div *ngIf="applications">
+  <p-table [value]="applications" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Full Name</th>
+        <th>Position Name</th>
+        <th>Previous Status</th>
+        <th>Application Status</th>
+        <th>Get Cv</th>
+        <th>Save</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-application>
+      <tr>
+        <td>{{ application.candidateFullName }}</td>
+        <td>{{ application.positionName }}</td>
+        <td>{{ application.prevApplicationStatusText }}</td>
+        <td>
+          <select class="form-select" [(ngModel)]="application.applicationStatus" *ngIf="aapplicationStatusOptions">
+            <option
+              *ngFor="let option of aapplicationStatusOptions"
+              [ngValue] = "option.value"
+            >
+              {{ option.label }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <p-button (click)="getCandidateCvPath(application.candidateCvPath)">Cv</p-button>
+        </td>
+        <td>
+          <p-button (click)="save(application)">Save</p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

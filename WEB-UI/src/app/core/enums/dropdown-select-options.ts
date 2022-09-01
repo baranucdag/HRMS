@@ -31,6 +31,16 @@ export enum workTimeTypeOptions {
   ıntern = 3,
 }
 
+export enum applicationStatusOptions{
+  rejected=-1,
+  evaluation=0,
+  onlineMeeting=1,
+  faceToFaceMeeting=2,
+  offered=3,
+  acceptOffer=4,
+  startToWork=5
+}
+
 export enum gender {
   male = 0,
   female = 1,

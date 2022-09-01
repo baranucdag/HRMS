@@ -84,8 +84,6 @@ export class JobadvertsComponent implements OnInit {
       .pipe(takeUntil(this.onDestroy))
       .subscribe((response) => {
         this.userApplication = response.data;
-        console.log(response);
-        console.log(this.currentCandidate);
       });
   }
 
