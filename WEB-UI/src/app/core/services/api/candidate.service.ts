@@ -21,4 +21,10 @@ export class CandidateService extends BaseService<ICandidate> {
    updateWithCv(senform:any):Observable<HttpResponse<any>>{
     return this.httpClient.post<HttpResponse<any>>(super.getFullPath("addWithFile"),senform);
    }
+
+   downloadCv(cvPath:string){
+    console.log(this.getFullPath("GetCandidateCv?cvPath=wwwroot/Uploads/cv/")+cvPath);
+    
+    return this.httpClient.get<any>(this.getFullPath("GetCandidateCv?cvPath=wwwroot/Uploads/cv/")+cvPath);
+   }
 }

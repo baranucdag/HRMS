@@ -1,3 +1,4 @@
+import { ApplyFormWorkExperienceComponent } from './apply-form/apply-form-work-experience/apply-form-work-experience.component';
 import { ApplyFormConfirmationComponent } from './apply-form/apply-form-confirmation/apply-form-confirmation.component';
 import { ApplyFormEducationComponent } from './apply-form/apply-form-education/apply-form-education.component';
 import { ApplyFormPersonalComponent } from './apply-form/apply-form-personal/apply-form-personal.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
           { path: PATHS.empty, redirectTo:PATHS.personal,pathMatch:'full' },
           { path: PATHS.personal, component: ApplyFormPersonalComponent },
           { path: PATHS.education, component: ApplyFormEducationComponent },
+          { path: PATHS.workexperience, component: ApplyFormWorkExperienceComponent },
           { path: PATHS.confirmation, component: ApplyFormConfirmationComponent },
          ],
       },

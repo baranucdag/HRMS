@@ -23,5 +23,6 @@ export const PATHS = {
     form:"form",
     education:"education",
     confirmation:"confirmation",
-    personal:"personal"
+    personal:"personal",
+    workexperience:"workexperience"
 }

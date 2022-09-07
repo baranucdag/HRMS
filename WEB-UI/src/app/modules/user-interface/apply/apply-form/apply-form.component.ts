@@ -36,7 +36,7 @@ export class ApplyFormComponent implements OnInit {
       },
       {
         label: 'Work Experience Information',
-        routerLink: 'work',
+        routerLink: 'workexperience',
       },
       {
         label: 'Confirmation',

@@ -1,5 +1,3 @@
-import { NavigationComponent } from './../../core/components/user-interface/navigation/navigation.component';
-import { FooterComponent } from './../../core/components/user-interface/footer/footer.component';
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -7,23 +5,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { DropdownComponent } from 'src/app/core/components/dropdowns';
 import { DropdownModule } from 'primeng/dropdown';
-import { ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { ButtonComponent } from 'src/app/core/components/buttons';
 import { TooltipModule } from 'primeng/tooltip';
 import { CustomDatePipe, SafeHtmlPipe } from 'src/app/core/pipes';
 import { StringTemplatePipe } from 'src/app/core/components/tables/table/pipes';
-import { CheckboxModule} from 'primeng/checkbox';
+import { CheckboxModule } from 'primeng/checkbox';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { InputSwitchModule} from 'primeng/inputswitch';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputNumberModule } from 'primeng/inputnumber';
-import {InputTextModule} from 'primeng/inputtext';
+import { InputTextModule } from 'primeng/inputtext';
 import { TableComponent } from 'src/app/core/components/tables';
 import { SidebarComponent } from 'src/app/core/components/navigation';
-import {AccordionModule} from 'primeng/accordion';
+import { AccordionModule } from 'primeng/accordion';
 import { SkeletonModule } from 'primeng/skeleton';
 import { RouterModule } from '@angular/router';
-import { DialogComponent, SidebarDialogComponent } from 'src/app/core/components/dialogs';
+import {
+  DialogComponent,
+  SidebarDialogComponent,
+} from 'src/app/core/components/dialogs';
 import { ToolbarComponent } from 'src/app/core/components/toolbars';
 import { SidebarModule } from 'primeng/sidebar';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -32,8 +33,8 @@ import { PanelModule } from 'primeng/panel';
 import { InsertionDirective } from 'src/app/core/directives';
 import { HeaderComponent } from 'src/app/core/components/navigation/header/header.component';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import {MenubarModule} from 'primeng/menubar';
-import {Calendar, CalendarModule} from 'primeng/calendar';
+import { MenubarModule } from 'primeng/menubar';
+import { Calendar, CalendarModule } from 'primeng/calendar';
 import '../../core/extensions';
 
 @NgModule({
@@ -75,9 +76,8 @@ import '../../core/extensions';
     PanelModule,
     PanelMenuModule,
     MenubarModule,
-    
   ],
-  exports:[
+  exports: [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -112,11 +112,7 @@ import '../../core/extensions';
     HeaderComponent,
     CalendarModule,
   ],
-  providers:[
-    DatePipe,
-    StringTemplatePipe,
-    SafeHtmlPipe,
-  ],
+  providers: [DatePipe, StringTemplatePipe, SafeHtmlPipe],
   entryComponents: [SidebarDialogComponent],
 })
-export class SharedModule { }
+export class SharedModule {}

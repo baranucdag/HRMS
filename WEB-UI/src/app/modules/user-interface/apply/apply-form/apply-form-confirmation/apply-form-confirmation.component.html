@@ -1,1 +1,82 @@
-<p>apply-form-confirmation works!</p>
+<div class="stepsdemo-content" *ngIf="candidateInformation">
+  <p-card>
+    <ng-template pTemplate="title"> Confirmation </ng-template>
+    <ng-template pTemplate="subtitle"> Enter your card details </ng-template>
+    <ng-template pTemplate="content">
+      <div class="col-4" style="margin-top: 10px">
+        <label for="class">Date Of Birth</label> <br />
+        <b>{{ candidateInformation.personal.dateOfBirth }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">adress</label> <br />
+        <b>{{ candidateInformation.personal.adress }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">bloudGroup</label> <br />
+        <b>{{ candidateInformation.personal.bloudGroup }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">canTravel</label> <br />
+        <b>{{ candidateInformation.personal.canTravel }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">criminalRecordReason</label> <br />
+        <b>{{ candidateInformation.personal.criminalRecordReason }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">fatherProfession</label> <br />
+        <b>{{ candidateInformation.personal.fatherProfession }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">fatherName</label> <br />
+        <b>{{ candidateInformation.personal.fatherName }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">disabilityDetail</label> <br />
+        <b>{{ candidateInformation.personal.disabilityDetail }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">dirivingLicenceDetail</label> <br />
+        <b>{{ candidateInformation.personal.dirivingLicenceDetail }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">fatherCurrentJob</label> <br />
+        <b>{{ candidateInformation.personal.fatherCurrentJob }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">criminalRecordReason</label> <br />
+        <b>{{ candidateInformation.personal.criminalRecordReason }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">motherName</label> <br />
+        <b>{{ candidateInformation.personal.motherName }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">motherCurrentJob</label> <br />
+        <b>{{ candidateInformation.personal.motherCurrentJob }} </b>
+      </div>
+      <div class="col-4">
+        <label for="class">motherProfession</label> <br />
+        <b>{{ candidateInformation.personal.motherProfession }} </b>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="grid grid-nogutter justify-content-end">
+        <p-button
+          [routerLink]="['/apply/form/workexperience']"
+          routerLinkActive="router-link-active"
+          label="Back"
+          icon="pi pi-angle-left"
+        ></p-button>
+        <p-button
+          [ngStyle]="{ 'margin-left': '1050px' }"
+          label="Complete"
+          (click)="save()"
+          icon="pi pi-angle-right"
+          iconPos="right"
+          styleClass="p-button-success"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

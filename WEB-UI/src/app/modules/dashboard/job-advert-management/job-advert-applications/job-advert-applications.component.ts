@@ -1,3 +1,4 @@
+import { CandidateService } from './../../../../core/services/api/candidate.service';
 import { MessageService } from 'primeng/api';
 import { ApplicationService } from 'src/app/core/services/api';
 import { Form, FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -37,11 +38,11 @@ export class JobAdvertApplicationsComponent implements OnInit {
   constructor(
     private applicationService: ApplicationService,
     private formBuilder: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private candidateService: CandidateService
   ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy() {
     this.onDestroy.next();
@@ -65,7 +66,6 @@ export class JobAdvertApplicationsComponent implements OnInit {
       .subscribe(
         (response) => {
           this.applications = response.data;
-          
         },
         (resposeError) => {}
       );
@@ -103,6 +103,22 @@ export class JobAdvertApplicationsComponent implements OnInit {
           detail: response.body?.message,
         });
         this.getApplicationsByJobAdvertId(this.initialData.id);
+      });
+  }
+
+  getCandidateCv(cvPath: string,name:string) {
+    this.candidateService
+      .downloadCv(cvPath)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe((response) => {
+
+        const linkSource = 'data:application/pdf;base64,'+response.fileContents;
+        const downloadLink = document.createElement("a");
+        const fileName = name+".pdf";
+
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
       });
   }
 }

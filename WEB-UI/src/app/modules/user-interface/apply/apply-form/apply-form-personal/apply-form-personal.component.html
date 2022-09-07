@@ -1,79 +1,418 @@
 <div class="stepsdemo-content">
-    <p-card>
-        <ng-template pTemplate="title">
-            Personal Information
-        </ng-template>
-        <ng-template pTemplate="subtitle">
-            Enter your personal information
-        </ng-template>
-        <ng-template pTemplate="content">
-            <div class="container">
-                <h3 style="text-align: center; margin-bottom: 15px">Required inputs</h3>
-                <form >
-                  <div class="row">
-                    <div class="col-4">
-                      <span class="p-float-label">
-                        <input
-                          type="date"
-                          style="width: 100%"
-                          id="inputtext"
-                          pInputText
-                        />
-                      </span>
-                    </div>
-                    <div class="col-4">
-                      <span class="p-float-label">
-                        <input
-                          style="width: 100%"
-                          type="text"
-                          id="inputtext-left"
-                          pInputText
-                        />
-                        <label for="inputtext-left">paceOfBirth</label>
-                      </span>
-                    </div>
-                    <div class="col-4">
-                      <span class="p-float-label">
-                        <input
-                          style="width: 100%"
-                          type="text"
-                          id="inputtext-right"
-                          pInputText
-                        />
-                        <label for="inputtext-right">gender</label>
-                      </span>
-                    </div>
-                    <div class="col-4">
-                      <span class="p-float-label">
-                        <input
-                          style="width: 100%"
-                          type="text"
-                          id="inputtext-right"
-                          pInputText
-                        />
-                        <label for="inputtext-right">profession</label>
-                      </span>
-                    </div>
-                    <div class="col-4">
-                      <span class="p-float-label">
-                        <input
-                          style="width: 100%"
-                          formControlName="isMarried"
-                          type="text"
-                          id="inputtext-right"
-                          pInputText
-                        />
-                        <label for="inputtext-right">isMarried</label>
-                      </span>
-                    </div>
-                  </div>
-                </form>
+  <p-card>
+    <ng-template pTemplate="title"> Personal Information </ng-template>
+    <ng-template pTemplate="subtitle">
+      Enter your personal information
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="container">
+        <form [formGroup]="personalInformationForm">
+          <div class="row" *ngIf="currentUser">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>First Name</label>
+                <input
+                  id="disabled-input"
+                  type="text"
+                  placeholder=" {{ currentUser.firstName }}"
+                  pInputText
+                  [disabled]="disabled"
+                />
+              </div>
             </div>
-        </ng-template>
-        <ng-template pTemplate="footer">
-            <div class="grid grid-nogutter justify-content-end">
-                <p-button label="Next"  icon="pi pi-angle-right" iconPos="right"></p-button>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Last Name</label>
+                <input
+                  id="disabled-input"
+                  type="text"
+                  placeholder=" {{ currentUser.lastName }}"
+                  pInputText
+                  [disabled]="disabled"
+                />
+              </div>
             </div>
-        </ng-template>
-    </p-card>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Email</label>
+                <input
+                  id="disabled-input"
+                  type="text"
+                  placeholder=" {{ currentUser.email }}"
+                  pInputText
+                  [disabled]="disabled"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Date Of Birth</label>
+                <input
+                  id="disabled-input"
+                  type="date"
+                  formControlName="dateOfBirth"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Place Of Birth</label>
+                <input
+                  required
+                  minlength="3"
+                  type="text"
+                  pInputText
+                  formControlName="placeOfBirth"
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Gender</label>
+                <select class="form-select" formControlName="gender">
+                  <option
+                    *ngFor="let option of genders"
+                    [ngValue]="option.value"
+                  >
+                    {{ option.label }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Adress</label>
+                <input formControlName="adress" type="text" pInputText />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Phone Number</label>
+                <input formControlName="phoneNumber" type="text" pInputText />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Home Phone Number</label>
+                <input
+                  formControlName="homePhoneNumber"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-3">
+              <h5>Are you married ?</h5>
+              <p-inputSwitch
+                formControlName="isMarried"
+                [(ngModel)]="isMarried"
+              ></p-inputSwitch>
+            </div>
+            <div class="col-3" *ngIf="isMarried">
+              <div class="p-fluid">
+                <label>Spouse Name</label>
+                <input formControlName="spouseName" type="text" pInputText />
+              </div>
+            </div>
+            <div class="col-3" *ngIf="isMarried">
+              <div class="p-fluid">
+                <label>Spouse Profession</label>
+                <input
+                  formControlName="spouseProfession"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-3" *ngIf="isMarried">
+              <div class="p-fluid">
+                <label>Spouse Current Job</label>
+                <input
+                  formControlName="spouseCurrentJob"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Father Name</label>
+                <input formControlName="fatherName" type="text" pInputText />
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Father Profession</label>
+                <input
+                  formControlName="fatherProfession"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Father Current Job</label>
+                <input
+                  formControlName="fatherCurrentJob"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Mother Name</label>
+                <input formControlName="motherName" type="text" pInputText />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Mother Profession</label>
+                <input
+                  formControlName="motherProfession"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Mother Current Job</label>
+                <input
+                  formControlName="motherCurrentJob"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-2">
+              <h5>Do you have any lawsuit ?</h5>
+              <p-inputSwitch
+                formControlName="hasLawSuit"
+                [(ngModel)]="hasLawSuit"
+              ></p-inputSwitch>
+            </div>
+            <div class="col-3" *ngIf="hasLawSuit">
+              <div class="p-fluid">
+                <label>Lawsuit Reason</label>
+                <input formControlName="lawSuitReason" type="text" pInputText />
+              </div>
+            </div>
+            <div class="col-2">
+              <h5>Do you have any Disability ?</h5>
+              <p-inputSwitch
+                formControlName="hasDisability"
+                [(ngModel)]="hasDisability"
+              ></p-inputSwitch>
+            </div>
+            <div class="col-3" *ngIf="hasDisability">
+              <div class="p-fluid">
+                <label>Disabity Detail</label>
+                <input
+                  formControlName="disabilityDetail"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-2">
+              <h5>Do you have any Mental or Physical Problem ?</h5>
+              <p-inputSwitch
+                formControlName="hasMentalPhysicalProblem"
+                [(ngModel)]="hasMentalPhysicalProblem"
+              ></p-inputSwitch>
+            </div>
+            <div class="col-3" *ngIf="hasMentalPhysicalProblem">
+              <div class="p-fluid">
+                <label>Mental Physical Problem Detail</label>
+                <input
+                  formControlName="mentalPhysicalProblemDetail"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <h5>Do you have any Major Surgery ?</h5>
+              <p-inputSwitch
+                formControlName="hadMajorSurgery"
+                [(ngModel)]="hadMajorSurgery"
+              ></p-inputSwitch>
+            </div>
+            <div class="col-3" *ngIf="hadMajorSurgery">
+              <div class="p-fluid">
+                <label>Major Surgery Detail</label>
+                <input
+                  formControlName="majorSurgeryDetail"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-2">
+              <h5>Do you have any Criminal Record ?</h5>
+              <p-inputSwitch
+                formControlName="hasCriminalRecord"
+                [(ngModel)]="hasCriminalRecord"
+              ></p-inputSwitch>
+            </div>
+            <div class="col-3" *ngIf="hasCriminalRecord">
+              <div class="p-fluid">
+                <label>Criminal Record Reason</label>
+                <input
+                  formControlName="criminalRecordReason"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-3">
+              <h5>Do you have a Valid Passport ?</h5>
+              <p-inputSwitch
+                formControlName="hasValidPassport"
+                [(ngModel)]="hasValidPassport"
+              ></p-inputSwitch>
+            </div>
+            <div class="col-3">
+              <h5>Can you travel ?</h5>
+              <p-inputSwitch
+                formControlName="canTravel"
+                [(ngModel)]="canTravel"
+              ></p-inputSwitch>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Bloud Group</label>
+                <input formControlName="bloudGroup" type="text" pInputText />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Military Information</label>
+                <input
+                  formControlName="militaryInformation"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Driving Licence Detail</label>
+                <input
+                  formControlName="drivingLicenceInformation"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-3">
+              <div class="p-fluid">
+                <label>Suscribed Unions </label>
+                <input
+                  formControlName="sucscribedUnions"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="p-fluid">
+                <label>Sucscribed Society </label>
+                <input
+                  formControlName="sucscribedSociety"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="p-fluid">
+                <label> Sucscribed Professional Organizations </label>
+                <input
+                  formControlName="sucscribedProfessionalOrganizations"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>   <div class="col-3">
+              <div class="p-fluid">
+                <label>Sucscribed Spor Clubs</label>
+                <input
+                  formControlName="sucscribedSporClubs"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Application Reason Detail</label>
+                <input
+                  formControlName="applicationReasonDetail"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Common Aquaintances</label>
+                <input
+                  formControlName="commonAquaintances"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div> <div class="col-4">
+              <div class="p-fluid">
+                <label>Job For Applied</label>
+                <input
+                  formControlName="jobForApplied"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="d-flex" style="flex-direction: row-reverse">
+        <p-button
+          (click)="sendFormToService()"
+          label="Next"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-card>
 </div>

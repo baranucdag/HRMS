@@ -1,0 +1,110 @@
+<div class="stepsdemo-content" >
+  <p-card>
+    <ng-template pTemplate="title"> Work Experience Information </ng-template>
+    <ng-template pTemplate="subtitle">
+      Enter your work experience information
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="container">
+        <form [formGroup]="workExperienceInformationForm">
+          <div class="row">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Last Position Name</label>
+                <input
+                  formControlName="lastPositionName"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Last Position Department</label>
+                <input
+                  formControlName="lastPositionDepartment"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Last Position Manager Title</label>
+                <input
+                  formControlName="lastPositionManagerTitle"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Last Position Additional Benefits</label>
+                <input
+                  formControlName="lastPositionAdditionalBenefits"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-12">
+              <div class="p-fluid">
+                <label>Last Position Description</label>
+                <textarea
+                  formControlName="lastPositionDescription"
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>Possible Start Date</label>
+                <input
+                  formControlName="possibleStartDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>Expected Salary</label>
+                <input
+                  formControlName="expectedSalary"
+                  type="number"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="justify-content-end">
+        <p-button
+          [routerLink]="['/apply/form/education']"
+          routerLinkActive="router-link-active"
+          label="Back"
+          icon="pi pi-angle-left"
+        ></p-button>
+        <p-button
+        [ngStyle]="{ 'margin-left': '1100px' }"
+          (click)="senFormToService()"
+          label="Next"
+          icon="pi pi-angle-right"
+          iconPos="right"
+        ></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
