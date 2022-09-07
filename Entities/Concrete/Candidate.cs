@@ -28,9 +28,9 @@ namespace Entities.Concrete
         public bool HasDisability { get; set; }
         public string DisabilityDetail { get; set; }
         public bool HasMentalPhysicalProblem { get; set; }
-        public string MentalPyhsicalProblemDetail { get; set; }
+        public string MentalPhysicalProblemDetail { get; set; }
         public bool HadMajorSurgery { get; set; }
-        public string MajorSurgeyDetail { get; set; }
+        public string MajorSurgeryDetail { get; set; }
         public string BloudGroup { get; set; }
         public string MilitaryInformation { get; set; }
         public string DrivingLicenceInformation { get; set; }
@@ -75,3 +75,7 @@ namespace Entities.Concrete
         public string CvPath { get; set; }
     }
 }
+
+
+
+

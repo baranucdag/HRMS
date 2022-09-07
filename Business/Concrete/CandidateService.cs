@@ -77,7 +77,7 @@ namespace Business.Concrete
         public ResultItem GetByUserId(int id)
         {
             var result = candidateDal.GetCandidateDetail(x => x.UserId == id);
-            return new ResultItem(true, result, Messages.DataListed);
+            return new ResultItem(true, result, null);
         }
 
         public ResultItem Update(Candidate candidate)

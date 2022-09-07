@@ -51,6 +51,18 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+
+        [HttpGet("GetByCandidateId")]
+        public IActionResult GetByCandidateId(int id)
+        {
+            var result = applicationService.GetByCandidateId(id);
+            if (result.IsOk)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("GetPaginationData")]
         public IActionResult GetPaginationData(PaginationItem<ApplicationDto> pi)
         {

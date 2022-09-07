@@ -4,6 +4,8 @@ using Entities.Concrete;
 using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
+using System.IO;
 
 namespace WebAPI.Controllers
 {
@@ -41,7 +43,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Update")]
-        public IActionResult Update(Candidate candidate)
+        public IActionResult Update([FromBody] Candidate candidate)
         {
             var result = candidateService.Update(candidate);
             if (result.IsOk)
@@ -107,5 +109,16 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("GetCandidateCv")]
+        public IActionResult GetCandidateCv(string cvPath)
+        {
+            //wwwroot\Uploads\cv\004e9022-701c-4304-95a7-3be5c2d56c39.pdf -> path
+            var data = System.IO.File.ReadAllBytes(cvPath);
+            var result = File(data, "application/pdf", "cv");
+            return Ok(result);
+
+        }
+
     }
 }

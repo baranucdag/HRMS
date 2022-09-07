@@ -11,6 +11,7 @@ namespace Business.Abstract
         ResultItem GetApplicationPaginated(PaginationItem<ApplicationDto> pi);
         ResultItem GetByUserIdAndCandidateId(int candidateId, int jobAdvertId);
         ResultItem GetByJobAdvertId(int id);
+        ResultItem GetByCandidateId(int id);
         ResultItem Add(Application application);
         ResultItem Update(Application application);
         ResultItem Delete(int id);

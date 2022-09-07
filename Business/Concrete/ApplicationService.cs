@@ -57,11 +57,24 @@ namespace Business.Concrete
             applicationDal.UnDelete(deletedEntity);
             return new ResultItem(true);
         }
+        public ResultItem GetByCandidateId(int id)
+        {
+            var result = applicationDal.GetApplicationDetails(x => x.CandidateId == id);
+            return new ResultItem(true, result, null);
+        }
 
         public ResultItem Update(Application application)
         {
+            //set prevApplicationStatus 
+            application.PrevApplicationStatus =  applicationDal.Get(x => x.Id == application.Id).ApplicationStatus;
+
+            //set hasEmailSent to false if application status has changed
+            if (application.ApplicationStatus != applicationDal.Get(x => x.Id == application.Id).ApplicationStatus)
+            {
+                application.HasEmailSent = false;
+            }
             applicationDal.Update(application);
-            return new ResultItem();
+            return new ResultItem(true,null,Messages.UpdateSuccess);
         }
 
         public ResultItem GetByUserIdAndCandidateId(int candidateId, int jobAdvertId)

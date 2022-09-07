@@ -4,10 +4,12 @@ namespace Entities.Enums
 {
     public enum ApplicationStatusEnum
     {
+        [Description("CandidateRejectedOffer")]
+        CandidateRejectedOffer = -2,
         [Description("Rejected")]
         Rejected = -1,
 
-        [Description("evaluation")]
+        [Description("Evaluation")]
         Evaluation = 0,
 
         [Description("OnlineMeeting")]
@@ -16,14 +18,17 @@ namespace Entities.Enums
         [Description("FaceToFaceMeeting")]
         FaceToFaceMeeting = 2,
 
+        [Description("FormCompleted")]
+        FormCompleted = 3,
+
         [Description("Offered")]
-        Offered = 3,
+        Offered = 4,
 
         [Description("AcceptOffer")]
-        AcceptOffer = 4,
+        AcceptOffer = 5,
 
         [Description("StartToWork")]
-        StartToWork = 5,
+        StartToWork = 6,
 
     }
 }
