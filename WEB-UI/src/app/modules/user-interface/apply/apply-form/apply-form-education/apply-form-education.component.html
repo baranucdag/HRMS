@@ -1,78 +1,233 @@
 <div class="stepsdemo-content">
   <p-card>
-    <ng-template pTemplate="title"> Seat Information </ng-template>
-    <ng-template pTemplate="subtitle"> Choose your seat </ng-template>
+    <ng-template pTemplate="title"> Education Information </ng-template>
+    <ng-template pTemplate="subtitle">
+      Enter your education information
+    </ng-template>
     <ng-template pTemplate="content">
       <div class="container">
-        <h3 style="text-align: center; margin-bottom: 15px">Required inputs</h3>
-        <form>
+        <form [formGroup]="educationInformationForm" *ngIf="savedInformations">
           <div class="row">
-            <div class="col-4">
-              <span class="p-float-label">
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>Primary School Start Date</label>
                 <input
+                  formControlName="primarySchoolStartDate"
                   type="date"
-                  style="width: 100%"
-                  id="inputtext"
                   pInputText
                 />
-              </span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>Primary School End Date</label>
+                <input
+                  formControlName="primarySchoolEndDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>Middle School Start Date</label>
+                <input
+                  formControlName="middleSchoolStartDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>Middle School End Date</label>
+                <input
+                  formControlName="middleSchoolEndDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>HighSchoolStartDate</label>
+                <input
+                  formControlName="highSchoolStartDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>High School End Date</label>
+                <input
+                  formControlName="highSchoolEndDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>University Start Date</label>
+                <input
+                  formControlName="universityStartDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>University End Date</label>
+                <input
+                  formControlName="universityEndDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>master Start Date</label>
+                <input
+                  formControlName="masterStartDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-fluid">
+                <label>masterEndDate</label>
+                <input
+                  formControlName="masterEndDate"
+                  type="date"
+                  pInputText
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 40px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>English Reading Level</label>
+                <input
+                  formControlName="englishReadingLevel"
+                  type="text"
+                  pInputText
+                />
+              </div>
             </div>
             <div class="col-4">
-              <span class="p-float-label">
+              <div class="p-fluid">
+                <label>English Writing Level</label>
                 <input
-                  style="width: 100%"
+                  formControlName="englishWritingLevel"
                   type="text"
-                  id="inputtext-left"
                   pInputText
                 />
-                <label for="inputtext-left">paceOfBirth</label>
-              </span>
+              </div>
             </div>
             <div class="col-4">
-              <span class="p-float-label">
+              <div class="p-fluid">
+                <label>English Speaking Level</label>
                 <input
-                  style="width: 100%"
+                  formControlName="englishSpeakingLevel"
                   type="text"
-                  id="inputtext-right"
                   pInputText
                 />
-                <label for="inputtext-right">gender</label>
-              </span>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>French Reading Level</label>
+                <input
+                  formControlName="frenchReadingLevel"
+                  type="text"
+                  pInputText
+                />
+              </div>
             </div>
             <div class="col-4">
-              <span class="p-float-label">
+              <div class="p-fluid">
+                <label>French Writing Level</label>
                 <input
-                  style="width: 100%"
+                  formControlName="frenchWritingLevel"
                   type="text"
-                  id="inputtext-right"
                   pInputText
                 />
-                <label for="inputtext-right">profession</label>
-              </span>
+              </div>
             </div>
             <div class="col-4">
-              <span class="p-float-label">
+              <div class="p-fluid">
+                <label>french Speaking Level</label>
                 <input
-                  style="width: 100%"
-                  formControlName="isMarried"
+                  formControlName="frenchSpeakingLevel"
                   type="text"
-                  id="inputtext-right"
                   pInputText
                 />
-                <label for="inputtext-right">isMarried</label>
-              </span>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 20px">
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Deucth Reading Level</label>
+                <input
+                  formControlName="deutchReadingLevel"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Deucth Writing Level</label>
+                <input
+                  formControlName="deutchWritingLevel"
+                  type="text"
+                  pInputText
+                />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-fluid">
+                <label>Deucth Speaking Level</label>
+                <input
+                  formControlName="deutchSpeakingLevel"
+                  type="text"
+                  pInputText
+                />
+              </div>
             </div>
           </div>
         </form>
       </div>
     </ng-template>
     <ng-template pTemplate="footer">
-      <div class="grid grid-nogutter justify-content-end">
+      <div class="justify-content-end">
         <p-button
+          [routerLink]="['/apply/form/personal']"
+          routerLinkActive="router-link-active"
           label="Back"
           icon="pi pi-angle-left"
         ></p-button>
         <p-button
+        [ngStyle]="{ 'margin-left': '1100px' }"
+          (click)="sendDataToService()"
           label="Next"
           icon="pi pi-angle-right"
           iconPos="right"

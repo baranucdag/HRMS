@@ -37,4 +37,14 @@ export class ApplicationService extends BaseService<IApplication> {
         id
     );
   }
+
+  getByCandidateId(
+    id: number
+  ): Observable<any> {
+    return this.httpClient.get<any>(
+      super.getFullPath('getByCandidateId') +
+        '?id=' +
+        id
+    );
+  }
 }

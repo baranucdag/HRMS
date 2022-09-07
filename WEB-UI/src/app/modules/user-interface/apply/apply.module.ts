@@ -11,7 +11,8 @@ import { StepsModule } from 'primeng/steps';
 import { ApplyFormEducationComponent } from './apply-form/apply-form-education/apply-form-education.component';
 import { ApplyFormPersonalComponent } from './apply-form/apply-form-personal/apply-form-personal.component';
 import { ApplyFormConfirmationComponent } from './apply-form/apply-form-confirmation/apply-form-confirmation.component';
-import { MenuItem } from 'primeng/api';
+import { ApplyFormWorkExperienceComponent } from './apply-form/apply-form-work-experience/apply-form-work-experience.component';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 @NgModule({
   declarations: [
@@ -21,10 +22,12 @@ import { MenuItem } from 'primeng/api';
     ApplyFormEducationComponent,
     ApplyFormPersonalComponent,
     ApplyFormConfirmationComponent,
+    ApplyFormWorkExperienceComponent,
   ],
   imports: [
     CommonModule,
     ApplyRoutingModule,
+    InputSwitchModule,
     SharedModule,
     FileUploadModule,
     CardModule,

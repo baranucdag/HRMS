@@ -20,11 +20,11 @@
           </div>
           <div class="text">
             <h5>Work Place Type</h5>
-            {{ currentJobAdvert.workPlaceType }}
+            {{ currentJobAdvert.workPlaceTypeText }}
           </div>
           <div class="text">
             <h5>Work Time Type</h5>
-            {{ currentJobAdvert.workTimeType }}
+            {{ currentJobAdvert.workTimeTypeText }}
           </div>
           <div>
             <h5>Deadline</h5>
@@ -83,8 +83,7 @@
         </p-card>
       </div>
       <div>
-        <p-button
-          
+        <p-button [routerLink]="['/apply/form']"
           >diğer adımlara geç</p-button
         >
       </div>
