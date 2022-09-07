@@ -17,9 +17,12 @@ namespace Entities.Dto
         public string CandidateFirstName { get; set; }
         public string CandidateLastName { get; set; }
         public string CandidateFullName => $"{CandidateFirstName} {CandidateLastName}";
+        public string CandidateCvPath { get; set; }
         public DateTime ApplicationDate { get; set; }
-        public string ApplicationStatus { get; set; }
-        public string PrevApplicationStatus { get; set; }
+        public string ApplicationStatusText { get; set; }
+        public int ApplicationStatus { get; set; }
+        public string PrevApplicationStatusText { get; set; }
+        public int PrevApplicationStatus { get; set; }
         public bool HasEmailSent { get; set; }
         public DateTime CraetedAt { get; set; }
         public int IsDeleted { get; set; }

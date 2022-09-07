@@ -8,7 +8,7 @@ namespace Entities.Enums
         Rejected = -1,
 
         [Description("evaluation")]
-        evaluation = 0,
+        Evaluation = 0,
 
         [Description("OnlineMeeting")]
         OnlineMeeting = 1,
